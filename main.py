@@ -28,8 +28,8 @@ def main():
             try:
                 request = session.get(url, timeout=request_timeout)
             except (req_ex.ConnectionError, req_ex.ReadTimeout, req_ex.ConnectTimeout):
-                continue
                 print 'Unable to access site'
+                continue
 
             if not is_mime_correct(request.headers['Content-Type']):
                 continue
@@ -41,10 +41,11 @@ def main():
 
             for url in urls:
                 href = url['href']
-                if is_onion_domain(href):
+                if is_onion_domain(href) and has_correct_extension(href):
                     stack.add_next(href)
+
     except KeyboardInterrupt:
-        print 'Zakonczono!'
+        print 'Searching finished...'
 
 
 if __name__ == '__main__':

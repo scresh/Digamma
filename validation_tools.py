@@ -1,6 +1,16 @@
 from BeautifulSoup import BeautifulSoup
 
 correct_mime = ['text/html', 'text/plain']
+correct_extensions = ['html', 'html', 'txt']
+
+
+def has_correct_extension(url):
+    supposed_extension = url.split('.')[-1]
+    if len(supposed_extension) > 4:
+        return True
+    if supposed_extension in correct_extensions:
+        return True
+    return False
 
 
 def is_mime_correct(content_type):
