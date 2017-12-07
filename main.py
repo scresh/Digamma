@@ -6,12 +6,25 @@ from validation_tools import *
 
 import requests
 import requests.exceptions as req_ex
+
+import sys
 import os
 
 
 def main():
+    # ./main.py phrase timeout
+
+    if len(sys.argv) < 2:
+        print 'Incorrect argument count'
+        return
+    phrase = sys.argv[1].lower()
+
+    try:
+        request_timeout = int(sys.argv[2])
+    except (IndexError, IndexError):
+        request_timeout = 10
+
     socks_port = '9050'  # Default port for Unix Client
-    request_timeout = 10
 
     if os.name == 'nt':  # Default port for Windows Client
         socks_port = '9150'
@@ -22,6 +35,9 @@ def main():
 
     start_url = 'http://54ogum7gwxhtgiya.onion/'  # Greetings for Krang :)
     stack = Stack(start_url)
+
+    phrase_results = []
+
     try:
         while stack.has_next():
             url = stack.get_next()
@@ -33,6 +49,11 @@ def main():
 
             if not is_mime_correct(request.headers['Content-Type']):
                 continue
+
+            content = request.content
+
+            if phrase in content.lower():
+                phrase_results.append(url)
 
             urls = get_urls(request.content)
 
@@ -46,6 +67,10 @@ def main():
 
     except KeyboardInterrupt:
         print 'Searching finished...'
+
+    print 'Found', len(phrase_results), 'results:'
+    for url in phrase_results:
+        print url
 
 
 if __name__ == '__main__':
