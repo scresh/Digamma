@@ -20,7 +20,7 @@ def main():
     start_url = 'http://54ogum7gwxhtgiya.onion/'
 
     session = requests.Session()
-    session.proxies = {'http': 'socks5h://127.0.0.1:9050', 'https': 'socks5h://127.0.0.1:9050'}
+    session.proxies = {'http': 'socks5h://127.0.0.1:9150', 'https': 'socks5h://127.0.0.1:9150'}
     stack = Stack(start_url)
 
     def signal_handler(signal, frame):
@@ -40,7 +40,7 @@ def main():
 
             try:
                 content = session.get(url, timeout=5).text
-            except (req_ex.ConnectionError, req_ex.ReadTimeout):
+            except (req_ex.ConnectionError, req_ex.ReadTimeout, req_ex.ConnectTimeout):
                 print 'Unable to acces site'
 
         try:
