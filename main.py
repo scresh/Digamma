@@ -22,7 +22,7 @@ def main():
     try:
         request_timeout = int(sys.argv[2])
     except (IndexError, IndexError):
-        request_timeout = 10
+        request_timeout = 5
 
     socks_port = '9050'  # Default port for Unix Client
 
