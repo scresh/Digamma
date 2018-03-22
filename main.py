@@ -11,7 +11,7 @@ def main():
     # if len(sys.argv) < 2:
     #    exit('Incorrect argument count')
 
-    phrase = 'spisek'  # sys.argv[1].lower()
+    phrase = ' '  # sys.argv[1].lower()
     tor_instances = 10  # int(sys.argv[2])
 
     socks_port = 9050  # Default port for Unix Client
@@ -21,14 +21,8 @@ def main():
 
     start_url = 'http://54ogum7gwxhtgiya.onion/'  # Greetings for Krang :)
 
-    tor_thread_caller = None
-    results = None
-
-    try:
-        tor_thread_caller = TorThreadCaller(phrase, start_url, tor_instances)
-    except KeyboardInterrupt:
-        print 'Searching finished...'
-        results = tor_thread_caller.get_results()
+    results = TorThreadCaller(phrase, start_url, tor_instances).get_results()
+    print 'Searching finished...'
 
     if results is not None:
         print 'Found', len(results), 'results:'
