@@ -1,76 +1,39 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from stack import Stack
-from validation_tools import *
-
-import requests
-import requests.exceptions as req_ex
-
-import sys
 import os
+from threds import TorThreadCaller
 
 
 def main():
     # ./main.py phrase timeout
 
-    if len(sys.argv) < 2:
-        print 'Incorrect argument count'
-        return
-    phrase = sys.argv[1].lower()
+    # if len(sys.argv) < 2:
+    #    exit('Incorrect argument count')
 
-    try:
-        request_timeout = int(sys.argv[2])
-    except (IndexError, IndexError):
-        request_timeout = 5
+    phrase = 'spisek'  # sys.argv[1].lower()
+    tor_instances = 10  # int(sys.argv[2])
 
-    socks_port = '9050'  # Default port for Unix Client
+    socks_port = 9050  # Default port for Unix Client
 
     if os.name == 'nt':  # Default port for Windows Client
-        socks_port = '9150'
-
-    session = requests.Session()
-    session.proxies = {'http': 'socks5h://127.0.0.1:' + socks_port,
-                       'https': 'socks5h://127.0.0.1:' + socks_port}
+        socks_port = 9150
 
     start_url = 'http://54ogum7gwxhtgiya.onion/'  # Greetings for Krang :)
-    stack = Stack(start_url)
 
-    phrase_results = []
+    tor_thread_caller = None
+    results = None
 
     try:
-        while stack.has_next():
-            url = stack.get_next()
-            try:
-                request = session.get(url, timeout=request_timeout)
-            except (req_ex.ConnectionError, req_ex.ReadTimeout, req_ex.ConnectTimeout):
-                print 'Unable to access site'
-                continue
-
-            if not is_mime_correct(request.headers['Content-Type']):
-                continue
-
-            content = request.content
-
-            if phrase in content.lower():
-                phrase_results.append(url)
-
-            urls = get_urls(request.content)
-
-            if urls is None:
-                continue
-
-            for url in urls:
-                href = url['href']
-                if is_onion_domain(href) and has_correct_extension(href):
-                    stack.add_next(href)
-
+        tor_thread_caller = TorThreadCaller(phrase, start_url, tor_instances)
     except KeyboardInterrupt:
         print 'Searching finished...'
+        results = tor_thread_caller.get_results()
 
-    print 'Found', len(phrase_results), 'results:'
-    for url in phrase_results:
-        print url
+    if results is not None:
+        print 'Found', len(results), 'results:'
+        for url in results:
+            print url
 
 
 if __name__ == '__main__':

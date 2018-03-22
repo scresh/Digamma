@@ -4,9 +4,9 @@
 set -o errexit
 set -o nounset
 
-#
+
 service tor stop
-pkill -9 tor
+#pkill -9 tor
 rm -rf tmp/*
 
 
@@ -21,13 +21,14 @@ if [ ${#} -ne 0 ]; then
 	TorInstances=${1}
 fi
 
+
 while [ ${InstanceID} -lt ${TorInstances} ]; do
     mkdir -p "tmp/${InstanceID}"
-    tor --SocksPort ${SocksPort} --ControlPort ${ControlPort} --DataDirectory "tmp/${SocksPort}" --quiet &
+    tor --SocksPort ${SocksPort} --ControlPort ${ControlPort} --DataDirectory "tmp/${SocksPort}"  --quiet &
 
     let InstanceID=InstanceID+1
     let SocksPort=SocksPort+2
     let ControlPort=ControlPort+2
 done
 
-./main.py
+#./main.py ${TorInstances} test
