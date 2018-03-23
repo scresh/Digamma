@@ -7,7 +7,7 @@ from validation_tools import *
 import requests.exceptions as req_ex
 
 stack = None
-run_thread = True
+run_threads = True
 
 
 class TorThread(threading.Thread):
@@ -18,19 +18,15 @@ class TorThread(threading.Thread):
         self.socks_port = 9050 + thread_id
         self.timeout = 10
 
-    @staticmethod
-    def stop():
-        global run_thread
-        run_thread = False
-
     def run(self):
         global stack
-        global run_thread
+        global run_threads
+
         # Waiting for TOR client instance establish connection
         while socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect_ex(('127.0.0.1', self.socks_port)) != 0:
             pass
-        # Waiting till at least 1 link is available to process
 
+        # Waiting till at least 1 url is available to process
         url = None
         while url is None:
             url = stack.get_next()
@@ -39,27 +35,32 @@ class TorThread(threading.Thread):
         session.proxies = {'http': 'socks5h://127.0.0.1:' + str(self.socks_port),
                            'https': 'socks5h://127.0.0.1:' + str(self.socks_port)}
 
-        while run_thread and (url is not None):
+        # Loop can be stopped by:
+        #   -> KeyboardInterrupt (Ctrl + C)
+        #   -> Stack, if there is no urls to process
+        while run_threads and (url is not None):
             try:
-                print 'Thread', self.thread_id, 'processing:', url
+                # Race condition only applies to print so it's feature :)
+                print self.thread_id
                 request = session.get(url, timeout=self.timeout)
-                current_url = url
-                url = stack.get_next()
             except (req_ex.ConnectionError, req_ex.ReadTimeout, req_ex.ConnectTimeout):
-                print 'Unable to access site'
+                print 'Unable to access site', url
+                url = stack.get_next()
                 continue
 
+            # Prevent processing images, videos, etc.
             if not is_mime_correct(request.headers['Content-Type']):
+                url = stack.get_next()
                 continue
-
             content = request.content
 
             if self.phrase in content.lower():
-                stack.add_result(current_url)
+                stack.add_result(url)
 
             a_href_tuple = get_urls(request.content)
 
             if a_href_tuple is None:
+                url = stack.get_next()
                 continue
 
             for a_href in a_href_tuple:
@@ -67,10 +68,15 @@ class TorThread(threading.Thread):
                 if is_onion_domain(href) and has_correct_extension(href):
                     stack.add_next(href)
 
+        # Stop all threads if current thread has no urls to process
+        if run_threads:
+            run_threads = False
+
 
 class TorThreadCaller:
     def __init__(self, phrase, start_url, tor_instances):
         global stack
+        global run_threads
 
         self.tor_instances = tor_instances
         self.phrase = phrase
@@ -83,15 +89,15 @@ class TorThreadCaller:
 
         # Waiting for Ctrl+C
         try:
-            while True:
+            while run_threads:
                 pass
         except KeyboardInterrupt:
-            print 'Searching stopped'
+            run_threads = False
 
-    def get_results(self):
-        global stack
-        global run_thread
-        run_thread = False
         for instance_id in xrange(self.tor_instances):
             self.tor_threads[instance_id].join()
+
+    @staticmethod
+    def get_results():
+        global stack
         return stack.get_results()
