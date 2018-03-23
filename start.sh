@@ -14,7 +14,7 @@ SocksPort=9050
 ControlPort=9051
 
 # Default values
-TorInstances=10
+TorInstances=16
 InstanceID=0
 
 if [ ${#} -ne 0 ]; then
@@ -23,8 +23,12 @@ fi
 
 
 while [ ${InstanceID} -lt ${TorInstances} ]; do
-    mkdir -p "tmp/${InstanceID}"
     tor --SocksPort ${SocksPort} --ControlPort ${ControlPort} --DataDirectory "tmp/${SocksPort}"  --quiet &
+
+    while ! nc -z localhost ${SocksPort}; do
+        sleep 0.2
+    done
+
 
     let InstanceID=InstanceID+1
     let SocksPort=SocksPort+2

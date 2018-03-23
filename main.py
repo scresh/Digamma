@@ -11,8 +11,8 @@ def main():
     # if len(sys.argv) < 2:
     #    exit('Incorrect argument count')
 
-    phrase = ' '  # sys.argv[1].lower()
-    tor_instances = 10  # int(sys.argv[2])
+    phrase = 'lisk'  # sys.argv[1].lower()
+    tor_instances = 16  # int(sys.argv[2])
 
     socks_port = 9050  # Default port for Unix Client
 
