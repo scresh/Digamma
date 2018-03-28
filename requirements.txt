@@ -25,6 +25,7 @@ pyOpenSSL==16.2.0
 pyserial==3.4
 PySocks==1.6.7
 pyxdg==0.25
+requests[socks]>=2.10.0
 requests==2.18.4
 SecretStorage==2.3.1
 service-identity==16.0.0

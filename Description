@@ -8,3 +8,9 @@ Stemak
 
 Try to make all commit messages in english.
 Of course must be commented in english!
+
+Documentation:
+- dokumentacja może być po polsku, można ją kiedyś zrobić na jakiejś stronie;
+- nazwy zmiennych i metod tworzymy z podkreśleniami (np. moja_nowa_zmienna, nie jako cammelCase - jak w Javie)
+- kommity po angielsku jako bezokoliczniki
+- komentarze po angielsku
