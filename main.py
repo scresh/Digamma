@@ -2,26 +2,26 @@
 # -*- coding: utf-8 -*-
 
 import os
+
+import sys
+
 from threds import TorThreadCaller
 
 
 def main():
-    # ./main.py phrase timeout
-
-    # if len(sys.argv) < 2:
-    #    exit('Incorrect argument count')
-
-    phrase = 'lisk'  # sys.argv[1].lower()
-    tor_instances = 16  # int(sys.argv[2])
-
-    socks_port = 9050  # Default port for Unix Client
-
-    if os.name == 'nt':  # Default port for Windows Client
-        socks_port = 9150
-
+    # Default values
+    phrase = 'conspiracy'
+    tor_instances = 1
     start_url = 'http://54ogum7gwxhtgiya.onion/'  # Greetings for Krang :)
 
-    results = TorThreadCaller(phrase, start_url, tor_instances).get_results()
+    if len(sys.argv) > 1:
+        phrase = sys.argv[1]
+    if len(sys.argv) > 2:
+        tor_instances = sys.argv[2]
+
+    start_port = [9050, 9150][os.name == 'nt']  # Default ports for Unix and Windows Clients
+
+    results = TorThreadCaller(phrase, start_url, tor_instances, start_port).get_results()
     print 'Searching finished...'
 
     if results is not None:

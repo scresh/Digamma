@@ -12,11 +12,11 @@ run_threads = True
 
 
 class TorThread(threading.Thread):
-    def __init__(self, phrase, thread_id):
+    def __init__(self, phrase, thread_id, start_port):
         threading.Thread.__init__(self)
         self.phrase = phrase
         self.thread_id = thread_id
-        self.socks_port = 9050 + thread_id * 2
+        self.socks_port = start_port + thread_id * 2
         self.timeout = 5
 
     def run(self):
@@ -76,7 +76,7 @@ class TorThread(threading.Thread):
 
 
 class TorThreadCaller:
-    def __init__(self, phrase, start_url, tor_instances):
+    def __init__(self, phrase, start_url, tor_instances, start_port):
         global stack
         global run_threads
 
@@ -86,7 +86,7 @@ class TorThreadCaller:
 
         self.tor_threads = []
         for instance_id in xrange(tor_instances):
-            self.tor_threads.append(TorThread(phrase, instance_id))
+            self.tor_threads.append(TorThread(phrase, instance_id, start_port))
             self.tor_threads[instance_id].start()
 
         # Waiting for Ctrl+C
