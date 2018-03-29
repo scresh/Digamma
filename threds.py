@@ -1,20 +1,25 @@
 import time
+import sys
 import requests
 import threading
+from html2text import html2text
 from random import uniform
-
 from stack import Stack
 from validation_tools import *
 from requests.exceptions import *
+
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 stack = None
 run_threads = True
 
 
 class TorThread(threading.Thread):
-    def __init__(self, phrase, thread_id, start_port):
+    def __init__(self, phrase, thread_id, start_port, mode):
         threading.Thread.__init__(self)
         self.phrase = phrase
+        self.mode = mode
         self.thread_id = thread_id
         self.socks_port = start_port + thread_id * 2
         self.timeout = 5
@@ -48,8 +53,13 @@ class TorThread(threading.Thread):
 
                 content = request.content
 
-                if self.phrase in content.lower():
-                    stack.add_result(url)
+                if self.mode == "-f":
+                    f = open("test.txt", "a")
+                    f.write(url + ":\t" + html2text(content).encode('utf-8').replace("\n"," ").lower() + "\n")
+                    f.close()
+                else:
+                    if self.phrase in content.lower():
+                        stack.add_result(url)
 
                 a_href_tuple = get_urls(request.content)
                 if a_href_tuple is None:
@@ -76,17 +86,18 @@ class TorThread(threading.Thread):
 
 
 class TorThreadCaller:
-    def __init__(self, phrase, start_url, tor_instances, start_port):
+    def __init__(self, phrase, start_url, tor_instances, start_port, mode):
         global stack
         global run_threads
 
         self.tor_instances = tor_instances
         self.phrase = phrase
+        self.mode = mode
         stack = Stack(start_url)
 
         self.tor_threads = []
         for instance_id in xrange(tor_instances):
-            self.tor_threads.append(TorThread(phrase, instance_id, start_port))
+            self.tor_threads.append(TorThread(phrase, instance_id, start_port, mode))
             self.tor_threads[instance_id].start()
 
         # Waiting for Ctrl+C
