@@ -1,5 +1,7 @@
+# coding=utf-8
 import time
 import sys
+import re
 import requests
 import threading
 from html2text import html2text
@@ -54,8 +56,12 @@ class TorThread(threading.Thread):
                 content = request.content
 
                 if self.mode == "-f":
-                    f = open("test.txt", "a")
-                    f.write(url + ":\t" + html2text(content).encode('utf-8').replace("\n"," ").lower() + "\n")
+                    # converts content to text and strips off non-alphanumeric chars, excessive whitespaces and urls
+                    parsed = re.sub(' +', ', ', re.sub(r'\b\w{20,}\b', '', re.sub('[^ąćęłńóśźżĄĆĘŁŃÓŚŹŻ a-zA-Z0-9]', '',
+                                                                                  html2text(content).encode(
+                                                                                      'utf-8').lower())))
+                    f = open("url_content.txt", "a")
+                    f.write(url + "\t" + parsed + "\n")
                     f.close()
                 else:
                     if self.phrase in content.lower():
