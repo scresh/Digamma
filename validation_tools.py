@@ -1,3 +1,5 @@
+import re
+
 from BeautifulSoup import BeautifulSoup
 
 correct_mime = ['text/html', 'text/plain']
@@ -27,10 +29,15 @@ def is_onion_domain(url):
     return True
 
 
-def get_urls(content):
+def get_urls_html(content):
     try:
         soup = BeautifulSoup(content)
     except UnicodeEncodeError:
         print 'Invalid HTML/TEXT file'
         return None
     return soup.findAll('a', href=True)
+
+def get_urls_plain(content):
+	pattern = r'(http[s]?://(?:\w+.)?\w+.\w+(?:/\S+)?)'
+	urls = re.findall(pattern, content)
+	return urls
