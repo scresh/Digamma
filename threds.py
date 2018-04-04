@@ -1,17 +1,13 @@
-# coding=utf-8
 import time
-import sys
-import re
 import requests
 import threading
 from html2text import html2text
 from random import uniform
+
 from stack import Stack
 from validation_tools import *
 from requests.exceptions import *
 
-reload(sys)
-sys.setdefaultencoding('utf8')
 
 stack = None
 run_threads = True
@@ -21,10 +17,10 @@ class TorThread(threading.Thread):
     def __init__(self, phrase, thread_id, start_port, mode):
         threading.Thread.__init__(self)
         self.phrase = phrase
-        self.mode = mode
         self.thread_id = thread_id
         self.socks_port = start_port + thread_id * 2
         self.timeout = 5
+        self.mode = mode
 
     def run(self):
         global stack
@@ -48,34 +44,23 @@ class TorThread(threading.Thread):
             try:
                 # Race condition only applies to print so it's feature :)
                 request = session.get(url, timeout=self.timeout)
-
-                # Prevent processing images, videos, etc.
-                if not is_mime_correct(request.headers['Content-Type']):
-                    raise Exception('Incorrect Content-Type')
+                content_type = request.headers['Content-Type']
 
                 content = request.content
-
                 if self.mode == "-f":
-                    # converts content to text and strips off non-alphanumeric chars, excessive whitespaces and urls
-                    parsed = re.sub(' +', ', ', re.sub(r'\b\w{20,}\b', '', re.sub('[^ąćęłńóśźżĄĆĘŁŃÓŚŹŻ a-zA-Z0-9]', '',
-                                                                                  html2text(content).encode(
-                                                                                      'utf-8').lower())))
-                    f = open("url_content.txt", "a")
-                    f.write(url + "\t" + parsed + "\n")
+                    f = open("test.txt", "a")
+                    f.write(url + ":\t" + html2text(content).encode('utf-8').replace("\n", " ").lower() + "\n")
                     f.close()
-                else:
-                    if self.phrase in content.lower():
-                        stack.add_result(url)
+                elif self.phrase in content.lower():
+                    stack.add_result(url)
 
-                a_href_tuple = get_urls(request.content)
-                if a_href_tuple is None:
+                urls = get_urls(content, content_type)
+
+                if urls is None:
                     raise Exception('No valid urls')
-
-                for a_href in a_href_tuple:
-                    href = a_href['href']
-                    if is_onion_domain(href) and has_correct_extension(href):
-                        stack.add_next(href)
-                raise Exception('Successfully processed')
+                else:
+                    map(lambda x: stack.add_next(x), urls)
+                    raise Exception('Successfully processed')
 
             except Exception as e:
                 thread_str = str(self.thread_id)
@@ -98,7 +83,6 @@ class TorThreadCaller:
 
         self.tor_instances = tor_instances
         self.phrase = phrase
-        self.mode = mode
         stack = Stack(start_url)
 
         self.tor_threads = []

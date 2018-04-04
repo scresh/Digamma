@@ -2,9 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
-
 import sys
-
 from threds import TorThreadCaller
 
 
