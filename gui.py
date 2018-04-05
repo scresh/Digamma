@@ -50,13 +50,13 @@ class Application(Tk):
 
     def create_entry1(self):
         self.entry_1=Entry(self)
-        #self.entry_1.pack(side=TOP)
-        self.entry_1.grid(row=0,column=0)
+        self.entry_1.pack(side=TOP)
+        #self.entry_1.grid(row=0,column=0)
 
     def create_entry2(self):
         self.entry_2 = Entry(self)
-        #self.entry_2.pack()
-        self.entry_2.grid(row=1,column=0)
+        self.entry_2.pack()
+        #self.entry_2.grid(row=1,column=0)
     def input(self):
         self.sb_textbox=Scrollbar(self)
         self.textbox=Text(self, width=50, height=50)
