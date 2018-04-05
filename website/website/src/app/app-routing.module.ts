@@ -13,7 +13,7 @@ const appRoutes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'result/:what',
+    path: 'result',
     component: ResultSearchComponent
   },
   {

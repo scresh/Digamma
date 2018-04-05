@@ -1,0 +1,11 @@
+.nav {
+  position: fixed;
+  height: 100%;
+}
+
+.about-us-link {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 2%;
+}
