@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { we } from './information-about-us';
+
 @Component({
   selector: 'app-about-us',
   templateUrl: './about-us.component.html',
@@ -9,7 +11,10 @@ export class AboutUsComponent implements OnInit {
 
   constructor() { }
 
+  we;
+
   ngOnInit() {
+    this.we = we;
   }
 
 }

@@ -8,3 +8,13 @@ body {
 .p-00 {
   padding: 0 0 !important;
 }
+
+.audiowide-font {
+  font-family: 'Audiowide', cursive;
+}
+
+.block-center {
+  left: 0;
+  right: 0;
+  position: absolute;
+}
