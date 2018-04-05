@@ -1,0 +1,42 @@
+#particles-js {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50% 50%;
+}
+
+canvas {
+  display: block;
+  vertical-align: bottom;
+}
+
+.page-footer {
+  position: absolute;
+  bottom: 0%;
+  width: 100%;
+  padding-top: 0px !important;
+}
+.page-footer .row {
+  margin-bottom: 0px !important;
+}
+
+.searchPanel {
+  display: block;
+  position: absolute;
+  top: 30%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  background-color: rgba(69, 69, 69, 0.81);
+  border: black;
+  border-style: solid;
+  border-width: 2px;
+  padding: 5px;
+  width: 40%;
+}
+.searchPanel .title {
+  font-family: 'Audiowide', cursive;
+}
