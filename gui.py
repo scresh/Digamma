@@ -1,45 +1,89 @@
+# coding=utf-8
 from Tkinter import *
-
-LARGE_FONT = ("Trebuchet MS", 12, "bold italic")
-WHITE = '#FFFFFF'
-SHARK = '#1A1A1D'
-ABBEY = '#4E4E50'
-CROWN = '#6F2232'
-MONARCH = '#950740'
-SHIZAR = '#C3073F'
-
+#from tcl import n1
 
 def backend_function():
     print 'Hej!'
 
+def sel():
+   selection = "You selected the option " + str(var.get())
+   label.config(text = selection)
 
-class Application(Tk):
-    def __init__(self):
-        Tk.__init__(self)
-        self.title('Tor Scanner :: Digamma')
-        self.geometry('600x400')
-        self.configure(background=SHARK)
-        self.resizable(False, False)
+def zamknij(zdarzenie):
+    for x in range(10):
+        x=entry_1.get()
+        print(x)
+   # print(entry_1.get())
+    okno.quit()
+    okno.destroy()
 
-        Entry(self).grid(row=0, column=0)
-        ShizarButton('Search', backend_function).grid(row=0, column=1)
-        Entry(self).grid(row=1, column=0)
-        ShizarButton('...', backend_function).grid(row=1, column=1)
+def view_his():
+    print "historia "
+
+def clear_his():
+    print "clear"
+
+def dream_team():
+    print "team::"
+
+def wypisz(text):
+    for x in range(10):
+        textbox.insert(END,entry_1.get())
+        textbox.insert(END,"\n")
+
+okno = Tk()
+
+topFrame=Frame(okno)
+topFrame.pack()
+buttonFrame=Frame(okno)
+buttonFrame.pack()
+
+etykieta = Label(topFrame, text="tu będzie zdjęcie!!oneone", font=("Arial", 24, "italic"),foreground="yellow", background="blue")
+etykieta.grid(row=0,column=0,columnspan=2,pady=120)
+#etykieta.pack(expand=NO,pady=100)
+
+#photo = PhotoImage("n1.png")
+#label_1=Label(topFrame,image=photo)
+#label_1.grid(row=0,column=0,columnspan=2,pady=120)
+#label_1.pack(pady=100)
+
+entry_1=Entry(buttonFrame)
+entry_1.grid(row=1,column=0)
 
 
-class ShizarButton(Button):
-    def __init__(self, text, command):
-        Button.__init__(self)
-        self.configure(activebackground=MONARCH)
-        self.configure(activeforeground=WHITE)
-        self.configure(background=SHIZAR)
-        self.configure(foreground=WHITE)
-        self.configure(font=LARGE_FONT)
-        self.configure(command=command)
-        self.configure(relief=GROOVE)
-        self.configure(text=text)
-        self.configure(padx=20)
+button_1=Button(buttonFrame, text = "Search",font=("Courier",16,"bold"), background="red")
+button_1.bind("<Button-1>", wypisz)
+button_1.grid(row=1,column=1)
+#przycisk_1.pack(side=LEFT)
 
 
-app = Application()
-app.mainloop()
+#Drop down menu
+menu=Menu(okno)
+okno.config(menu=menu)
+
+hisMenu=Menu(menu)
+menu.add_cascade(label="History",menu=hisMenu)
+hisMenu.add_command(label="View",command=view_his)
+hisMenu.add_command(label="Clear",command=clear_his)
+
+infoMenu=Menu(menu)
+menu.add_cascade(label="Info",menu=infoMenu)
+infoMenu.add_command(label="Team",command=dream_team)
+#radiobutton
+var = IntVar()
+R1 = Radiobutton(buttonFrame, text="Option 1", variable=var, value=1, command=sel)
+R1.pack( anchor = W )
+
+R2 = Radiobutton(buttonFrame, text="Option 2", variable=var, value=2, command=sel)
+R2.pack( anchor = W )
+
+#input
+sb_textbox=Scrollbar(okno)
+textbox=Text(okno,width=50,height=50)
+textbox.pack(side=BOTTOM)
+sb_textbox.place(in_=textbox,relx=1.,rely=0,relheight=1.)
+#textbox.place(x=100,y=10)
+textbox.insert(END,"Hello ",("h1"))
+sb_textbox.config(command = textbox.yview)
+okno.title("Digamma")
+okno.mainloop()
