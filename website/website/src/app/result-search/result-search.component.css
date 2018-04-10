@@ -1,0 +1,19 @@
+.nav {
+  position: fixed;
+  height: 100%;
+}
+
+.about-us-link {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 2%;
+}
+
+.link {
+  font-size: 12px;
+}
+
+.collection-item:hover {
+  background-color: rgba(102, 0, 15, 0.12);
+}
