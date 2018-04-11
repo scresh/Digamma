@@ -17,5 +17,4 @@ export class MainComponent implements OnInit {
       console.log('callback - particles-js config loaded');
     });
   }
-
 }

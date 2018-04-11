@@ -5,6 +5,8 @@ import { NgModule } from '@angular/core';
 
 import { Router } from '@angular/router';
 
+import { HttpClientModule } from '@angular/common/http';
+
 import { AppComponent } from './app.component';
 import { MainComponent } from './main/main.component';
 import { AboutUsComponent } from './about-us/about-us.component';
@@ -25,7 +27,8 @@ import { AppRoutingModule } from "./app-routing.module";
   imports: [
     MaterializeModule,
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
