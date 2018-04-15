@@ -8,204 +8,27 @@
 
   <div class="col s12 m8 l9 offset-s12 offset-m4 offset-l3 center-block">
     <ul class="pagination center">
-      <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-      <li class="active"><a href="#!">1</a></li>
-      <li class="waves-effect"><a href="#!">2</a></li>
-      <li class="waves-effect"><a href="#!">3</a></li>
-      <li class="waves-effect"><a href="#!">4</a></li>
-      <li class="waves-effect"><a href="#!">5</a></li>
-      <li class="waves-effect"><a href="#!">6</a></li>
-      <li class="waves-effect"><a href="#!">7</a></li>
-      <li class="waves-effect"><a href="#!">8</a></li>
-      <li class="waves-effect"><a href="#!">9</a></li>
-      <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+      <li class="waves-effect" [ngClass]="{'disabled': page.number==1}"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+      <li [ngClass]="{'active':page.active, 'waves-effect':!page.active}" *ngFor="let page of pagination">
+        <a href="#!">page.number</a>
+      </li>
+      <li class="waves-effect" [ngClass]="{'disabled': page.last}"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
     </ul>
     <div class="row">
       <ul class="collection col s6 p-00">
-        <li class="collection-item">
-          <div>Now with free Bitcoin mixer, you will always get new coins back when you withdraw from your EasyCoin wallet!
-            You only pay the <b>Bitcoin</b> transaction fee.
-            <br><a class="link green-text text-lighten-1">http://easycoinsayj7p5l.onion/</a><a href="#!" class="secondary-content"><i
-              class="material-icons">send</i></a></div>
-        </li>
-        <li class="collection-item">
-          <div>Now with free Bitcoin mixer, you will always get new coins back when you withdraw from your EasyCoin wallet!
-            You only pay the <b>Bitcoin</b> transaction fee.
-            <br><a class="link green-text text-lighten-1">http://easycoinsayj7p5l.onion/</a><a href="#!" class="secondary-content"><i
-              class="material-icons">send</i></a></div>
-        </li>
-        <li class="collection-item">
-          <div>Now with free Bitcoin mixer, you will always get new coins back when you withdraw from your EasyCoin wallet!
-            You only pay the <b>Bitcoin</b> transaction fee.
-            <br><a class="link green-text text-lighten-1">http://easycoinsayj7p5l.onion/</a><a href="#!" class="secondary-content"><i
-              class="material-icons">send</i></a></div>
-        </li>
-        <li class="collection-item">
-          <div>Now with free Bitcoin mixer, you will always get new coins back when you withdraw from your EasyCoin wallet!
-            You only pay the <b>Bitcoin</b> transaction fee.
-            <br><a class="link green-text text-lighten-1">http://easycoinsayj7p5l.onion/</a><a href="#!" class="secondary-content"><i
-              class="material-icons">send</i></a></div>
-        </li>
-        <li class="collection-item">
-          <div>Now with free Bitcoin mixer, you will always get new coins back when you withdraw from your EasyCoin wallet!
-            You only pay the <b>Bitcoin</b> transaction fee.
-            <br><a class="link green-text text-lighten-1">http://easycoinsayj7p5l.onion/</a><a href="#!" class="secondary-content"><i
-              class="material-icons">send</i></a></div>
-        </li>
-        <li class="collection-item">
-          <div>Now with free Bitcoin mixer, you will always get new coins back when you withdraw from your EasyCoin wallet!
-            You only pay the <b>Bitcoin</b> transaction fee.
-            <br><a class="link green-text text-lighten-1">http://easycoinsayj7p5l.onion/</a><a href="#!" class="secondary-content"><i
-              class="material-icons">send</i></a></div>
-        </li>
-        <li class="collection-item">
-          <div>Now with free Bitcoin mixer, you will always get new coins back when you withdraw from your EasyCoin wallet!
-            You only pay the <b>Bitcoin</b> transaction fee.
-            <br><a class="link green-text text-lighten-1">http://easycoinsayj7p5l.onion/</a><a href="#!" class="secondary-content"><i
-              class="material-icons">send</i></a></div>
-        </li>
-        <li class="collection-item">
-          <div>Now with free Bitcoin mixer, you will always get new coins back when you withdraw from your EasyCoin wallet!
-            You only pay the <b>Bitcoin</b> transaction fee.
-            <br><a class="link green-text text-lighten-1">http://easycoinsayj7p5l.onion/</a><a href="#!" class="secondary-content"><i
-              class="material-icons">send</i></a></div>
-        </li>
-        <li class="collection-item">
-          <div>Now with free Bitcoin mixer, you will always get new coins back when you withdraw from your EasyCoin wallet!
-            You only pay the <b>Bitcoin</b> transaction fee.
-            <br><a class="link green-text text-lighten-1">http://easycoinsayj7p5l.onion/</a><a href="#!" class="secondary-content"><i
-              class="material-icons">send</i></a></div>
-        </li>
-        <li class="collection-item">
-          <div>Now with free Bitcoin mixer, you will always get new coins back when you withdraw from your EasyCoin wallet!
-            You only pay the <b>Bitcoin</b> transaction fee.
-            <br><a class="link green-text text-lighten-1">http://easycoinsayj7p5l.onion/</a><a href="#!" class="secondary-content"><i
-              class="material-icons">send</i></a></div>
-        </li>
-        <li class="collection-item">
-          <div>Now with free Bitcoin mixer, you will always get new coins back when you withdraw from your EasyCoin wallet!
-            You only pay the <b>Bitcoin</b> transaction fee.
-            <br><a class="link green-text text-lighten-1">http://easycoinsayj7p5l.onion/</a><a href="#!" class="secondary-content"><i
-              class="material-icons">send</i></a></div>
-        </li>
-        <li class="collection-item">
-          <div>Now with free Bitcoin mixer, you will always get new coins back when you withdraw from your EasyCoin wallet!
-            You only pay the <b>Bitcoin</b> transaction fee.
-            <br><a class="link green-text text-lighten-1">http://easycoinsayj7p5l.onion/</a><a href="#!" class="secondary-content"><i
-              class="material-icons">send</i></a></div>
-        </li>
-        <li class="collection-item">
-          <div>Now with free Bitcoin mixer, you will always get new coins back when you withdraw from your EasyCoin wallet!
-            You only pay the <b>Bitcoin</b> transaction fee.
-            <br><a class="link green-text text-lighten-1">http://easycoinsayj7p5l.onion/</a><a href="#!" class="secondary-content"><i
-              class="material-icons">send</i></a></div>
-        </li>
-        <li class="collection-item">
-          <div>Now with free Bitcoin mixer, you will always get new coins back when you withdraw from your EasyCoin wallet!
-            You only pay the <b>Bitcoin</b> transaction fee.
-            <br><a class="link green-text text-lighten-1">http://easycoinsayj7p5l.onion/</a><a href="#!" class="secondary-content"><i
-              class="material-icons">send</i></a></div>
-        </li>
-        <li class="collection-item">
-          <div>Now with free Bitcoin mixer, you will always get new coins back when you withdraw from your EasyCoin wallet!
-            You only pay the <b>Bitcoin</b> transaction fee.
-            <br><a class="link green-text text-lighten-1">http://easycoinsayj7p5l.onion/</a><a href="#!" class="secondary-content"><i
+        <li class="collection-item" *ngFor="let result of results1">
+          <div>{{result.text}}
+            <br><a class="link green-text text-lighten-1">{{result.link}}</a><a href="#!" class="secondary-content"><i
               class="material-icons">send</i></a></div>
         </li>
       </ul>
       <ul class="collection col s6 p-00">
-        <li class="collection-item">
-          <div>Now with free Bitcoin mixer, you will always get new coins back when you withdraw from your EasyCoin wallet!
-            You only pay the <b>Bitcoin</b> transaction fee.
-            <br><a class="link green-text text-lighten-1">http://easycoinsayj7p5l.onion/</a><a href="#!" class="secondary-content"><i
-              class="material-icons">send</i></a></div>
-        </li>
-        <li class="collection-item">
-          <div>Now with free Bitcoin mixer, you will always get new coins back when you withdraw from your EasyCoin wallet!
-            You only pay the <b>Bitcoin</b> transaction fee.
-            <br><a class="link green-text text-lighten-1">http://easycoinsayj7p5l.onion/</a><a href="#!" class="secondary-content"><i
-              class="material-icons">send</i></a></div>
-        </li>
-        <li class="collection-item">
-          <div>Now with free Bitcoin mixer, you will always get new coins back when you withdraw from your EasyCoin wallet!
-            You only pay the <b>Bitcoin</b> transaction fee.
-            <br><a class="link green-text text-lighten-1">http://easycoinsayj7p5l.onion/</a><a href="#!" class="secondary-content"><i
-              class="material-icons">send</i></a></div>
-        </li>
-        <li class="collection-item">
-          <div>Now with free Bitcoin mixer, you will always get new coins back when you withdraw from your EasyCoin wallet!
-            You only pay the <b>Bitcoin</b> transaction fee.
-            <br><a class="link green-text text-lighten-1">http://easycoinsayj7p5l.onion/</a><a href="#!" class="secondary-content"><i
-              class="material-icons">send</i></a></div>
-        </li>
-        <li class="collection-item">
-          <div>Now with free Bitcoin mixer, you will always get new coins back when you withdraw from your EasyCoin wallet!
-            You only pay the <b>Bitcoin</b> transaction fee.
-            <br><a class="link green-text text-lighten-1">http://easycoinsayj7p5l.onion/</a><a href="#!" class="secondary-content"><i
-              class="material-icons">send</i></a></div>
-        </li>
-        <li class="collection-item">
-          <div>Now with free Bitcoin mixer, you will always get new coins back when you withdraw from your EasyCoin wallet!
-            You only pay the <b>Bitcoin</b> transaction fee.
-            <br><a class="link green-text text-lighten-1">http://easycoinsayj7p5l.onion/</a><a href="#!" class="secondary-content"><i
-              class="material-icons">send</i></a></div>
-        </li>
-        <li class="collection-item">
-          <div>Now with free Bitcoin mixer, you will always get new coins back when you withdraw from your EasyCoin wallet!
-            You only pay the <b>Bitcoin</b> transaction fee.
-            <br><a class="link green-text text-lighten-1">http://easycoinsayj7p5l.onion/</a><a href="#!" class="secondary-content"><i
-              class="material-icons">send</i></a></div>
-        </li>
-        <li class="collection-item">
-          <div>Now with free Bitcoin mixer, you will always get new coins back when you withdraw from your EasyCoin wallet!
-            You only pay the <b>Bitcoin</b> transaction fee.
-            <br><a class="link green-text text-lighten-1">http://easycoinsayj7p5l.onion/</a><a href="#!" class="secondary-content"><i
-              class="material-icons">send</i></a></div>
-        </li>
-        <li class="collection-item">
-          <div>Now with free Bitcoin mixer, you will always get new coins back when you withdraw from your EasyCoin wallet!
-            You only pay the <b>Bitcoin</b> transaction fee.
-            <br><a class="link green-text text-lighten-1">http://easycoinsayj7p5l.onion/</a><a href="#!" class="secondary-content"><i
-              class="material-icons">send</i></a></div>
-        </li>
-        <li class="collection-item">
-          <div>Now with free Bitcoin mixer, you will always get new coins back when you withdraw from your EasyCoin wallet!
-            You only pay the <b>Bitcoin</b> transaction fee.
-            <br><a class="link green-text text-lighten-1">http://easycoinsayj7p5l.onion/</a><a href="#!" class="secondary-content"><i
-              class="material-icons">send</i></a></div>
-        </li>
-        <li class="collection-item">
-          <div>Now with free Bitcoin mixer, you will always get new coins back when you withdraw from your EasyCoin wallet!
-            You only pay the <b>Bitcoin</b> transaction fee.
-            <br><a class="link green-text text-lighten-1">http://easycoinsayj7p5l.onion/</a><a href="#!" class="secondary-content"><i
-              class="material-icons">send</i></a></div>
-        </li>
-        <li class="collection-item">
-          <div>Now with free Bitcoin mixer, you will always get new coins back when you withdraw from your EasyCoin wallet!
-            You only pay the <b>Bitcoin</b> transaction fee.
-            <br><a class="link green-text text-lighten-1">http://easycoinsayj7p5l.onion/</a><a href="#!" class="secondary-content"><i
-              class="material-icons">send</i></a></div>
-        </li>
-        <li class="collection-item">
-          <div>Now with free Bitcoin mixer, you will always get new coins back when you withdraw from your EasyCoin wallet!
-            You only pay the <b>Bitcoin</b> transaction fee.
-            <br><a class="link green-text text-lighten-1">http://easycoinsayj7p5l.onion/</a><a href="#!" class="secondary-content"><i
-              class="material-icons">send</i></a></div>
-        </li>
-        <li class="collection-item">
-          <div>Now with free Bitcoin mixer, you will always get new coins back when you withdraw from your EasyCoin wallet!
-            You only pay the <b>Bitcoin</b> transaction fee.
-            <br><a class="link green-text text-lighten-1">http://easycoinsayj7p5l.onion/</a><a href="#!" class="secondary-content"><i
-              class="material-icons">send</i></a></div>
-        </li>
-        <li class="collection-item">
-          <div>Now with free Bitcoin mixer, you will always get new coins back when you withdraw from your EasyCoin wallet!
-            You only pay the <b>Bitcoin</b> transaction fee.
-            <br><a class="link green-text text-lighten-1">http://easycoinsayj7p5l.onion/</a><a href="#!" class="secondary-content"><i
+        <li class="collection-item" *ngFor="let result of result2">
+          <div>{{result.text}}
+            <br><a class="link green-text text-lighten-1">{{result.link}}</a><a href="#!" class="secondary-content"><i
               class="material-icons">send</i></a></div>
         </li>
       </ul>
     </div>
   </div>
-
 </div>
