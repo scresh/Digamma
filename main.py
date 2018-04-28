@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 
 import os
-from db import Database
 from sys import argv, exit
 from datetime import datetime
-from threds import TorThreadCaller
+from local_modules.db import Database
+from local_modules.threds import TorThreadCaller
 
 MAX_THREADS = 32
 
@@ -22,7 +22,7 @@ def main():
     # Default values
     start_port = [9050, 9150][os.name == 'nt']  # Default ports for Unix and Windows Clients
     start_url = 'http://54ogum7gwxhtgiya.onion/'  # Greetings for Krang :)
-    filename = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    filename = datetime.now().strftime("%Y-%m-%d %H_%M_%S")
     output_file = None
     threads = 1
     words = None
