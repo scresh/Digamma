@@ -1,0 +1,15 @@
+
+.searchPanel {
+  display: block;
+  position: absolute;
+  top: 30%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  background-color: rgba(69, 69, 69, 0.81);
+  border: 2px solid #000;
+  border-radius: 20px;
+  box-shadow: 0px 0px 30px 5px #000;
+  padding: 5px;
+  width: 40%;
+}

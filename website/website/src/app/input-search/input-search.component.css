@@ -1,0 +1,20 @@
+.search-button-height {
+  height: 3rem !important;
+  line-height: 3rem !important;
+}
+
+.small-p-lr {
+  padding-left: 0 !important;
+}
+
+.search__icon {
+  background-color: rgb(160, 10, 10);
+  border: 2px solid #000;
+  border-radius: 10px;
+  -webkit-transition: all 0.6s linear;
+  transition: all 0.6s linear;
+}
+.search__icon:hover {
+  background-color: rgb(255, 0, 0);
+  border: 2px solid rgb(120, 10, 10);
+}
