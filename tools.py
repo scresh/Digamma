@@ -1,10 +1,20 @@
+# -*- coding: utf-8 -*-
+
 from BeautifulSoup import BeautifulSoup
+from html2text import html2text
 
 html_mime = 'text/html'
 plain_mime = 'text/plain'
 
 correct_mime = [html_mime, plain_mime]
 correct_extensions = ['html', 'html', 'txt']
+
+
+def is_mime_correct(content_type):
+    mime_type = content_type.split(';')[0]
+    if not (mime_type in correct_mime):
+        return False
+    return True
 
 
 def has_correct_extension(url):
@@ -26,10 +36,9 @@ def is_onion_domain(url):
 
 
 def get_urls(content, content_type):
-    # Previously is_mime_correct() did it
-    mime_type = content_type.split(';')[0]
-    if not (mime_type in correct_mime):
+    if not is_mime_correct(content_type):
         return None
+    mime_type = content_type.split(';')[0]
 
     # Different processing for different MIME types
     urls = []
@@ -41,7 +50,7 @@ def get_urls(content, content_type):
         except UnicodeEncodeError:
             print 'Invalid HTML/TEXT file'
     else:
-        words = content.replace('\n', ' ').split(' ')
+        words = content.replace('\n', ' ').split()
         for word in words:
             if word[:4] == 'http':
                 urls.append(word)
@@ -53,3 +62,17 @@ def get_urls(content, content_type):
             results.append(url)
     return results
 
+
+def get_words(content):
+    lower_text = html2text(content.decode('utf8')).replace("\n", " ").lower()
+    line = ''
+    for c in lower_text:
+        if c.isalnum() or c.isspace():
+            line += c
+    all_words = list(set(line.split()))
+
+    words = []
+    for word in all_words:
+        if 0 < len(word) < 16:
+            words.append(word)
+    return words
