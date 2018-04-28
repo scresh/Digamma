@@ -1,0 +1,30 @@
+.content__block {
+  text-align: center;
+}
+
+.danger__image {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30%;
+  border: 2px solid rgb(250,5,5);
+  box-shadow: 0px 0px 12px 3px rgb(250,5,5);
+  border-radius: 40px;
+}
+
+.danger__block {
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: rgba(250,5,5,0.8);
+  border: 2px solid rgb(250,5,5);
+  box-shadow: 0px 0px 12px 3px rgb(250,5,5);
+  border-radius: 20px;
+}
+
+.danger__font {
+  font-weight: 700;
+  font-size: 24px;
+  color: #fff;
+  padding: 15px;
+}
