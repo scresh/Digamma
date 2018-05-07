@@ -49,7 +49,7 @@ export class SearchingService {
   changePagination() {
     this.lastPage = this.count/this.aim.howMuchPerPage;
     this.pagination = [];
-    for(let i=this.aim.whichPage-5; i<(this.aim.whichPage+5); i++){
+    for(let i=this.aim.whichPage-10; i<(this.aim.whichPage+10); i++){
       if(i>=0 && i<=this.lastPage)
         this.pagination.push(i);
     }
