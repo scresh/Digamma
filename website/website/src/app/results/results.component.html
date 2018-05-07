@@ -1,10 +1,10 @@
 <div class="col s12 m8 l9 offset-s12 offset-m4 offset-l3 center-block">
   <ul class="pagination center">
-    <li class="waves-effect" [ngClass]="{'disabled': page.number==1}"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-    <li [ngClass]="{'active':page.active, 'waves-effect':!page.active}" *ngFor="let page of pagination">
-      <a href="#!">{{page.number}}</a>
+    <li class="waves-effect" [ngClass]="{'disabled': !Searching.aim.whichPage}"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+    <li [ngClass]="page==Searching.aim.whichPage ? 'active' : 'waves-effect'" *ngFor="let page of Searching.pagination">
+      <a href="#!">{{page}}</a>
     </li>
-    <li class="waves-effect" [ngClass]="{'disabled': page.last}"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+    <li class="waves-effect" [ngClass]="{'disabled': Searching.lastPage}"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
   </ul>
   <div class="row">
     <ul class="collection col s6 p-00">

@@ -17,6 +17,8 @@ export class SearchingService {
   count;
   results1;
   results2;
+  lastPage;
+  pagination;
 
   search(what, whichPage = 0, howMuchPerPage = 40) {
     this.aim.whichPage = whichPage;
@@ -37,9 +39,20 @@ export class SearchingService {
           let half = this.aim.howMuchPerPage/2;
           let results = Object.values(response);
           this.results1 = results.slice(0,results.length/2);
-          this.results2 = results.slice(results.length/2,results.length)},
+          this.results2 = results.slice(results.length/2,results.length);
+          this.changePagination()},
         (error) => console.log(error)
       );
+
+  }
+
+  changePagination() {
+    this.lastPage = this.count/this.aim.howMuchPerPage;
+    this.pagination = [];
+    for(let i=this.aim.whichPage-5; i<(this.aim.whichPage+5); i++){
+      if(i>=0 && i<=this.lastPage)
+        this.pagination.push(i);
+    }
   }
 
 }
