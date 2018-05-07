@@ -10,11 +10,19 @@ let db = new sqlite3.Database('./db/insideTor.db', sqlite3.OPEN_READONLY, (err) 
     console.log('Connected to the insideTor database.');
 });
 
+//dangerous solution - to change!
+//set to test integration between Angular and Node in the same machine
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
 app.get('/', function(req, res){
     res.send('hello world');
 });
 
-app.get('/count', function(req, res){
+app.get('/api/count', function(req, res){
     let sql = "SELECT COUNT(*) AS count " +
         "FROM Words " +
         "INNER JOIN Pairs on Words.id = Pairs.word_id " +
@@ -29,7 +37,7 @@ app.get('/count', function(req, res){
     });
 });
 
-app.get('/search', function(req, res){
+app.get('/api/search', function(req, res){
     let pagesPerPage = req.query.ppage == undefined ? 40 : req.query.ppage;
     let page = req.query.page == undefined ? 0 : req.query.page;
     let start = page * pagesPerPage;

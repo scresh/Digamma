@@ -1,0 +1,25 @@
+<div class="col s12 m8 l9 offset-s12 offset-m4 offset-l3 center-block">
+  <ul class="pagination center">
+    <li class="waves-effect" [ngClass]="{'disabled': page.number==1}"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+    <li [ngClass]="{'active':page.active, 'waves-effect':!page.active}" *ngFor="let page of pagination">
+      <a href="#!">{{page.number}}</a>
+    </li>
+    <li class="waves-effect" [ngClass]="{'disabled': page.last}"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+  </ul>
+  <div class="row">
+    <ul class="collection col s6 p-00">
+      <li class="collection-item" *ngFor="let result of Searching.results1">
+        <div>{{result.word}}
+          <br><a class="link green-text text-lighten-1">{{result.url}}</a><a [href]="result.url" class="secondary-content"><i
+            class="material-icons">send</i></a></div>
+      </li>
+    </ul>
+    <ul class="collection col s6 p-00">
+      <li class="collection-item" *ngFor="let result of Searching.results2">
+        <div>{{result.word}}
+          <br><a class="link green-text text-lighten-1">{{result.url}}</a><a [href]="result.url" class="secondary-content"><i
+            class="material-icons">send</i></a></div>
+      </li>
+    </ul>
+  </div>
+</div>

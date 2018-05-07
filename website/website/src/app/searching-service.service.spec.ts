@@ -1,15 +1,15 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { SearchingServiceService } from './searching-service.service';
+import { SearchingService } from './searching-service.service';
 
 describe('SearchingServiceService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [SearchingServiceService]
+      providers: [SearchingService]
     });
   });
 
-  it('should be created', inject([SearchingServiceService], (service: SearchingServiceService) => {
+  it('should be created', inject([SearchingService], (service: SearchingService) => {
     expect(service).toBeTruthy();
   }));
 });
