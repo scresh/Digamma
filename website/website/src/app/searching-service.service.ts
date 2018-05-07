@@ -32,6 +32,7 @@ export class SearchingService {
         (error) => console.log(error)
     );
     }
+    this.aim.what = what;
     this.http.get("http://127.0.0.1:9112/api/search?key=" + what + "&ppage=" + howMuchPerPage + "&page=" + whichPage)
       .subscribe(
         (response) => {
@@ -47,12 +48,24 @@ export class SearchingService {
   }
 
   changePagination() {
-    this.lastPage = this.count/this.aim.howMuchPerPage;
-    this.pagination = [];
-    for(let i=this.aim.whichPage-10; i<(this.aim.whichPage+10); i++){
-      if(i>=0 && i<=this.lastPage)
-        this.pagination.push(i);
+    this.lastPage = Math.floor(this.count/this.aim.howMuchPerPage);
+    console.log(this.lastPage);
+    this.pagination = [this.aim.whichPage];
+
+    var pagesInPagination = 0;
+    for(let i=1; i<10; i++){
+      if((this.aim.whichPage+i)<=this.lastPage) {
+        this.pagination.push(this.aim.whichPage + i);
+        pagesInPagination++;
+      }
+      if((this.aim.whichPage-i)>=0) {
+        this.pagination.push(this.aim.whichPage - i);
+        pagesInPagination++;
+      }
+      if(pagesInPagination>10)
+        break;
     }
+    this.pagination.sort(function(a, b){return a-b});
   }
 
 }

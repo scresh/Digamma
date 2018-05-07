@@ -14,10 +14,18 @@ export class ResultsComponent implements OnInit {
   ngOnInit() {
   }
 
-  results1; results2; pagination = [
-    {"active": true, "number": 1},
-    {"active": false, "number": 2}
-  ];
-  page = {"number": 1};
+  changePage(numberPage){
+    this.Searching.search(this.Searching.aim.what, numberPage);
+  }
+
+  previousPage(){
+    if(this.Searching.aim.whichPage!=0)
+      this.Searching.search(this.Searching.aim.what, this.Searching.aim.whichPage-1);
+  }
+
+  nextPage(){
+    if(this.Searching.aim.whichPage!=this.Searching.lastPage)
+      this.Searching.search(this.Searching.aim.what, this.Searching.aim.whichPage+1);
+  }
 
 }
