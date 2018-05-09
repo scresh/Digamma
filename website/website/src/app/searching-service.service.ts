@@ -39,8 +39,8 @@ export class SearchingService {
           console.log(response);
           let half = this.aim.howMuchPerPage/2;
           let results = Object.values(response);
-          this.results1 = results.slice(0,results.length/2);
-          this.results2 = results.slice(results.length/2,results.length);
+          this.results2 = results.slice(0,results.length/2);
+          this.results1 = results.slice(results.length/2,results.length);
           this.changePagination()},
         (error) => console.log(error)
       );
