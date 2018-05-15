@@ -10,7 +10,7 @@ MONARCH = '#950740'
 SHIZAR = '#C3073F'
 
 def backend_function():
-    print 'Hej!'
+    print 'Hejc!'
 
 def view_his():
     print "historia "
