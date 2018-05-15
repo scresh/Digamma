@@ -1,6 +1,9 @@
 # Digamma
 **Real time search engine for TOR and IoT.**
 
+![Digamma logo](http://80.211.245.225/logo.png)
+
+
 **Can be run with the following parameters:**
 - **'threads': ('--threads', '-t')** - specifies the number of threads we want to run search engine on
 - **'output': ('--output', '-o')** - specifies the name of file where each searched website's url in
