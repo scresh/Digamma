@@ -1,4 +1,5 @@
 from Tkinter import *
+#from PIL import Image, ImageTk
 import time
 LARGE_FONT = ("Trebuchet MS", 12, "bold italic")
 WHITE = '#FFFFFF'
@@ -29,9 +30,9 @@ class Application(Tk):
     def __init__(self):
         Tk.__init__(self)
         self.title('Tor Scanner :: Digamma')
-        self.geometry('600x350')
+        self.geometry('470x460')
         self.resizable(False, False)
-        self.configure(background=SHARK)
+        self.configure(background='#F2DEE7')
         self.input()
         self.create_button_1()
         self.create_button_2()
@@ -43,11 +44,26 @@ class Application(Tk):
         self.create_radio_button_1()
         self.create_radio_button_2()
         #zegar
-        self.clock = Label(self, font=('times', 20, 'bold'), bg='green')
+        self.clock = Label(self, font=('digital-7', 20, 'bold'), bg='#F2DEE7')
         #self.clock.pack(fill=BOTH, expand=1)
-        self.clock.grid(row=0,column=3)
+        self.clock.grid(row=4,column=1)
         self.tick()
+ #       self.showImg()
+     #   self.create_photo()
 
+   # def create_photo(self):
+   #     self.img = ImageTk.PhotoImage(Image.open("True1.gif"))
+   #     self.panel = Label(root, image=img)
+   #     self.panel.pack(side="bottom", fill="both", expand="yes")
+
+#    def showImg(self):
+#        load = Image.open("logo.png")
+#        render = ImageTk.PhotoImage(load)
+
+        # labels can be text or images
+#        img = Label(self, image=render)
+#        img.image = render
+#       img.place(x=0, y=0)
     def tick(self):
         s = time.strftime('%H:%M:%S')
         if s != self.clock["text"]:
@@ -109,14 +125,14 @@ class Application(Tk):
         rd_1.grid(row=0,column=2)
 
     def create_radio_button_2(self):
-        rd_2=RadioButton_1('opcja2',backend_function)
+        rd_2=RadioButton_2('opcja2',backend_function)
         #rd_2.pack()
         rd_2.grid(row=1,column=2)
 
 class Text_1(Text):
     def __init__(self):
         Text.__init__(self)
-        self.configure(width=50)
+        self.configure(width=60)
         self.configure(height=50)
 
 class Entry_1(Entry):
@@ -156,25 +172,36 @@ class RadioButton_1(Radiobutton):
         Radiobutton.__init__(self)
         self.configure(text=text)
         self.configure(command=command)
+        self.configure(background='#F5AAC8')
+        self.configure(height=1)
+        self.configure(width =5)
 
 class RadioButton_2(Radiobutton):
     def __init__(self,text,command):
         Radiobutton.__init__(self)
         self.configure(text=text)
         self.configure(command=command)
+        self.configure(background='#F5AAC8')
+        self.configure(height=1)
+        self.configure(width =5)
+
 
 class Button_1(Button):
     def __init__(self, text, command):
         Button.__init__(self)
         self.configure(activebackground=MONARCH)
         self.configure(activeforeground=WHITE)
-        self.configure(background=SHIZAR)
+        self.configure(background='#CD7794')
+        self.configure(borderwidth=2)
+
         self.configure(foreground=WHITE)
         self.configure(font=LARGE_FONT)
         self.configure(command=command)
         self.configure(relief=GROOVE)
         self.configure(text=text)
         self.configure(padx=20)
+        self.configure(height =1)
+        self.configure(width =5)
         #self.configure(state=)#stan przyciku
 
 class Button_2(Button):
@@ -182,13 +209,16 @@ class Button_2(Button):
         Button.__init__(self)
         self.configure(activebackground=MONARCH)
         self.configure(activeforeground=WHITE)
-        self.configure(background=SHIZAR)
+        self.configure(background='#CD7794')
         self.configure(foreground=WHITE)
         self.configure(font=LARGE_FONT)
         self.configure(command=command)
-        self.configure(relief=GROOVE)
+        self.configure(relief=RIDGE)
         self.configure(text=text)
         self.configure(padx=20)
+        self.configure(height=1)
+        self.configure(width =5)
+
         #self.configure(state=)#stan przciksu
 
 
