@@ -9,11 +9,3 @@
   right: 0;
   bottom: 2%;
 }
-
-.link {
-  font-size: 12px;
-}
-
-.collection-item:hover {
-  background-color: rgba(102, 0, 15, 0.12);
-}
