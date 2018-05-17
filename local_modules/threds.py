@@ -82,10 +82,13 @@ class TorThread(threading.Thread):
                     if not is_mime_correct(content_type):
                         raise Exception('Incorrect content type')
 
-                    content = request.content
-                    words = get_words(content)
+                    content = request.content.decode('utf8')
+                    title = get_title(content)
+                    plain = get_plain(content)
+                    words = get_words(plain)
+                    sentences = get_sentences(plain)
                     file_lock.acquire()
-                    self.output_file.insert(url, words)
+                    self.output_file.insert(url, words, content, title, sentences)
                     file_lock.release()
 
                     urls = get_urls(content, content_type)

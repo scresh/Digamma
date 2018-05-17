@@ -63,8 +63,16 @@ def get_urls(content, content_type):
     return results
 
 
-def get_words(content):
-    lower_text = html2text(content.decode('utf8')).replace("\n", " ").lower()
+def get_title(content):
+    return BeautifulSoup(content).title.string
+
+
+def get_plain(content):
+    return html2text(content).replace("\n", " ")
+
+
+def get_words(plain):
+    lower_text = plain.lower()
     line = ''
     for c in lower_text:
         if c.isalnum() or c.isspace():
@@ -76,3 +84,7 @@ def get_words(content):
         if 0 < len(word) < 16:
             words.append(word)
     return words
+
+
+def get_sentences(plain):
+    return [plain[i:i + 32] for i in range(0, len(plain), 32)]
