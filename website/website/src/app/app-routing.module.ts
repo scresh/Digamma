@@ -17,12 +17,19 @@ const appRoutes: Routes = [
     component: ResultSearchComponent
   },
   {
+    path: 'result/:key', component: ResultSearchComponent
+  },
+  {
+    path: 'result/:key/:page', component: ResultSearchComponent
+  },
+  {
     path: 'about',
     component: AboutUsComponent
   },
   {
     path: '**', component: NotFoundComponent
   }
+
 ];
 
 @NgModule({
