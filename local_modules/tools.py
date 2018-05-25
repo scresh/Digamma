@@ -68,7 +68,7 @@ def get_title(content):
 
 
 def get_plain(content):
-    return html2text(content).replace("\n", " ")
+    return html2text(content).replace('\n', ' ')
 
 
 def get_words(plain):
@@ -87,4 +87,40 @@ def get_words(plain):
 
 
 def get_sentences(plain):
-    return [plain[i:i + 32] for i in range(0, len(plain), 32)]
+    separators = '.!?'
+
+    for c in separators:
+        plain = plain.replace(c, '.')
+
+    sep_split = plain.split('. ')
+
+    sentences = []
+    current_sentence = ''
+
+    for s in sep_split:
+        current_sentence += s
+        if current_sentence > 40:
+            sentences.append(current_sentence)
+            current_sentence = ''
+    if current_sentence != '':
+        sentences.append(current_sentence)
+
+    '''
+    sentences = []
+    current_sentence = ''
+    #print plain
+    for c in plain:
+        if len(current_sentence) < 40:
+            current_sentence += c
+        elif current_sentence >= 150:
+            current_sentence += c
+            sentences.append(current_sentence)
+            current_sentence = ''
+        elif c in separators:
+            current_sentence += c
+            sentences.append(current_sentence)
+            current_sentence = ''
+        else:
+            current_sentence += c
+    '''
+    return sentences
