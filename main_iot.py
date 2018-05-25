@@ -1,7 +1,24 @@
 import socket
 import sys
+from local_modules.tools import *
+from random import randint
 
-list_of_ports_to_scan = [21, 22, 25, 80, 110, 443]
+'''
+Forbidden ranges:
+    0.0.0.0 to 0.255.255.255
+    10.0.0.0 to 10.255.255.255
+    127.0.0.0 to 127.255.255.255
+    172.16.0.0 to 172.31.255.255
+    192.168.0.0 to 192.168.255.255
+'''
+
+excluded_ips = [
+    [167772160, 184549375],
+    [2130706432, 2147483647],
+    [2886729728, 2887778303],
+    [3232235520, 3232301055],
+]
+ports = [21, 22, 25, 80, 110, 443]
 
 
 # ip_list = ['140.120.51.160', '178.159.11.162']
@@ -30,27 +47,38 @@ def grab_banner(target_ip, target_port):
 
 def main():
     saved_banners = open('saved_banners', 'a')
+    socket.setdefaulttimeout(0.5)
 
-    # zmienna pomocniczna do "testow"
-    b = 0
+    visited_ips = tuple()
 
-    socket.setdefaulttimeout(2)
-    for i in range(178, 255):
-        for j in range(159, 255):
-            for k in range(11, 255):
-                for l in range(162, 255):
-                    ip_adr = str(i) + '.' + str(j) + '.' + str(k) + '.' + str(l)
-                    for port in list_of_ports_to_scan:
-                        banner = grab_banner(ip_adr, port)
-                        if banner is not None:
-                            banner = ''.join([line.strip() for line in banner.strip().splitlines()])
-                            banner = ip_adr + ':' + str(port) + ' - ' + banner
-                            saved_banners.write(banner + '\n')
-                            b = b + 1
-                            # zakonczy po 10 bannerach
-                            if b > 10:
-                                saved_banners.close()
-                                sys.exit()
+    while True:
+        ip = randint(2 ** 24, 2 ** 32)
+
+        if excluded_ips[0][0] <= ip <= excluded_ips[0][1]:
+            continue
+        elif excluded_ips[1][0] <= ip <= excluded_ips[1][1]:
+            continue
+        elif excluded_ips[2][0] <= ip <= excluded_ips[2][1]:
+            continue
+        elif excluded_ips[3][0] <= ip <= excluded_ips[3][1]:
+            continue
+        elif ip in visited_ips:
+            continue
+        else:
+            visited_ips += (ip,)
+
+        try:
+            ip_adr = no_to_ip(ip)
+            for port in ports:
+                banner = grab_banner(ip_adr, port)
+                if banner is not None:
+                    banner = ''.join([line.strip() for line in banner.strip().splitlines()])
+                    banner = ip_adr + ':' + str(port) + ' - ' + banner
+                    saved_banners.write(banner + '\n')
+
+        except KeyboardInterrupt:
+            break
+    saved_banners.close()
 
 
 if __name__ == '__main__':

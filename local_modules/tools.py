@@ -100,23 +100,16 @@ def get_sentences(plain):
         else:
             sentences.append(current_sentence)
             current_sentence = s
-
-    '''
-    sentences = []
-    current_sentence = ''
-    #print plain
-    for c in plain:
-        if len(current_sentence) < 40:
-            current_sentence += c
-        elif current_sentence >= 150:
-            current_sentence += c
-            sentences.append(current_sentence)
-            current_sentence = ''
-        elif c in separators:
-            current_sentence += c
-            sentences.append(current_sentence)
-            current_sentence = ''
-        else:
-            current_sentence += c
-    '''
     return sentences
+
+
+def ip_to_no(ip):
+    i = map(int, ip.split('.'))
+    return i[0] * (2 ** 24) + i[1] * (2 ** 16) + i[2] * (2 ** 8) + i[3]
+
+
+def no_to_ip(no):
+    no = ('0' * 8 + hex(no)[2:])[-8:]
+    i = map(str, map(lambda x: int(x, 16), [no[i:i + 2] for i in range(0, len(no), 2)]))
+    return '.'.join(i)
+

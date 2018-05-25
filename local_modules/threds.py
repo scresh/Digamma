@@ -7,7 +7,7 @@ from stack import Stack
 from tools import *
 from requests.exceptions import *
 
-TIMEOUT = 10
+TIMEOUT = 5
 stack = None
 run_threads = True
 file_lock = threading.Lock()
