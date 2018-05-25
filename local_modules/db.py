@@ -57,7 +57,6 @@ class Database:
         self.cur.execute(sentences_query)
         self.cur.execute(pairs_query)
 
-
     def insert(self, url, words, html, title, sentences):
         self.cur.execute(check_page_query, (url,))
         if self.cur.fetchone()[0] != 0:
@@ -81,7 +80,7 @@ class Database:
             word_id = self.cur.fetchone()[0]
 
             for sentence in sentences:
-                if word in sentence:
+                if word in sentence.lower():
                     self.cur.execute(select_sentence_query, (sentence,))
                     sentence_id = self.cur.fetchone()[0]
                     self.cur.execute(insert_pair_query, (word_id, url_id, sentence_id))

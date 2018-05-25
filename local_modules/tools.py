@@ -68,7 +68,9 @@ def get_title(content):
 
 
 def get_plain(content):
-    return html2text(content).replace('\n', ' ')
+    soup = BeautifulSoup(content)
+    body = soup.find('body')
+    return html2text(body.text).replace('\n', ' ')
 
 
 def get_words(plain):
@@ -87,23 +89,17 @@ def get_words(plain):
 
 
 def get_sentences(plain):
-    separators = '.!?'
-
-    for c in separators:
-        plain = plain.replace(c, '.')
-
-    sep_split = plain.split('. ')
+    sep_split = plain.split()
 
     sentences = []
     current_sentence = ''
 
     for s in sep_split:
-        current_sentence += s
-        if current_sentence > 40:
+        if (len(s) + len(current_sentence)) < 150:
+            current_sentence += ' ' + s
+        else:
             sentences.append(current_sentence)
-            current_sentence = ''
-    if current_sentence != '':
-        sentences.append(current_sentence)
+            current_sentence = s
 
     '''
     sentences = []

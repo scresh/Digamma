@@ -7,7 +7,7 @@ from stack import Stack
 from tools import *
 from requests.exceptions import *
 
-TIMEOUT = 5
+TIMEOUT = 10
 stack = None
 run_threads = True
 file_lock = threading.Lock()
@@ -99,6 +99,7 @@ class TorThread(threading.Thread):
                         raise Exception('Successfully processed')
 
                 except Exception as e:
+                    print self.socks_port
                     thread_str = str(self.thread_id)
                     if any(isinstance(e, exc) for exc in (ConnectionError, ReadTimeout, ConnectTimeout)):
                         print 'Thread #' + thread_str + ':\t' + 'Connection error' + ': ' + url
