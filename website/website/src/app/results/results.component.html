@@ -9,14 +9,16 @@
   <div class="row">
     <ul class="collection col s6 p-00">
       <li class="collection-item" *ngFor="let result of Searching.results1">
-        <div>{{result.word}}
+        <div><b>{{result.title}}</b><br>
+          {{result.sentence}}
           <br><a class="link green-text text-lighten-1">{{result.url}}</a><a [href]="result.url" class="secondary-content"><i
             class="material-icons">send</i></a></div>
       </li>
     </ul>
     <ul class="collection col s6 p-00">
       <li class="collection-item" *ngFor="let result of Searching.results2">
-        <div>{{result.word}}
+        <div><b>{{result.title}}</b><br>
+          {{result.sentence}}
           <br><a class="link green-text text-lighten-1">{{result.url}}</a><a [href]="result.url" class="secondary-content"><i
             class="material-icons">send</i></a></div>
       </li>

@@ -23,17 +23,22 @@ app.get('/', function(req, res){
 });
 
 app.get('/api/count', function(req, res){
-    let sql = "SELECT COUNT(*) AS count " +
-        "FROM Words " +
-        "INNER JOIN Pairs on Words.id = Pairs.word_id " +
-        "INNER JOIN Urls on Urls.id = Pairs.url_id " +
-        "WHERE Words.word LIKE " + "'%" + req.query.key + "%';";
+
+    req.query.key = req.query.key.split(" ");
+
+    let sql = "select count(*) AS count from (select count(distinct Words.word) from Words "+
+        "inner join Pairs on Words.id = Pairs.word_id "+
+        "inner join Pages on Pairs.page_id = Pages.id "+
+        "inner join Sentences on Sentences.id = Pairs.sentence_id "+
+        "where Words.word IN ('" + req.query.key.join("','") + "') "+
+        "group by Pages.url) ;";
 
     console.log(sql);
 
     // Print the records as JSON
     db.all(sql, function(err, rows) {
         res.send(JSON.stringify(rows));
+        console.log(rows);
     });
 });
 
@@ -41,12 +46,17 @@ app.get('/api/search', function(req, res){
     let pagesPerPage = req.query.ppage == undefined ? 40 : req.query.ppage;
     let page = req.query.page == undefined ? 0 : req.query.page;
     let start = page * pagesPerPage;
-    let sql = "SELECT Words.word, Urls.url " +
-        "FROM Words " +
-        "INNER JOIN Pairs on Words.id = Pairs.word_id " +
-        "INNER JOIN Urls on Urls.id = Pairs.url_id " +
-        "WHERE Words.word LIKE " + "'%" + req.query.key + "%' " +
-        "LIMIT " + pagesPerPage + " OFFSET " + start +" ;";
+
+    req.query.key = req.query.key.split(" ");
+
+    let sql = "select count(distinct Words.word) AS count, Pages.url AS url, Sentences.sentence AS sentence, Pages.title AS title from Words "+
+        "inner join Pairs on Words.id = Pairs.word_id "+
+        "inner join Pages on Pairs.page_id = Pages.id "+
+        "inner join Sentences on Sentences.id = Pairs.sentence_id "+
+        "where Words.word IN ('" + req.query.key.join("','") + "') "+
+        "group by Pages.url "+
+        "order by count(distinct Words.word) DESC "+
+        "LIMIT "+ pagesPerPage + " OFFSET " + start +" ;";
 
     console.log(sql);
 
