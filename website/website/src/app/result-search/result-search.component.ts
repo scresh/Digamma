@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MatSelectModule } from '@angular/material/select';
+import { SearchingService } from '../searching-service.service';
 
 @Component({
   selector: 'app-result-search',
@@ -8,10 +10,16 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ResultSearchComponent implements OnInit {
 
+  resultsPerPage = 40;
 
-  constructor() {}
+  constructor(public Searching: SearchingService) { }
 
   ngOnInit() {
   }
 
+  setResultsPerPage(numberPerPage: number) {
+    this.resultsPerPage = numberPerPage;
+    this.Searching.setResultsPerPage(this.resultsPerPage);
+    this.Searching.changePagination();
+  }
 }

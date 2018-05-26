@@ -9,3 +9,28 @@
   right: 0;
   bottom: 2%;
 }
+
+.button_NumberPerPage {
+  background-color: #3f3f3f;
+  color: #fff;
+}
+
+.resultsColor {
+  font-weight: 900;
+}
+
+.btn_number {
+  -webkit-border-radius: 10;
+  -moz-border-radius: 10;
+  border-radius: 10px;
+  border: 2px solid #000;
+  color: #ffffff;
+  background: #7c7c7c;
+  text-decoration: none;
+  min-width: 40px;
+}
+
+.btn_number:hover {
+  background: #5a5a5a;
+  text-decoration: none;
+}
