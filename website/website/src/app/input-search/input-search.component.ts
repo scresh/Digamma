@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { SearchingService } from "../searching-service.service";
+import { Router } from '@angular/router';
+import { Component, OnInit, Input } from '@angular/core';
+import { SearchingService } from '../searching-service.service';
 
 @Component({
   selector: 'app-input-search',
@@ -8,15 +9,16 @@ import { SearchingService } from "../searching-service.service";
 })
 export class InputSearchComponent implements OnInit {
 
-  constructor(public Searching: SearchingService) { }
+  searchingText: String;
+
+  constructor(public Searching: SearchingService, private router: Router) { }
 
   ngOnInit() {
   }
 
-  searchingText: String;
-
   search() {
-    this.Searching.search(this.searchingText);
+    console.log(this.router.url);
+    this.router.navigate(['/result/' + this.searchingText]);
   }
 
 }

@@ -1,7 +1,7 @@
 <form class="col s12">
   <div class="input-field col s12 row">
     <div class="col s10 small-p-lr">
-      <input id="searchText" type="tel" name="searchingText" class="validate" [(ngModel)]="searchingText">
+      <input id="searchText" type="tel" name="searchingText" class="validate" [(ngModel)]="searchingText" (keydown.enter)="search()">
       <label for="searchText">Wyszukaj...</label>
     </div>
     <div class="col s2 waves-effect waves-light btn center-align search-button-height search__icon" (click)="search()">
