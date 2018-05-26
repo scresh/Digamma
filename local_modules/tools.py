@@ -2,6 +2,7 @@
 
 from BeautifulSoup import BeautifulSoup
 from html2text import html2text
+from os.path import expanduser
 
 html_mime = 'text/html'
 plain_mime = 'text/plain'
@@ -58,6 +59,7 @@ def get_urls(content, content_type):
     # Final validation
     results = []
     for url in urls:
+        url = url.split('#')[0]
         if is_onion_domain(url) and has_correct_extension(url):
             results.append(url)
     return results
@@ -113,3 +115,6 @@ def no_to_ip(no):
     i = map(str, map(lambda x: int(x, 16), [no[i:i + 2] for i in range(0, len(no), 2)]))
     return '.'.join(i)
 
+
+def get_home_path():
+    return expanduser("~")

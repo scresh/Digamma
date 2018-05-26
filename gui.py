@@ -1,6 +1,8 @@
 #!/usr/bin/python
 from Tkinter import *
+import tkFileDialog
 import ttk
+from local_modules.tools import *
 
 LARGE_FONT = ("Trebuchet MS", 8, "bold italic")
 WHITE = '#FFFFFF'
@@ -11,9 +13,54 @@ MONARCH = '#950740'
 SHIZAR = '#C3073F'
 
 
-class Empty(Label):
+def change_path(input_field):
+    path = get_home_path()
+    title = "Select file"
+    file_type = (("all files", "*.*"),)
+    path = tkFileDialog.asksaveasfilename(initialdir=path, title=title, filetypes=file_type)
+    if len(path) != 0:
+        input_field.configure(state=NORMAL)
+        input_field.delete(0, END)
+        input_field.insert(0, path)
+        input_field.configure(state=DISABLED)
+
+
+def select_phrase(input_field):
+    input_field.configure(state=NORMAL)
+
+
+def select_harvest(input_field):
+    input_field.configure(state=DISABLED)
+
+
+def start_stop():
+    pass
+
+
+class Switch(Radiobutton):
+    def __init__(self, owner, **kw):
+        Radiobutton.__init__(self, owner, **kw)
+        self.configure(activebackground=SHARK)
+        self.configure(activeforeground=WHITE)
+        self.configure(highlightcolor=SHARK)
+        self.configure(selectcolor=SHARK)
+        self.configure(background=SHARK)
+        self.configure(foreground=WHITE)
+        self.configure(borderwidth=0)
+        self.configure(highlightthickness=0)
+
+
+class WhiteText(Label):
+    def __init__(self, owner, text):
+        Label.__init__(self, owner, text=text)
+        self.configure(fg=WHITE)
+        self.configure(bg=SHARK)
+
+
+class Separator(Label):
     def __init__(self, owner):
         Label.__init__(self, owner)
+        self.configure(bg=SHARK)
 
 
 class LogViewer(Text):
@@ -24,25 +71,28 @@ class LogViewer(Text):
         self.configure(highlightcolor=SHIZAR)
         self.configure(height=16)
         self.configure(width=96)
+        self.configure(state=DISABLED)
 
 
-class WhiteEntry(Entry):
-    def __init__(self, owner):
-        Entry.__init__(self, owner)
+class WhiteEntry(ttk.Entry):
+    def __init__(self, owner, text='', state=NORMAL):
+        ttk.Entry.__init__(self, owner)
+        self.delete(0, END)
+        self.insert(0, text)
+        self.configure(state=state)
 
 
 class ShizarButton(Button):
-    def __init__(self, owner, text, command):
-        Button.__init__(self, owner)
+    def __init__(self, owner, text, **kw):
+        Button.__init__(self, owner, **kw)
         self.configure(activebackground=MONARCH)
         self.configure(activeforeground=WHITE)
         self.configure(background=SHIZAR)
         self.configure(foreground=WHITE)
         self.configure(font=LARGE_FONT)
-        self.configure(command=command)
         self.configure(relief=GROOVE)
         self.configure(text=text)
-        self.configure(padx=20)
+        self.configure(padx=40)
 
 
 class TabBar(ttk.Notebook):
@@ -61,16 +111,12 @@ class Application(Tk):
     def __init__(self):
         Tk.__init__(self)
         self.title('Tor Scanner :: Digamma')
-        self.geometry('800x600')
+        self.geometry('816x462')
         self.resizable(False, False)
         self.configure(background=SHARK)
 
-        for r in xrange(60):
-            self.rowconfigure(r, weight=1)
-            self.columnconfigure(r, weight=1)
-
+        # Create tabs and them to bar
         tab_bar = TabBar(self)
-
         tor_tab = Tab(tab_bar)
         iot_tab = Tab(tab_bar)
         au_tab = Tab(tab_bar)
@@ -81,19 +127,47 @@ class Application(Tk):
         tab_bar.add(set_tab, text='Settings')
         tab_bar.add(au_tab, text='About us')
 
-        # Tor Panel
-        Empty(tor_tab).grid(row=0, column=0, columnspan=3, padx=10, pady=10)
-        Empty(tor_tab).grid(row=4, column=10, columnspan=10, padx=10, pady=10)
+        # Tkinter variables
+        mode = IntVar()
+        mode.set(1)
+        state = StringVar()
 
-        WhiteEntry(tor_tab).grid(row=0, column=0, columnspan=3, padx=10, pady=0, sticky='we')
-        ShizarButton(tor_tab, 'Start', None).grid(row=0, column=3, padx=10, pady=10, sticky='we')
+        # Create all objects
+        background_image = PhotoImage(file="bg.png")
+        background_label = Label(tor_tab, image=background_image)
+        background_label.place(x=0, y=0, relwidth=1, relheight=1)
 
-        WhiteEntry(tor_tab).grid(row=1, column=0, columnspan=3, padx=10, pady=10, sticky='we')
-        ShizarButton(tor_tab, '...', None).grid(row=1, column=3, padx=10, pady=10, sticky='we')
+        top_left = Separator(tor_tab)
+        bottom_right = Separator(tor_tab)
+        phrase_text = WhiteText(tor_tab, 'Phrase to search:')
+        phrase_input = WhiteEntry(tor_tab)
+        run_button = ShizarButton(tor_tab, 'Start')
+        mode_text = WhiteText(tor_tab, 'Select mode:')
+        path_button = ShizarButton(tor_tab, '...')
+        phrase_radio = Switch(tor_tab, text="Phrase", variable=mode, value=1)
+        harvest_radio = Switch(tor_tab, text="Harvest", variable=mode, value=2)
+        output_text = WhiteText(tor_tab, 'Output file path:')
+        path_input = WhiteEntry(tor_tab, text=get_home_path(), state=DISABLED)
+        log_viewer = LogViewer(tor_tab)
 
-        LogViewer(tor_tab).grid(row=2, column=0, columnspan=6, padx=10, pady=10)
+        # Configure objects
+        path_button.configure(command=lambda: change_path(path_input))
+        phrase_radio.configure(command=lambda: select_phrase(phrase_input))
+        harvest_radio.configure(command=lambda: select_harvest(phrase_input))
 
-        tor_tab.grid_columnconfigure(0, weight=1)
+        # Set location for all objects
+        top_left.grid(row=0, column=0)
+        phrase_text.grid(row=1, column=1, padx=16, sticky='sw')
+        phrase_input.grid(row=2, column=1, columnspan=8, padx=16, sticky='ew')
+        run_button.grid(row=2, column=9, columnspan=2, padx=16, sticky='new')
+        output_text.grid(row=3, column=1, padx=16, sticky='sw')
+        path_input.grid(row=4, column=1, columnspan=8, padx=16, sticky='ew')
+        path_button.grid(row=4, column=9, columnspan=2, padx=16, sticky='new')
+        mode_text.grid(row=2, column=11, padx=16, columnspan=2, sticky='nw')
+        phrase_radio.grid(row=3, column=11, columnspan=2, padx=16, sticky='nw')
+        harvest_radio.grid(row=4, column=11, columnspan=2, padx=16, sticky='nw')
+        log_viewer.grid(row=5, column=1, columnspan=12, rowspan=8, padx=16, pady=10, sticky='nesw')
+        bottom_right.grid(row=13, column=13)
 
 
 app = Application()
