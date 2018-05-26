@@ -1,7 +1,16 @@
-.link {
+.url {
   font-size: 12px;
 }
 
 .collection-item:hover {
-  background-color: rgba(102, 0, 15, 0.12);
+  background-color: rgba(1, 11, 102, 0.12);
+}
+
+.link:hover {
+  text-decoration: underline;
+  font-size: 15px;
+}
+
+.sentence {
+  font-size: 10px;
 }
