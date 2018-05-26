@@ -3,6 +3,15 @@
   <div class="col s12 m4 l3  blue-grey lighten-4 nav z-depth-2">
     <h3 class="audiowide-font col s12 center-align">DiGamma</h3>
     <app-input-search></app-input-search>
+
+    <div class="center">
+      <p>Liczba wynikow na strone: <span class="resultsColor">{{ resultsPerPage }}</span></p>
+      <button type="button" (click)="setResultsPerPage(20)" class="btn_number">20</button>
+      <button (click)="setResultsPerPage(40)" class="btn_number">40</button>
+      <button (click)="setResultsPerPage(60)" class="btn_number">60</button>
+      <button (click)="setResultsPerPage(80)" class="btn_number">80</button>
+      <button (click)="setResultsPerPage(100)" class="btn_number">100</button>
+    </div>
     <a class="red-text about-us-link center" href="#!">Obout Us!</a>
   </div>
 
