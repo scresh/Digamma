@@ -20,7 +20,7 @@ export class SearchingService {
   lastPage;
   pagination;
 
-  search(what, whichPage = 0, howMuchPerPage = 40) {
+  search(what, whichPage = 0, howMuchPerPage = this.aim.howMuchPerPage) {
     this.aim.whichPage = whichPage;
     this.aim.howMuchPerPage = howMuchPerPage;
     if (this.aim.what !== what) {
@@ -73,4 +73,7 @@ export class SearchingService {
     this.pagination.sort(function (a, b) { return a - b; });
   }
 
+  setResultsPerPage(perPage: number) {
+    this.aim.howMuchPerPage = perPage;
+  }
 }
