@@ -67,3 +67,25 @@ app.get('/api/search', function(req, res){
 });
 
 app.listen(9112);
+
+var http = require('http');
+var url = require('url');
+
+http.createServer(function (req, res) {
+    var q = url.parse(req.url, true);
+    var qdata = q.query;
+
+    let sql = "SELECT Pages.html FROM Pages WHERE Pages.id = " + qdata.page + " ;";
+    console.log(sql);
+
+    db.all(sql, function(err, rows) {
+        console.log(rows);
+        if (err) {
+            res.writeHead(404, {'Content-Type': 'text/html'});
+            return res.end("404 Not Found");
+        }
+        res.writeHead(200, {'Content-Type': 'text/html'});
+        res.write(rows[0].html);
+        return res.end();
+    });
+}).listen(9979);
