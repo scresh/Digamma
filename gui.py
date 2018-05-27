@@ -6,6 +6,7 @@ from local_modules.tools import *
 
 LARGE_FONT = ("Trebuchet MS", 8, "bold italic")
 WHITE = '#FFFFFF'
+ALOHA = '#26272E'
 SHARK = '#1A1A1D'
 ABBEY = '#4E4E50'
 CROWN = '#6F2232'
@@ -13,8 +14,15 @@ MONARCH = '#950740'
 SHIZAR = '#C3073F'
 
 
+def print_log(log_box, text):
+    log_box.configure(state=NORMAL)
+    log_box.insert(END, text + '\n')
+    log_box.see(END)
+    log_box.configure(state=DISABLED)
+
+
 def change_path(input_field):
-    path = get_home_path()
+    path = get_default_path()
     title = "Select file"
     file_type = (("all files", "*.*"),)
     path = tkFileDialog.asksaveasfilename(initialdir=path, title=title, filetypes=file_type)
@@ -33,18 +41,14 @@ def select_harvest(input_field):
     input_field.configure(state=DISABLED)
 
 
-def start_stop():
-    pass
-
-
 class Switch(Radiobutton):
     def __init__(self, owner, **kw):
         Radiobutton.__init__(self, owner, **kw)
-        self.configure(activebackground=SHARK)
+        self.configure(activebackground=ALOHA)
         self.configure(activeforeground=WHITE)
         self.configure(highlightcolor=SHARK)
         self.configure(selectcolor=SHARK)
-        self.configure(background=SHARK)
+        self.configure(background=ALOHA)
         self.configure(foreground=WHITE)
         self.configure(borderwidth=0)
         self.configure(highlightthickness=0)
@@ -54,21 +58,22 @@ class WhiteText(Label):
     def __init__(self, owner, text):
         Label.__init__(self, owner, text=text)
         self.configure(fg=WHITE)
-        self.configure(bg=SHARK)
+        self.configure(bg=ALOHA)
 
 
 class Separator(Label):
     def __init__(self, owner):
         Label.__init__(self, owner)
-        self.configure(bg=SHARK)
+        self.configure(bg=ALOHA)
 
 
 class LogViewer(Text):
     def __init__(self, owner):
         Text.__init__(self, owner)
         self.configure(background=SHARK)
-        self.configure(foreground=WHITE)
+        self.configure(foreground=SHIZAR)
         self.configure(highlightcolor=SHIZAR)
+        self.configure(highlightthickness=1)
         self.configure(height=16)
         self.configure(width=96)
         self.configure(state=DISABLED)
@@ -104,14 +109,15 @@ class TabBar(ttk.Notebook):
 class Tab(Frame):
     def __init__(self, owner):
         Frame.__init__(self, owner)
-        self.configure(background=SHARK)
+        self.configure(background=ALOHA)
 
 
 class Application(Tk):
     def __init__(self):
         Tk.__init__(self)
         self.title('Tor Scanner :: Digamma')
-        self.geometry('816x462')
+        self.geometry('818x444')
+        self.iconbitmap('favicon.ico')
         self.resizable(False, False)
         self.configure(background=SHARK)
 
@@ -130,13 +136,9 @@ class Application(Tk):
         # Tkinter variables
         mode = IntVar()
         mode.set(1)
-        state = StringVar()
+        log = StringVar()
 
         # Create all objects
-        background_image = PhotoImage(file="bg.png")
-        background_label = Label(tor_tab, image=background_image)
-        background_label.place(x=0, y=0, relwidth=1, relheight=1)
-
         top_left = Separator(tor_tab)
         bottom_right = Separator(tor_tab)
         phrase_text = WhiteText(tor_tab, 'Phrase to search:')
@@ -147,10 +149,12 @@ class Application(Tk):
         phrase_radio = Switch(tor_tab, text="Phrase", variable=mode, value=1)
         harvest_radio = Switch(tor_tab, text="Harvest", variable=mode, value=2)
         output_text = WhiteText(tor_tab, 'Output file path:')
-        path_input = WhiteEntry(tor_tab, text=get_home_path(), state=DISABLED)
+        path_input = WhiteEntry(tor_tab, text=get_default_path(), state=DISABLED)
         log_viewer = LogViewer(tor_tab)
+        status_text = WhiteText(tor_tab, 'Choose mode')
 
         # Configure objects
+        run_button.configure(command=lambda: print_log(log_viewer, get_default_path()))
         path_button.configure(command=lambda: change_path(path_input))
         phrase_radio.configure(command=lambda: select_phrase(phrase_input))
         harvest_radio.configure(command=lambda: select_harvest(phrase_input))
@@ -159,14 +163,15 @@ class Application(Tk):
         top_left.grid(row=0, column=0)
         phrase_text.grid(row=1, column=1, padx=16, sticky='sw')
         phrase_input.grid(row=2, column=1, columnspan=8, padx=16, sticky='ew')
-        run_button.grid(row=2, column=9, columnspan=2, padx=16, sticky='new')
+        run_button.grid(row=2, column=9, columnspan=2, padx=2, sticky='new')
         output_text.grid(row=3, column=1, padx=16, sticky='sw')
         path_input.grid(row=4, column=1, columnspan=8, padx=16, sticky='ew')
-        path_button.grid(row=4, column=9, columnspan=2, padx=16, sticky='new')
+        path_button.grid(row=4, column=9, columnspan=2, padx=2, sticky='new')
         mode_text.grid(row=2, column=11, padx=16, columnspan=2, sticky='nw')
         phrase_radio.grid(row=3, column=11, columnspan=2, padx=16, sticky='nw')
         harvest_radio.grid(row=4, column=11, columnspan=2, padx=16, sticky='nw')
         log_viewer.grid(row=5, column=1, columnspan=12, rowspan=8, padx=16, pady=10, sticky='nesw')
+        status_text.grid(row=13, column=1, columnspan=12, sticky='new')
         bottom_right.grid(row=13, column=13)
 
 
