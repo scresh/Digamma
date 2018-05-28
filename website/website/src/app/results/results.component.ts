@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { SearchingService } from '../searching-service.service';
 import { ActivatedRoute } from '@angular/router';
 
-declare var $ :any;
-
 @Component({
   selector: 'app-results',
   templateUrl: './results.component.html',
