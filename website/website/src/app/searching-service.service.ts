@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { browser } from 'protractor';
 
 @Injectable()
 export class SearchingService {
@@ -11,7 +12,8 @@ export class SearchingService {
   aim = {
     what: '',
     whichPage: 0,
-    howMuchPerPage: 40
+    howMuchPerPage: 40,
+    browserType: 'tor'
   };
 
   count;
@@ -25,7 +27,7 @@ export class SearchingService {
     this.aim.howMuchPerPage = howMuchPerPage;
     if (this.aim.what !== what) {
       console.log(this.aim.whichPage);
-      this.http.get('http://localhost:9112/api/count?key=' + what)
+      this.http.get('http://localhost:9112/api/' + this.aim.browserType + '/count?key=' + what)
         .subscribe(
           (response) => {
             this.count = response[0].count;
@@ -36,7 +38,8 @@ export class SearchingService {
         );
     }
     this.aim.what = what;
-    this.http.get('http://127.0.0.1:9112/api/search?key=' + what + '&ppage=' + howMuchPerPage + '&page=' + whichPage)
+    this.http.get('http://127.0.0.1:9112/api/' + this.aim.browserType + '/search?key=' + what + '&ppage=' +
+    howMuchPerPage + '&page=' + whichPage)
       .subscribe(
         (response) => {
           console.log(response);
@@ -75,5 +78,10 @@ export class SearchingService {
 
   setResultsPerPage(perPage: number) {
     this.aim.howMuchPerPage = perPage;
+  }
+
+  setBrowserType(browserType: string) {
+    console.log('ustawiam browser type na: ' + browserType);
+    this.aim.browserType = browserType;
   }
 }
