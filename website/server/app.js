@@ -3,11 +3,18 @@ var app = express();
 
 const sqlite3 = require('sqlite3').verbose();
 
-let db = new sqlite3.Database('./db/insideTor.db', sqlite3.OPEN_READONLY, (err) => {
+let dbTor = new sqlite3.Database('./db/insideTor.db', sqlite3.OPEN_READONLY, (err) => {
     if (err) {
         console.error(err.message);
     }
     console.log('Connected to the insideTor database.');
+});
+
+let dbIoT = new sqlite3.Database('./db/insideIoT.db', sqlite3.OPEN_READONLY, (err) => {
+    if (err) {
+        console.error(err.message);
+    }
+    console.log('Connected to the insideIoT database.');
 });
 
 //dangerous solution - to change!
@@ -36,7 +43,7 @@ app.get('/api/count', function(req, res){
     console.log(sql);
 
     // Print the records as JSON
-    db.all(sql, function(err, rows) {
+    dbTor.all(sql, function(err, rows) {
         res.send(JSON.stringify(rows));
         console.log(rows);
     });
@@ -49,7 +56,7 @@ app.get('/api/search', function(req, res){
 
     req.query.key = req.query.key.split(" ");
 
-    let sql = "select count(distinct Words.word) AS count, Pages.url AS url, Sentences.sentence AS sentence, Pages.title AS title, Pages.id AS idPage from Words "+
+    let sql = "select count(distinct Words.word) AS count, Pages.url AS url, Sentences.sentence AS sentence, Pages.title AS title from Words "+
         "inner join Pairs on Words.id = Pairs.word_id "+
         "inner join Pages on Pairs.page_id = Pages.id "+
         "inner join Sentences on Sentences.id = Pairs.sentence_id "+
@@ -61,30 +68,9 @@ app.get('/api/search', function(req, res){
     console.log(sql);
 
     // Print the records as JSON
-    db.all(sql, function(err, rows) {
+    dbTor.all(sql, function(err, rows) {
         res.send(JSON.stringify(rows));
     });
 });
 
 app.listen(9112);
-
-var http = require('http');
-var url = require('url');
-
-http.createServer(function (req, res) {
-    var q = url.parse(req.url, true);
-    var qdata = q.query;
-
-    let sql = "SELECT Pages.html FROM Pages WHERE Pages.id = " + qdata.page + " ;";
-    console.log(sql);
-
-    db.all(sql, function(err, rows) {
-        if (err) {
-            res.writeHead(404, {'Content-Type': 'text/html'});
-            return res.end("404 Not Found");
-        }
-        res.writeHead(200, {'Content-Type': 'text/html'});
-        res.write(rows[0].html);
-        return res.end();
-    });
-}).listen(9979);
