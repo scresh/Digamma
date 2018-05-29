@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 export class ResultSearchComponent implements OnInit {
 
   resultsPerPage = 40;
+  browserType = 'ToR';
 
   constructor(public Searching: SearchingService, private route: ActivatedRoute) { }
 
@@ -31,5 +32,9 @@ export class ResultSearchComponent implements OnInit {
 
     }
     */
+  }
+  setBrowserType(browserType: string) {
+    this.browserType = browserType;
+    this.Searching.setBrowserType(browserType);
   }
 }
