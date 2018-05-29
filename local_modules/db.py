@@ -14,6 +14,7 @@ words_query = '''
     `word`	TEXT NOT NULL UNIQUE
   );
 '''
+words_index = 'CREATE INDEX word_index ON Words (word);'
 
 sentences_query = '''
   CREATE TABLE `Sentences` (
@@ -54,6 +55,7 @@ class Database:
 
         self.cur.execute(pages_query)
         self.cur.execute(words_query)
+        self.cur.execute(words_index)
         self.cur.execute(sentences_query)
         self.cur.execute(pairs_query)
 

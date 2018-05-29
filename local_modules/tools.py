@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime
 
+import os
 from BeautifulSoup import BeautifulSoup
 from html2text import html2text
 from os.path import expanduser
@@ -116,5 +118,7 @@ def no_to_ip(no):
     return '.'.join(i)
 
 
-def get_home_path():
-    return expanduser("~")
+def get_default_path():
+    slash = ['/', '\\'][os.name == 'nt']
+
+    return expanduser("~") + slash + datetime.now().strftime("%Y-%m-%d %H_%M_%S") + '.db'

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatSelectModule } from '@angular/material/select';
 import { SearchingService } from '../searching-service.service';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
   selector: 'app-result-search',
@@ -12,14 +13,23 @@ export class ResultSearchComponent implements OnInit {
 
   resultsPerPage = 40;
 
-  constructor(public Searching: SearchingService) { }
+  constructor(public Searching: SearchingService, private route: ActivatedRoute) { }
 
   ngOnInit() {
   }
 
   setResultsPerPage(numberPerPage: number) {
+    // const lastPerPage = this.resultsPerPage;
     this.resultsPerPage = numberPerPage;
-    this.Searching.setResultsPerPage(this.resultsPerPage);
     this.Searching.changePagination();
+    this.Searching.setResultsPerPage(this.resultsPerPage);
+    this.Searching.search(this.Searching.aim.what, 0, this.Searching.aim.howMuchPerPage);
+    /* if (this.Searching.aim.whichPage !== 0) {
+      const dest = Math.round((lastPerPage * (this.Searching.aim.whichPage + 1) / numberPerPage));
+      this.Searching.search(this.Searching.aim.what, dest, this.Searching.aim.howMuchPerPage);
+    } else {
+
+    }
+    */
   }
 }

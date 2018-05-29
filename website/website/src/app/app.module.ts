@@ -17,7 +17,10 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { InputSearchComponent } from './input-search/input-search.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ResultsComponent } from './results/results.component';
-import {SearchingService} from "./searching-service.service";
+import { SearchingService } from "./searching-service.service";
+
+import { MatSelectModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,9 @@ import {SearchingService} from "./searching-service.service";
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    MatSelectModule,
+    BrowserAnimationsModule
   ],
   providers: [SearchingService],
   bootstrap: [AppComponent]
