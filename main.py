@@ -18,13 +18,7 @@ PARAMS = {
 }
 
 
-
-def gui_launcher(log_box, output, words, port, url):
-    argv = []
-    argv.append('main')
-    argv.append('')
-
-def main(log_box=None):
+def main():
     # Default values
     start_port = [9050, 9150][os.name == 'nt']  # Default ports for Unix and Windows Clients
     start_url = 'http://54ogum7gwxhtgiya.onion/'  # Greetings for Krang :)
@@ -32,6 +26,7 @@ def main(log_box=None):
     output_file = None
     threads = 1
     words = None
+    results = None
 
     # Parse arguments
     for i in xrange(1, len(argv) - 1):
@@ -75,22 +70,12 @@ def main(log_box=None):
         results = TorThreadCaller(start_url, threads, start_port, output_file, words).get_results()
     except KeyboardInterrupt:
         pass
-    if log_viewer is None:
-        print 'Searching finished...'
-    else:
-        print_log('Searching finished...', log_viewer)
+    print 'Searching finished...'
 
     if results is not None:
-        if log_viewer is None:
-            print 'Found', len(results), 'results:'
-        else:
-            print_log(('Found', len(results), 'results:'), log_viewer)
+        print 'Found', len(results), 'results:'
         for url in results:
-            if log_viewer is None:
-                print url
-            else:
-                print_log(url, log_viewer)
-
+            print url
 
 
 if __name__ == '__main__':

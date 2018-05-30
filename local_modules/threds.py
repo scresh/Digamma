@@ -82,7 +82,7 @@ class TorThread(threading.Thread):
                     if not is_mime_correct(content_type):
                         raise Exception('Incorrect content type')
 
-                    content = request.content.decode('utf8')
+                    content = unicode(request.content, errors='ignore')
                     title = get_title(content)
                     plain = get_plain(content)
                     words = get_words(plain)
@@ -99,7 +99,6 @@ class TorThread(threading.Thread):
                         raise Exception('Successfully processed')
 
                 except Exception as e:
-                    print self.socks_port
                     thread_str = str(self.thread_id)
                     if any(isinstance(e, exc) for exc in (ConnectionError, ReadTimeout, ConnectTimeout)):
                         print 'Thread #' + thread_str + ':\t' + 'Connection error' + ': ' + url

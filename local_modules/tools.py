@@ -5,6 +5,8 @@ import os
 from BeautifulSoup import BeautifulSoup
 from html2text import html2text
 from os.path import expanduser
+from Tkinter import *
+
 
 html_mime = 'text/html'
 plain_mime = 'text/plain'
@@ -122,3 +124,10 @@ def get_default_path():
     slash = ['/', '\\'][os.name == 'nt']
 
     return expanduser("~") + slash + datetime.now().strftime("%Y-%m-%d %H_%M_%S") + '.db'
+
+
+def print_log(log_box, text):
+    log_box.configure(state=NORMAL)
+    log_box.insert(END, text + '\n')
+    log_box.see(END)
+    log_box.configure(state=DISABLED)

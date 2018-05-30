@@ -2,9 +2,12 @@
 from Tkinter import *
 import tkFileDialog
 import ttk
+
+import time
+
 from local_modules.tools import *
 
-LARGE_FONT = ("Trebuchet MS", 8, "bold italic")
+LARGE_FONT = ("Monoscape Regular", 8, "bold italic")
 WHITE = '#FFFFFF'
 ALOHA = '#26272E'
 SHARK = '#1A1A1D'
@@ -12,13 +15,6 @@ ABBEY = '#4E4E50'
 CROWN = '#6F2232'
 MONARCH = '#950740'
 SHIZAR = '#C3073F'
-
-
-def print_log(log_box, text):
-    log_box.configure(state=NORMAL)
-    log_box.insert(END, text + '\n')
-    log_box.see(END)
-    log_box.configure(state=DISABLED)
 
 
 def change_path(input_field):
@@ -115,9 +111,9 @@ class Tab(Frame):
 class Application(Tk):
     def __init__(self):
         Tk.__init__(self)
-        self.title('Tor Scanner :: Digamma')
+        self.title('Digamma :: Tor & IoT Scanner')
         self.geometry('818x444')
-        self.iconbitmap('favicon.ico')
+        # self.iconbitmap('favicon.ico')
         self.resizable(False, False)
         self.configure(background=SHARK)
 
@@ -173,6 +169,11 @@ class Application(Tk):
         log_viewer.grid(row=5, column=1, columnspan=12, rowspan=8, padx=16, pady=10, sticky='nesw')
         status_text.grid(row=13, column=1, columnspan=12, sticky='new')
         bottom_right.grid(row=13, column=13)
+
+        time.sleep(5)
+        log = '''
+        
+        '''
 
 
 app = Application()
