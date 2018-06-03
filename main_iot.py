@@ -1,6 +1,7 @@
 import socket
 import sys
 from local_modules.tools import *
+from local_modules.db import *
 from random import randint
 
 '''
@@ -19,12 +20,13 @@ excluded_ips = [
     [3232235520, 3232301055],
 ]
 ports = [21, 22, 25, 80, 110, 443]
-
+google_ip = "212.182.64.91"
 
 # ip_list = ['140.120.51.160', '178.159.11.162']
 
 def grab_banner(target_ip, target_port):
     try:
+        target_ip = google_ip
         s = socket.socket()
         s.connect((target_ip, target_port))
         print '[+] Connection to ' + target_ip + ' port ' + str(target_port) + ' succeeded!'
@@ -32,7 +34,7 @@ def grab_banner(target_ip, target_port):
             name = socket.gethostbyaddr(target_ip)
             get = 'GET / HTTP/1.1\r\n' + 'Host: ' + name[0] + '\r\n\r\n'
             s.send(get)
-            ret = s.recv(1024)
+            ret = s.recv(128)
             print '[+]' + str(ret)
             return str(ret)
         except Exception, e:
@@ -46,7 +48,7 @@ def grab_banner(target_ip, target_port):
 
 
 def main():
-    saved_banners = open('saved_banners', 'a')
+    iot_db = IoTDatabase("iot_database.db")
     socket.setdefaulttimeout(0.5)
 
     visited_ips = tuple()
@@ -74,11 +76,11 @@ def main():
                 if banner is not None:
                     banner = ''.join([line.strip() for line in banner.strip().splitlines()])
                     banner = ip_adr + ':' + str(port) + ' - ' + banner
-                    saved_banners.write(banner + '\n')
+                    print banner
+                    iot_db.insert(ip_adr, port, banner)
 
         except KeyboardInterrupt:
             break
-    saved_banners.close()
 
 
 if __name__ == '__main__':

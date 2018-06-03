@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import socket
+import struct
 from datetime import datetime
 
 import os
@@ -110,14 +112,11 @@ def get_sentences(plain):
 
 
 def ip_to_no(ip):
-    i = map(int, ip.split('.'))
-    return i[0] * (2 ** 24) + i[1] * (2 ** 16) + i[2] * (2 ** 8) + i[3]
+    return struct.unpack("!I", socket.inet_aton(ip))[0]
 
 
 def no_to_ip(no):
-    no = ('0' * 8 + hex(no)[2:])[-8:]
-    i = map(str, map(lambda x: int(x, 16), [no[i:i + 2] for i in range(0, len(no), 2)]))
-    return '.'.join(i)
+    return socket.inet_ntoa(struct.pack("!I", no))
 
 
 def get_default_path():
