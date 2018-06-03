@@ -1,7 +1,9 @@
 import socket
 import sys
+import json
 from local_modules.tools import *
 from local_modules.db import *
+from datetime import datetime
 from random import randint
 
 '''
@@ -19,14 +21,12 @@ excluded_ips = [
     [2886729728, 2887778303],
     [3232235520, 3232301055],
 ]
-ports = [21, 22, 25, 80, 110, 443]
-google_ip = "212.182.64.91"
+
 
 # ip_list = ['140.120.51.160', '178.159.11.162']
 
 def grab_banner(target_ip, target_port):
     try:
-        target_ip = google_ip
         s = socket.socket()
         s.connect((target_ip, target_port))
         print '[+] Connection to ' + target_ip + ' port ' + str(target_port) + ' succeeded!'
@@ -48,13 +48,16 @@ def grab_banner(target_ip, target_port):
 
 
 def main():
-    iot_db = IoTDatabase("iot_database.db")
-    socket.setdefaulttimeout(0.5)
+    filename = datetime.now().strftime("%Y-%m-%d %H_%M_%S.db")
+    iot_db = IoTDatabase(filename)
+    socket_list = json.loads(open("list.txt", 'r').read())
+    socket.setdefaulttimeout(1.0)
 
     visited_ips = tuple()
+    for socket_object in socket_list:
 
-    while True:
-        ip = randint(2 ** 24, 2 ** 32)
+        ip = socket_object["ip"]
+        port = socket_object["ports"][0]["port"]
 
         if excluded_ips[0][0] <= ip <= excluded_ips[0][1]:
             continue
@@ -70,14 +73,11 @@ def main():
             visited_ips += (ip,)
 
         try:
-            ip_adr = no_to_ip(ip)
-            for port in ports:
-                banner = grab_banner(ip_adr, port)
-                if banner is not None:
-                    banner = ''.join([line.strip() for line in banner.strip().splitlines()])
-                    banner = ip_adr + ':' + str(port) + ' - ' + banner
-                    print banner
-                    iot_db.insert(ip_adr, port, banner)
+
+            banner = grab_banner(ip, port)
+            if banner is not None:
+                print ip, port, banner
+                iot_db.insert(ip, port, banner)
 
         except KeyboardInterrupt:
             break
