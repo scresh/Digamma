@@ -48,18 +48,16 @@ def grab_banner(target_ip, target_port):
 
 
 def main():
-    filename = datetime.now().strftime("%Y-%m-%d %H_%M_%S")
+    filename = datetime.now().strftime("%Y-%m-%d %H_%M_%S.db")
     iot_db = IoTDatabase(filename)
     socket_list = json.loads(open("list.txt", 'r').read())
     socket.setdefaulttimeout(1.0)
 
     visited_ips = tuple()
-    i = 0
-    while True:
+    for socket_object in socket_list:
 
-        ip = socket_list[i]["ip"]
-        port = socket_list[i]["ports"][0]["port"]
-        i += 1
+        ip = socket_object["ip"]
+        port = socket_object["ports"][0]["port"]
 
         if excluded_ips[0][0] <= ip <= excluded_ips[0][1]:
             continue
