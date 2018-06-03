@@ -4,7 +4,7 @@
 import os
 from sys import argv, exit
 from datetime import datetime
-from local_modules.db import Database
+from local_modules.db import TorDatabase
 from local_modules.threds import TorThreadCaller
 
 MAX_THREADS = 32
@@ -60,7 +60,7 @@ def main():
     try:
         if words is None:
             filename = filename + '.db'
-            output_file = Database(filename)
+            output_file = TorDatabase(filename)
         else:
             filename = filename + '.txt'
             output_file = open(filename, 'w')
