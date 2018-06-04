@@ -26,7 +26,7 @@ def print_log(log_box, text):
 
 def change_path(input_field):
     path = get_default_path()
-    title = "Select file"
+    title = "Select files"
     file_type = (("all files", "*.*"),)
     path = tkFileDialog.asksaveasfilename(initialdir=path, title=title, filetypes=file_type)
     if len(path) != 0:
