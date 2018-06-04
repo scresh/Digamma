@@ -7,6 +7,7 @@ import time
 
 from local_modules.tools import *
 
+
 LARGE_FONT = ("Monoscape Regular", 8, "bold italic")
 WHITE = '#FFFFFF'
 ALOHA = '#26272E'
@@ -95,7 +96,8 @@ class ShizarButton(Button):
         self.configure(text=text)
         self.configure(padx=40)
 
-
+        
+        
 class TabBar(ttk.Notebook):
     def __init__(self, owner):
         ttk.Notebook.__init__(self, owner)
@@ -170,10 +172,7 @@ class Application(Tk):
         status_text.grid(row=13, column=1, columnspan=12, sticky='new')
         bottom_right.grid(row=13, column=13)
 
-        time.sleep(5)
-        log = '''
         
-        '''
 
 
 app = Application()
