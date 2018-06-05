@@ -90,7 +90,7 @@ app.get('/api/iot/count', function (req, res) {
 
     /* dbTor change to dbIot */
     // Print the records as JSON 
-    dbTor.all(sql, function (err, rows) {
+    dbIot.all(sql, function (err, rows) {
         res.send(JSON.stringify(rows));
         console.log(rows);
     });
@@ -112,7 +112,7 @@ app.get('/api/iot/search', function (req, res) {
 
     /* dbTor change to dbIot */
     // Print the records as JSON
-    dbTor.all(sql, function (err, rows) {
+    dbIot.all(sql, function (err, rows) {
         res.send(JSON.stringify(rows));
     });
 });
