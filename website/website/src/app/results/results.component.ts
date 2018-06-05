@@ -9,7 +9,17 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ResultsComponent implements OnInit {
 
+  browserType: {
+    what: string,
+    whichPage: number,
+    howMuchPerPage: number,
+    browserType: string,
+    actualBrowserType: string
+  };
+
   constructor(public Searching: SearchingService, private route: ActivatedRoute) {
+    this.browserType = this.Searching.getSettings();
+
     this.route.params.subscribe(params => {
       if (params['page'] !== undefined && params['key'] !== undefined) {
         console.log('page =' + params['page']);

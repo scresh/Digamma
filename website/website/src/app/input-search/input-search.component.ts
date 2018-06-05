@@ -1,6 +1,7 @@
 import { Router } from '@angular/router';
 import { Component, OnInit, Input } from '@angular/core';
 import { SearchingService } from '../searching-service.service';
+import { browser } from 'protractor';
 
 @Component({
   selector: 'app-input-search',
@@ -22,6 +23,7 @@ export class InputSearchComponent implements OnInit {
   }
 
   setBrowserType(browserType: string) {
+    console.log('browser type = ' + browserType);
     this.Searching.setBrowserType(browserType);
   }
 }

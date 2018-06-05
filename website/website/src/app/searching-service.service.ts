@@ -13,7 +13,8 @@ export class SearchingService {
     what: '',
     whichPage: 0,
     howMuchPerPage: 40,
-    browserType: 'tor'
+    browserType: 'tor',
+    actualBrowserType: 'tor'
   };
 
   count;
@@ -23,9 +24,10 @@ export class SearchingService {
   pagination;
 
   search(what, whichPage = 0, howMuchPerPage = this.aim.howMuchPerPage) {
+    this.aim.actualBrowserType = this.aim.browserType;
     this.aim.whichPage = whichPage;
     this.aim.howMuchPerPage = howMuchPerPage;
-    if (this.aim.what !== what) {
+    if (this.aim.what !== what || this.aim.actualBrowserType !== this.aim.browserType) {
       console.log(this.aim.whichPage);
       this.http.get('http://localhost:9112/api/' + this.aim.browserType + '/count?key=' + what)
         .subscribe(
@@ -37,9 +39,12 @@ export class SearchingService {
           (error) => console.log(error)
         );
     }
+    console.log(this.aim.actualBrowserType);
+    console.log(this.aim.browserType);
+    this.aim.actualBrowserType = this.aim.browserType;
     this.aim.what = what;
     this.http.get('http://127.0.0.1:9112/api/' + this.aim.browserType + '/search?key=' + what + '&ppage=' +
-    howMuchPerPage + '&page=' + whichPage)
+      howMuchPerPage + '&page=' + whichPage)
       .subscribe(
         (response) => {
           console.log(response);
@@ -84,4 +89,10 @@ export class SearchingService {
     console.log('ustawiam browser type na: ' + browserType);
     this.aim.browserType = browserType;
   }
+
+  getSettings() {
+    return this.aim;
+  }
+
+
 }
