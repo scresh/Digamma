@@ -8,15 +8,14 @@
 }
 
 .search__icon {
-  background-color: rgb(160, 10, 10);
-  border: 2px solid #000;
-  border-radius: 10px;
+  background-color: #d32f2f;
+  border-radius: 6px;
+  box-shadow: 0px 0px 10px 5px #333;
   -webkit-transition: all 0.6s linear;
   transition: all 0.6s linear;
 }
 .search__icon:hover {
-  background-color: rgb(255, 0, 0);
-  border: 2px solid rgb(120, 10, 10);
+  background-color: #a40a0a;
 }
 
 .radio-red {
@@ -31,7 +30,7 @@
 
 [type="radio"]:checked + label:after,
 [type="radio"].with-gap:checked + label:after {
-  background-color: rgb(160, 10, 10);
+  background-color: #d32f2f;
 }
 
 [type="radio"]:checked + label:after,
