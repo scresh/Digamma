@@ -11,15 +11,16 @@ let dbTor = new sqlite3.Database('./db/insideTor.db', sqlite3.OPEN_READONLY, (er
     }
 });
 
-/*
+
 let dbIot = new sqlite3.Database('./db/insideIot.db', sqlite3.OPEN_READONLY, (err) => {
-    if (err) {
+    if(err) {
         console.error(err.message);
     } else {
         console.log('Connected to the insideIoT database.');
-    }
-});
-*/
+}
+})
+;
+
 
 //dangerous solution - to change!
 //set to test integration between Angular and Node in the same machine
@@ -82,12 +83,8 @@ app.get('/api/iot/count', function (req, res) {
     req.query.key = req.query.key.split(" ");
 
     /* this should be replaced with sql command to get count from iot database */
-    let sql = "select count(*) AS count from (select count(distinct Words.word) from Words " +
-        "inner join Pairs on Words.id = Pairs.word_id " +
-        "inner join Pages on Pairs.page_id = Pages.id " +
-        "inner join Sentences on Sentences.id = Pairs.sentence_id " +
-        "where Words.word IN ('" + req.query.key.join("','") + "') " +
-        "group by Pages.url) ;";
+    let sql = "select count(*) AS count from Devices "+
+        "where Devices.banner LIKE '" + req.query.key.join("' OR Devices.banner LIKE '") + "' ";
 
     console.log(sql);
 
@@ -107,13 +104,8 @@ app.get('/api/iot/search', function (req, res) {
     req.query.key = req.query.key.split(" ");
 
     /* this should be replaced with sql command to get count from iot database */
-    let sql = "select count(distinct Words.word) AS count, Pages.url AS url, Sentences.sentence AS sentence, Pages.title AS title, Pages.id AS idPage from Words " +
-        "inner join Pairs on Words.id = Pairs.word_id " +
-        "inner join Pages on Pairs.page_id = Pages.id " +
-        "inner join Sentences on Sentences.id = Pairs.sentence_id " +
-        "where Words.word IN ('" + req.query.key.join("','") + "') " +
-        "group by Pages.url " +
-        "order by count(distinct Words.word) DESC " +
+    let sql = "select Devices.ip as ip, Devices.port as port, Devices.banner as banner from Devices "+
+        "where Devices.banner LIKE '" + req.query.key.join("' OR Devices.banner LIKE '") + "' " +
         "LIMIT " + pagesPerPage + " OFFSET " + start + " ;";
 
     console.log(sql);
@@ -124,6 +116,7 @@ app.get('/api/iot/search', function (req, res) {
         res.send(JSON.stringify(rows));
     });
 });
+
 
 app.listen(9112);
 
@@ -137,7 +130,7 @@ http.createServer(function (req, res) {
     let sql = "SELECT Pages.html FROM Pages WHERE Pages.id = " + qdata.page + " ;";
     console.log(sql);
 
-    dbTor.all(sql, function(err, rows) {
+    dbTor.all(sql, function (err, rows) {
         console.log(rows);
         if (err) {
             res.writeHead(404, {'Content-Type': 'text/html'});
