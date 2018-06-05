@@ -21,4 +21,7 @@ export class InputSearchComponent implements OnInit {
     this.router.navigate(['/result/' + this.searchingText]);
   }
 
+  setBrowserType(browserType: string) {
+    this.Searching.setBrowserType(browserType);
+  }
 }

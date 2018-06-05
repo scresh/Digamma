@@ -33,6 +33,10 @@ body {
   margin-bottom: 0px !important;
 }
 
+.row {
+  margin-bottom: 5px !important;
+}
+
 .about {
   font-size: 14px;
   -webkit-transition: all 0.6s linear;
