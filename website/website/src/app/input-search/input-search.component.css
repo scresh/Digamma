@@ -18,3 +18,24 @@
   background-color: rgb(255, 0, 0);
   border: 2px solid rgb(120, 10, 10);
 }
+
+.radio-red {
+  color: rgb(160, 10, 10);
+  -webkit-transition: all 0.6s linear;
+  transition: all 0.6s linear;
+}
+
+.radio-red:hover {
+  color: rgb(255, 0, 0);
+}
+
+[type="radio"]:checked + label:after,
+[type="radio"].with-gap:checked + label:after {
+  background-color: rgb(160, 10, 10);
+}
+
+[type="radio"]:checked + label:after,
+[type="radio"].with-gap:checked + label:before,
+[type="radio"].with-gap:checked + label:after {
+  border: 2px solid #000;
+}

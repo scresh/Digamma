@@ -7,10 +7,19 @@
     <div class="col s2 waves-effect waves-light btn center-align search-button-height search__icon" (click)="search()">
       <i class="material-icons">search</i>
     </div>
-    <div class="col s12">
-      <h6 *ngIf="Searching.count>0">Znaleziono <b>{{Searching.count}}</b> dopasowań</h6>
-      <h6 *ngIf="Searching.count==0">Nie znaleziono dopasowań</h6>
+  </div>
+  <div class="col s12 center">
+    <!-- Browser type -->
+    <div class="center row">
+      <input class="radio-red" type="radio" id="tor" name="browserType" value="ToR" checked (click)="setBrowserType('tor')">
+      <label for="tor">ToR</label>
+      <input class="radio-red" type="radio" id="iot" name="browserType" value="IoT" (click)="setBrowserType('iot')">
+      <label for="iot">IoT</label>
     </div>
   </div>
+  <div class="col s12 center">
+    <h6 *ngIf="Searching.count>0">Znaleziono
+      <b>{{Searching.count}}</b> dopasowań</h6>
+    <h6 *ngIf="Searching.count==0">Nie znaleziono dopasowań</h6>
+  </div>
 </form>
-

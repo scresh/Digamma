@@ -7,7 +7,7 @@
     <!-- Results Per Page -->
     <div class="center row">
       <p>Liczba wyników na stronę:
-        <span class="resultsColor">{{ resultsPerPage }}</span>
+        <span class="resultsColor"></span>
       </p>
       <button type="button" (click)="setResultsPerPage(20)" class="waves-effect waves-light btn col s2 offset-s1">20</button>
       <button (click)="setResultsPerPage(40)" class="waves-effect waves-light btn col s2">40</button>
@@ -16,13 +16,6 @@
       <button (click)="setResultsPerPage(100)" class="waves-effect waves-light btn col s2">100</button>
     </div>
 
-    <!-- Browser type -->
-    <div class="center row">
-      <input type="radio" id="tor" name="browserType" value="ToR" checked (click)="setBrowserType('tor')">
-      <label for="tor">ToR</label>
-      <input type="radio" id="iot" name="browserType" value="IoT" (click)="setBrowserType('iot')">
-      <label for="iot">IoT</label>
-    </div>
 
     <a class="red-text about-us-link center" href="/about">About Us!</a>
   </div>
