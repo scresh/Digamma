@@ -84,7 +84,7 @@ app.get('/api/iot/count', function (req, res) {
 
     /* this should be replaced with sql command to get count from iot database */
     let sql = "select count(*) AS count from Devices "+
-        "where Devices.banner LIKE '" + req.query.key.join("' OR Devices.banner LIKE '") + "' ";
+        "where Devices.banner LIKE '" + req.query.key.join("' OR Devices.banner LIKE '") + "' ;";
 
     console.log(sql);
 
