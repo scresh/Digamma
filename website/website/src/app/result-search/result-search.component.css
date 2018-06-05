@@ -34,3 +34,16 @@
   background: #5a5a5a;
   text-decoration: none;
 }
+
+.back-color {
+  background-color: #444;
+}
+
+.light-back {
+  background-color: #666;
+}
+
+.footer-elem {
+  background-color: #272727;
+  min-height: 50px;
+}

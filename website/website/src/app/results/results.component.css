@@ -3,7 +3,7 @@
 }
 
 .collection-item:hover {
-  background-color: rgba(1, 11, 102, 0.12);
+  background-color: #333;
 }
 
 .link:hover {
@@ -13,4 +13,20 @@
 
 .sentence {
   font-size: 10px;
+}
+
+.back-color {
+  background-color: #444;
+}
+
+.border-color {
+  border: 1px solid #666;
+}
+
+.light-back {
+  background-color: #666;
+}
+
+.min-height {
+  min-height: 100vh;
 }
