@@ -6,7 +6,7 @@
           <i class="material-icons">chevron_left</i>
         </a>
       </li>
-      <li [ngClass]="page==Searching.aim.whichPage ? 'active' : 'waves-effect'" *ngFor="let page of Searching.pagination" (click)="changePage(page)">
+      <li [ngClass]="page==Searching.aim.whichPage ? 'activePage' : 'waves-effect'" *ngFor="let page of Searching.pagination" (click)="changePage(page)">
         <a>{{page}}</a>
       </li>
       <li [ngClass]="{'disabled': Searching.aim.whichPage==Searching.lastPage}" class="waves-effect" (click)="nextPage()">

@@ -30,3 +30,7 @@
 .min-height {
   min-height: 100vh;
 }
+
+.activePage {
+  background-color: #e53935;
+}
