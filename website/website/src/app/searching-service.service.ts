@@ -44,6 +44,8 @@ export class SearchingService {
     console.log(this.aim.browserType);
     this.aim.actualBrowserType = this.aim.browserType;
     this.aim.what = what;
+    this.results1 = [];
+    this.results2 = [];
     this.http.get('http://127.0.0.1:9112/api/' + this.aim.browserType + '/search?key=' + what + '&ppage=' +
       howMuchPerPage + '&page=' + whichPage)
       .subscribe(
