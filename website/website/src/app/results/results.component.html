@@ -6,7 +6,8 @@
           <i class="material-icons">chevron_left</i>
         </a>
       </li>
-      <li [ngClass]="page==Searching.aim.whichPage ? 'activePage' : 'waves-effect'" *ngFor="let page of Searching.pagination" (click)="changePage(page)">
+      <li [ngClass]="page==Searching.aim.whichPage ? 'activePage' : 'waves-effect'" *ngFor="let page of Searching.pagination"
+          (click)="changePage(page)">
         <a>{{page}}</a>
       </li>
       <li [ngClass]="{'disabled': Searching.aim.whichPage==Searching.lastPage}" class="waves-effect" (click)="nextPage()">
@@ -15,6 +16,19 @@
         </a>
       </li>
     </ul>
+    <div class="preloader-wrapper big active" *ngIf="Searching.results1.length == 0 && Searching.results2.length == 0">
+      <div class="spinner-layer spinner-blue-only">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div>
+        <div class="gap-patch">
+          <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+    </div>
     <div class="row">
       <ul class="collection col s6 p-00 border-color">
         <li class="collection-item back-color" *ngFor="let result of Searching.results1">
@@ -57,7 +71,8 @@
           <i class="material-icons">chevron_left</i>
         </a>
       </li>
-      <li [ngClass]="page==Searching.aim.whichPage ? 'activePage' : 'waves-effect'" *ngFor="let page of Searching.pagination" (click)="changePage(page)">
+      <li [ngClass]="page==Searching.aim.whichPage ? 'activePage' : 'waves-effect'" *ngFor="let page of Searching.pagination"
+          (click)="changePage(page)">
         <a>{{page}}</a>
       </li>
       <li [ngClass]="{'disabled': Searching.aim.whichPage==Searching.lastPage}" class="waves-effect" (click)="nextPage()">
@@ -66,11 +81,24 @@
         </a>
       </li>
     </ul>
+    <div class="preloader-wrapper big active" *ngIf="Searching.results1.length == 0 && Searching.results2.length == 0">
+      <div class="spinner-layer spinner-blue-only">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div>
+        <div class="gap-patch">
+          <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+    </div>
     <div class="row">
       <ul class="collection col s6 p-00 border-color">
         <li class="collection-item back-color" *ngFor="let result of Searching.results1">
           <div>
-            <img [src]="'../../assets/flags/'+result.countryCode+'.png'" style="border: 1px solid black; height: 16px">
+            <img [src]="'../../assets/flags/'+result.countryCode+'.png'" style="border: 1px solid black;">
             <a class="link" [href]="result.ip+':'+result.port">
               <b class="blue-text" style="font-size: 18px">{{result.ip}}:{{result.port}}</b>
             </a>
