@@ -70,8 +70,9 @@
       <ul class="collection col s6 p-00 border-color">
         <li class="collection-item back-color" *ngFor="let result of Searching.results1">
           <div>
+            <img [src]="'../../assets/flags/'+result.countryCode+'.png'" style="border: 1px solid black; height: 16px">
             <a class="link" [href]="result.ip+':'+result.port">
-              <b class="blue-text">{{result.ip}}:{{result.port}}</b>
+              <b class="blue-text" style="font-size: 18px">{{result.ip}}:{{result.port}}</b>
             </a>
             <br>
             <a class="url green-text text-lighten-1">{{result.banner}}</a>
@@ -81,8 +82,9 @@
       <ul class="collection col s6 p-00 border-color">
         <li class="collection-item back-color" *ngFor="let result of Searching.results1">
           <div>
+            <img [src]="'../../assets/flags/'+result.countryCode+'.png'" style="border: 1px solid black; height: 16px">
             <a class="link" [href]="result.ip+':'+result.port">
-              <b class="blue-text">{{result.ip}}:{{result.port}}</b>
+              <b class="blue-text" style="font-size: 18px">{{result.ip}}:{{result.port}}</b>
             </a>
             <br>
             <a class="url green-text text-lighten-1">{{result.banner}}</a>

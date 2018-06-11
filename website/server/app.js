@@ -104,7 +104,7 @@ app.get('/api/iot/search', function (req, res) {
     req.query.key = req.query.key.split(" ");
 
     /* this should be replaced with sql command to get count from iot database */
-    let sql = "select Devices.ip as ip, Devices.port as port, Devices.banner as banner from Devices "+
+    let sql = "select Devices.ip as ip, Devices.port as port, Devices.banner as banner, 'code' as countryCode from Devices "+
         "where Devices.banner LIKE '" + req.query.key.join("' OR Devices.banner LIKE '%") + "%' " +
         "LIMIT " + pagesPerPage + " OFFSET " + start + " ;";
 

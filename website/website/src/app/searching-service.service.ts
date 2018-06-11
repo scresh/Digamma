@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { browser } from 'protractor';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {browser} from 'protractor';
 
 @Injectable()
 export class SearchingService {
@@ -54,10 +54,31 @@ export class SearchingService {
           this.results2 = results.slice(0, results.length / 2);
           this.results1 = results.slice(results.length / 2, results.length);
           this.changePagination();
+          if(this.aim.actualBrowserType == "iot")
+            this.setFlags();
         },
         (error) => console.log(error)
       );
+  }
 
+  setFlags() {
+    for (let i = 0; i < this.results2.length; i++) {
+      this.http.get('http://freegeoip.net/json/'+this.results2[i].ip).subscribe(
+        (response) => {
+          console.log(response);
+          this.results2[i].countryCode = response['country_code'];
+          console.log(response);
+        },
+        (error) => console.log(error)
+      );
+      this.http.get('http://freegeoip.net/json/'+this.results1[i].ip).subscribe(
+        (response) => {
+          console.log(response);
+          this.results1[i].countryCode = response['country_code'];
+        },
+        (error) => console.log(error)
+      );
+    }
   }
 
   changePagination() {
@@ -79,7 +100,9 @@ export class SearchingService {
         break;
       }
     }
-    this.pagination.sort(function (a, b) { return a - b; });
+    this.pagination.sort(function (a, b) {
+      return a - b;
+    });
   }
 
   setResultsPerPage(perPage: number) {
