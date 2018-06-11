@@ -12,9 +12,10 @@ export class SearchingService {
   aim = {
     what: '',
     whichPage: 0,
-    howMuchPerPage: 40,
+    howMuchPerPage: 20,
     browserType: 'tor',
-    actualBrowserType: 'tor'
+    actualBrowserType: 'tor',
+    enterFromPrevious: ""
   };
 
   count;
@@ -23,10 +24,10 @@ export class SearchingService {
   lastPage;
   pagination;
 
-  search(what, whichPage = 0, howMuchPerPage = this.aim.howMuchPerPage) {
-    this.aim.actualBrowserType = this.aim.browserType;
+  search(what, whichPage = 0, howMuchPerPage = this.aim.howMuchPerPage, browserType = this.aim.browserType) {
     this.aim.whichPage = whichPage;
     this.aim.howMuchPerPage = howMuchPerPage;
+    this.aim.browserType = browserType;
     if (this.aim.what !== what || this.aim.actualBrowserType !== this.aim.browserType) {
       console.log(this.aim.whichPage);
       this.http.get('http://localhost:9112/api/' + this.aim.browserType + '/count?key=' + what)

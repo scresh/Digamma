@@ -15,11 +15,12 @@ export class InputSearchComponent implements OnInit {
   constructor(public Searching: SearchingService, private router: Router) { }
 
   ngOnInit() {
+    this.searchingText = this.Searching.aim.what;
   }
 
   search() {
     console.log(this.router.url);
-    this.router.navigate(['/result/' + this.searchingText]);
+    this.router.navigate(['/result/' + this.searchingText + "/" + this.Searching.aim.browserType]);
   }
 
   setBrowserType(browserType: string) {

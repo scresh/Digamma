@@ -2,7 +2,7 @@
   <div class="input-field col s12 row">
     <div class="col s10 small-p-lr">
       <input id="searchText" type="tel" name="searchingText" class="validate" [(ngModel)]="searchingText" (keydown.enter)="search()">
-      <label for="searchText">Wyszukaj...</label>
+      <label for="searchText" class="active">Wyszukaj...</label>
     </div>
     <div class="col s2 waves-effect waves-light btn center-align search-button-height search__icon" (click)="search()">
       <i class="material-icons">search</i>
@@ -13,6 +13,7 @@
     <div class="center row">
       <input class="radio-red" type="radio" id="tor" name="browserType" value="ToR" checked (click)="setBrowserType('tor')">
       <label for="tor">ToR</label>
+      &nbsp; &nbsp; &nbsp;
       <input class="radio-red" type="radio" id="iot" name="browserType" value="IoT" (click)="setBrowserType('iot')">
       <label for="iot">IoT</label>
     </div>

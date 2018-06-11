@@ -21,14 +21,15 @@ export class ResultsComponent implements OnInit {
     this.browserType = this.Searching.getSettings();
 
     this.route.params.subscribe(params => {
-      if (params['page'] !== undefined && params['key'] !== undefined) {
+      if (params['page'] !== undefined && params['key'] !== undefined && params['browserType'] !== undefined) {
         console.log('page =' + params['page']);
-        this.Searching.search(params['key'], Number(params['page']));
-      } else if (params['key'] !== undefined) {
+        this.Searching.search(params['key'], Number(params['page']), this.Searching.aim.howMuchPerPage, params['browserType']);
+      } else if (params['key'] !== undefined && params['browserType'] !== undefined) {
         this.route.params['key'] = params['key'];
-        this.Searching.search(params['key'], 0);
+        this.Searching.search(params['key'], 0, this.Searching.aim.howMuchPerPage, params['browserType']);
       }
     });
+
   }
 
   ngOnInit() {

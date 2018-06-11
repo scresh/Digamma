@@ -17,10 +17,10 @@ const appRoutes: Routes = [
     component: ResultSearchComponent
   },
   {
-    path: 'result/:key/:page', component: ResultSearchComponent
+    path: 'result/:key/:browserType/:page', component: ResultSearchComponent
   },
   {
-    path: 'result/:key', component: ResultSearchComponent
+    path: 'result/:key/:browserType', component: ResultSearchComponent
   },
   {
     path: 'about',
