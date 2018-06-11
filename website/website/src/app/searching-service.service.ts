@@ -19,8 +19,8 @@ export class SearchingService {
   };
 
   count;
-  results1;
-  results2;
+  results1 = [];
+  results2 = [];
   lastPage;
   pagination;
 
@@ -49,10 +49,13 @@ export class SearchingService {
       .subscribe(
         (response) => {
           console.log(response);
-          const half = this.aim.howMuchPerPage / 2;
           const results = Object.values(response);
-          this.results2 = results.slice(0, results.length / 2);
-          this.results1 = results.slice(results.length / 2, results.length);
+          for(let i=0; i<results.length; i++) {
+            if(i%2==0)
+              this.results2.push(results[i]);
+            else
+              this.results1.push(results[i]);
+          }
           this.changePagination();
           if(this.aim.actualBrowserType == "iot")
             this.setFlags();
