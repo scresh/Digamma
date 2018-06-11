@@ -105,6 +105,7 @@ class TorDatabase:
 class IoTDatabase:
     def __init__(self, filename):
         self.con = sqlite3.connect(filename, check_same_thread=False)
+        self.con.text_factory = lambda x: unicode(x, 'utf-8', 'ignore')
         self.cur = self.con.cursor()
         self.cur.execute(create_devices_tab_query)
 
