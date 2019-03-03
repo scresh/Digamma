@@ -3,10 +3,10 @@
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
 
-# Digamma
+# <img src="https://raw.githubusercontent.com/scresh/Digamma/master/images/favicon.png" width="32" height="32" alt="Logo" >Digamma
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/scresh/Digamma/master/images/favicon.png" alt="Logo" >
+    <img src="https://raw.githubusercontent.com/scresh/Digamma/master/images/logo-gray.png" alt="Logo" >
 
   <p align="center">
     Real time search engine for TOR and IoT.
