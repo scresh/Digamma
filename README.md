@@ -3,7 +3,7 @@
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
 
-# <img src="https://raw.githubusercontent.com/scresh/Digamma/master/images/favicon.png" width="32" height="32" alt="Logo" >Digamma
+# <img src="https://raw.githubusercontent.com/scresh/Digamma/master/images/favicon.png" width="24" height="24" alt="Logo" > Digamma
 
 <p align="center">
     <img src="https://raw.githubusercontent.com/scresh/Digamma/master/images/logo-gray.png" alt="Logo" >
