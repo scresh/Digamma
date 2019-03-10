@@ -18,21 +18,16 @@
 **Can be run with the following parameters:**
 - **--save:** save all matching results to .db file
 - **--phrase** pace separated word list
-- **--threads** The number of threads
-- **--port** - The custom port zero
-- **--url** - The start page url
+- **--threads** the number of threads
+- **--port** the custom port zero
+- **--url** the start page url
 
 
 
 ## Usage
 
-Execute start script to run network nodes:
-```bash
-./start.sh
-```
-
 ## Screenshots
-
+<img src="https://raw.githubusercontent.com/scresh/Digamma/master/images/tor_cli.png" height=405 width=856 alt="tor_cli" >
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [contributors-shield]: https://img.shields.io/badge/contributors-6-orange.svg
