@@ -7,7 +7,6 @@ import os
 from BeautifulSoup import BeautifulSoup
 from html2text import html2text
 from os.path import expanduser
-from Tkinter import *
 
 
 html_mime = 'text/html'
@@ -33,16 +32,16 @@ def has_correct_extension(url):
     return False
 
 
-def is_onion_domain(url):
+def get_onion_domain(url):
     try:
         if url.split('/')[2][-6:] != '.onion':
-            return False
-        return True
+            return None
+        return '/'.join(url.split('/')[:3])
     except IndexError:
-        return False
+        return None
 
 
-def get_urls(content, content_type):
+def get_urls(current_url, content, content_type):
     if not is_mime_correct(content_type):
         return None
     mime_type = content_type.split(';')[0]
@@ -65,8 +64,10 @@ def get_urls(content, content_type):
     # Final validation
     results = []
     for url in urls:
-        url = url.split('#')[0]
-        if is_onion_domain(url) and has_correct_extension(url):
+        # url = url.split('#')[0]
+        if url[0] == '/':
+            url = get_onion_domain(current_url) + url
+        if get_onion_domain(url) and has_correct_extension(url):
             results.append(url)
     return results
 
@@ -124,9 +125,3 @@ def get_default_path():
 
     return expanduser("~") + slash + datetime.now().strftime("%Y-%m-%d %H_%M_%S") + '.db'
 
-
-def print_log(log_box, text):
-    log_box.configure(state=NORMAL)
-    log_box.insert(END, text + '\n')
-    log_box.see(END)
-    log_box.configure(state=DISABLED)

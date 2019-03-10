@@ -22,8 +22,6 @@ let dbIot = new sqlite3.Database('./db/insideIot.db', sqlite3.OPEN_READONLY, (er
 ;
 
 
-//dangerous solution - to change!
-//set to test integration between Angular and Node in the same machine
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");

@@ -1,8 +1,8 @@
 import socket
 import sys
 import json
-from local_modules.tools import *
-from local_modules.db import *
+from tools.tools import *
+from tools.db import *
 from datetime import datetime
 from random import randint
 

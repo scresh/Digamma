@@ -4,6 +4,9 @@
 set -o errexit
 set -o nounset
 
+if ! (dpkg -l | grep torsocks > /dev/null); then
+    yes | sudo apt-get update
+    yes | sudo apt-get install tor
 
 service tor stop
 #pkill -9 tor
@@ -18,13 +21,13 @@ ControlPort=9051
 TorInstances=32
 InstanceID=0
 
-if [ ${#} -ne 0 ]; then
+if [[ ${#} -ne 0 ]]; then
 	TorInstances=${1}
 fi
 
 
-while [ ${InstanceID} -lt ${TorInstances} ]; do
-    tor --SocksPort ${SocksPort} --ControlPort ${ControlPort} --DataDirectory "./tmp/${SocksPort}"  --quiet &
+while [[ ${InstanceID} -lt ${TorInstances} ]]; do
+    tor --SocksPort ${SocksPort} --ControlPort ${ControlPort} --DataDirectory "/tmp/digamma/${SocksPort}"  --quiet &
 
     while ! nc -z localhost ${SocksPort}; do
         sleep 0.2
@@ -36,4 +39,4 @@ while [ ${InstanceID} -lt ${TorInstances} ]; do
     let ControlPort=ControlPort+2
 done
 
-#./main.py ${TorInstances} test
+#./tor.py ${TorInstances} test

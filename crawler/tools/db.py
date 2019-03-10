@@ -33,12 +33,11 @@ pairs_query = '''CREATE TABLE Pairs (
 );
 '''
 
-create_devices_tab_query = '''
-  CREATE TABLE `Devices` (
-	`ip`TEXT NOT NULL,
-	`port`	INT NOT NULL,
-	`banner`TEXT
-  );
+create_devices_tab_query = '''CREATE TABLE `Devices` (
+    `ip`TEXT NOT NULL,
+    `port`	INT NOT NULL,
+    `banner`TEXT
+);
 '''
 
 check_page_query = 'SELECT EXISTS(SELECT 1 FROM Pages WHERE url=?);'
@@ -63,6 +62,8 @@ update_device_query = 'UPDATE Devices SET banner = ? WHERE ip = ? AND PORT = ?;'
 class TorDatabase:
     def __init__(self, filename):
         self.con = sqlite3.connect(filename, check_same_thread=False)
+        self.con.text_factory = str
+
         self.cur = self.con.cursor()
 
         self.cur.execute(pages_query)
