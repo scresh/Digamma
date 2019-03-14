@@ -10,8 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.4",
-    "ng-factory": "^1.1.0",
-    "sqlite3": "^4.0.6",
-    "undertaker-app-tasks": "^0.5.2"
+    "sqlite3": "^4.0.6"
   }
 }
