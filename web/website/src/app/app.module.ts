@@ -11,7 +11,6 @@ import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { MainComponent } from './main/main.component';
-import { AboutUsComponent } from './about-us/about-us.component';
 import { ResultSearchComponent } from './result-search/result-search.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { InputSearchComponent } from './input-search/input-search.component';
@@ -26,7 +25,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   declarations: [
     AppComponent,
     MainComponent,
-    AboutUsComponent,
     ResultSearchComponent,
     NotFoundComponent,
     InputSearchComponent,
