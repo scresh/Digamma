@@ -1,8 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { SearchingService } from '../searching-service.service';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {SearchingService} from '../searching-service.service';
 
 @Component({
   selector: 'app-result-search',
@@ -33,7 +31,4 @@ export class ResultSearchComponent implements OnInit {
     */
   }
 
-  setBrowserType(browserType: string) {
-    this.Searching.setBrowserType(browserType);
-  }
 }

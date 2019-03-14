@@ -18,7 +18,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { ResultsComponent } from './results/results.component';
 import { SearchingService } from "./searching-service.service";
 
-import { MatSelectModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
@@ -36,7 +35,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    MatSelectModule,
     BrowserAnimationsModule
   ],
   providers: [SearchingService],
