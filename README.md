@@ -1,6 +1,7 @@
 [![Contributors][contributors-shield]]()
 [![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
+[![LinkedIn][linkedin-shield]][linkedin-url-emanuel-zarzecki]
+[![LinkedIn][linkedin-shield]][linkedin-url-filip-szczesniak]
 
 
 # <img src="https://raw.githubusercontent.com/scresh/Digamma/master/images/favicon.png" width="24" height="24" alt="Logo" > Digamma
@@ -34,5 +35,6 @@
 [license-shield]: https://img.shields.io/badge/License-GPLv3-blue.svg
 [license-url]: https://github.com/scresh/Digamma/blob/master/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?logo=linkedin&colorB=555
-[linkedin-url]: https://www.linkedin.com/in/emanuel-zarzecki/
+[linkedin-url-emanuel-zarzecki]: https://www.linkedin.com/in/emanuel-zarzecki/
+[linkedin-url-filip-szczesniak]: https://www.linkedin.com/in/filip-szcześniak-0b9340182/
 

@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { MainComponent } from './main/main.component';
 import { ResultSearchComponent } from './result-search/result-search.component' ;
-import { AboutUsComponent } from './about-us/about-us.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 
 const appRoutes: Routes = [
@@ -21,10 +20,6 @@ const appRoutes: Routes = [
   },
   {
     path: 'result/:key/:browserType', component: ResultSearchComponent
-  },
-  {
-    path: 'about',
-    component: AboutUsComponent
   },
   {
     path: '**', component: NotFoundComponent
