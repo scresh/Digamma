@@ -1,6 +1,6 @@
 from threading import Lock
 from datetime import datetime
-from db import TorDatabase
+from .db import TorDatabase
 
 
 class SharedMemory:

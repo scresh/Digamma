@@ -4,7 +4,7 @@ import struct
 from datetime import datetime
 
 import os
-from BeautifulSoup import BeautifulSoup
+from bs4 import BeautifulSoup
 from html2text import html2text
 from os.path import expanduser
 
@@ -54,7 +54,7 @@ def get_urls(current_url, content, content_type):
             for a_href in soup.findAll('a', href=True):
                 urls.append(a_href['href'])
         except UnicodeEncodeError:
-            print 'Invalid HTML/TEXT file'
+            print('Invalid HTML/TEXT file')
     else:
         words = content.replace('\n', ' ').split()
         for word in words:

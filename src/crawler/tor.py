@@ -16,7 +16,7 @@ from requests import ConnectionError, ReadTimeout, ConnectTimeout
 
 class TorThread(threading.Thread):
     def __init__(self, thread_id, shared_memory):
-        threading.Thread.__init__(self)
+        super().__init__()
         self.thread_id = thread_id
 
         socks_port = shared_memory.start_port + 2 * thread_id
@@ -67,9 +67,9 @@ class TorThread(threading.Thread):
             except Exception as e:
                 thread_str = str(self.thread_id)
                 if any(isinstance(e, exc) for exc in (ConnectionError, ReadTimeout, ConnectTimeout)):
-                    print 'Thread #' + thread_str + ':\t' + 'Connection error' + ': ' + url
+                    print('Thread #' + thread_str + ':\t' + 'Connection error' + ': ' + url)
                 else:
-                    print 'Thread #' + thread_str + ':\t' + str(e) + ': ' + url
+                    print('Thread #' + thread_str + ':\t' + str(e) + ': ' + url)
 
             self.shared_memory.set_inactive(self.thread_id)
 
@@ -78,8 +78,8 @@ def main():
     parser = argparse.ArgumentParser(description='Run Tor scanner for a given phrase')
     parser.add_argument("--save", help="Save all matching results to .db file", action="store_true")
     parser.add_argument('--phrase', help='Space separated word list')
-    parser.add_argument('--threads', type=int, default=4, choices=xrange(1, 64), help='The number of threads')
-    parser.add_argument('--port', type=int, choices=xrange(1024, 65535), help='The custom port zero')
+    parser.add_argument('--threads', type=int, default=4, choices=range(1, 64), help='The number of threads')
+    parser.add_argument('--port', type=int, choices=range(1024, 65535), help='The custom port zero')
     parser.add_argument('--url', help='The first page url')
     args = parser.parse_args()
 
@@ -109,7 +109,7 @@ def main():
     shared_memory = SharedMemory(phrase_words, start_port, timeout=5, save_mode=args.save, threads_no=args.threads)
     shared_memory.add_url(start_url)
 
-    for thread_id in xrange(args.threads):
+    for thread_id in range(args.threads):
         os.system(
             'tor --SocksPort {} --ControlPort {} --DataDirectory "/tmp/digamma/{}"  --quiet &'.format(
                 start_port + 2 * thread_id,

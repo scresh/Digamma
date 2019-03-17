@@ -29,19 +29,19 @@ def grab_banner(target_ip, target_port):
     try:
         s = socket.socket()
         s.connect((target_ip, target_port))
-        print '[+] Connection to ' + target_ip + ' port ' + str(target_port) + ' succeeded!'
+        print('[+] Connection to ' + target_ip + ' port ' + str(target_port) + ' succeeded!')
         try:
             name = socket.gethostbyaddr(target_ip)
             get = 'GET / HTTP/1.1\r\n' + 'Host: ' + name[0] + '\r\n\r\n'
             s.send(get)
             ret = s.recv(128)
-            print '[+]' + str(ret)
+            print('[+]' + str(ret))
             return str(ret)
-        except Exception, e:
-            print '[-] Unable to grab any information: ' + str(e)
+        except Exception as e:
+            print('[-] Unable to grab any information: ' + str(e))
             return None
-    except Exception, e:
-        print '[-] Connection to ' + target_ip + ' port ' + str(target_port) + ' failed: ' + str(e)
+    except Exception as e:
+        print('[-] Connection to ' + target_ip + ' port ' + str(target_port) + ' failed: ' + str(e))
         return None
     finally:
         s.close()
@@ -76,7 +76,7 @@ def main():
 
             banner = grab_banner(ip, port)
             if banner is not None:
-                print ip, port, banner
+                print(ip, port, banner)
                 iot_db.insert(ip, port, banner)
 
         except KeyboardInterrupt:
