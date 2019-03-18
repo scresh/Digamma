@@ -1,17 +1,18 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 import os
+
 import argparse
 import requests
 import threading
 
 from time import sleep
-from tools import tools
+from tools import methods
 from random import uniform
 from getpass import getpass
-from tools.urlstack import SharedMemory
-from requests import ConnectionError, ReadTimeout, ConnectTimeout
+from tools.shared_memory import SharedMemory
+
+SUCCESS = '\033[92m'
+WARNING = '\033[93m'
+NORMAL = '\033[0m'
 
 
 class TorThread(threading.Thread):
@@ -21,57 +22,80 @@ class TorThread(threading.Thread):
 
         socks_port = shared_memory.start_port + 2 * thread_id
 
-        self.session = requests.Session()
-        self.session.proxies = {'http': 'socks5h://127.0.0.1:' + str(socks_port),
-                                'https': 'socks5h://127.0.0.1:' + str(socks_port)}
+        self.proxies = {'http': 'socks5h://127.0.0.1:' + str(socks_port),
+                        'https': 'socks5h://127.0.0.1:' + str(socks_port)}
 
         self.shared_memory = shared_memory
 
     def run(self):
 
         while self.shared_memory.run_threads:
+            try:
+                requests.get(
+                    'http://www.google.com/',
+                    timeout=self.shared_memory.timeout,
+                    proxies=self.proxies
+                )
+            except requests.ConnectTimeout:
+                self.print(f'Attempting to establish Tor connection: Waiting...', NORMAL)
+                sleep(1)
+                continue
+            else:
+                break
+
+        while self.shared_memory.run_threads:
+
             url = self.shared_memory.get_url(self.thread_id)
 
             if url is None:
                 if self.shared_memory.any_active():
                     sleep(uniform(0, 1))
+                    self.print(f'Attempting to get new url: Waiting...', NORMAL)
                     continue
                 else:
                     self.shared_memory.run_threads = False
+                    self.print(f'No urls to process: Stop all threads', WARNING)
                     break
 
             try:
-                request = self.session.get(url, timeout=self.shared_memory.timeout)
+                request = requests.get(
+                    url,
+                    timeout=self.shared_memory.timeout,
+                    proxies=self.proxies
+                )
                 content_type = request.headers['Content-Type']
-                if not tools.is_mime_correct(content_type):
-                    raise Exception('Incorrect content type')
+                if not methods.is_mime_correct(content_type):
+                    raise IncorrectContentType
 
                 content = request.content
                 if all(word in content.lower() for word in self.shared_memory.phrase_words):
                     if self.shared_memory.db_mode():
-                        title = tools.get_title(content)
-                        plain = tools.get_plain(content)
-                        words = tools.get_words(plain)
-                        sentences = tools.get_sentences(plain)
+                        title = methods.get_title(content)
+                        plain = methods.get_plain(content)
+                        words = methods.get_words(plain)
+                        sentences = methods.get_sentences(plain)
                         self.shared_memory.save_page(url, words, content, title, sentences)
 
                     self.shared_memory.save_url(url)
 
-                urls = tools.get_urls(url, content, content_type)
-                if not urls:
-                    raise Exception('No valid urls')
+                urls = methods.get_urls(url, content, content_type)
+
+                if urls:
+                    for x in urls:
+                        self.shared_memory.add_url(x)
                 else:
-                    map(lambda x: self.shared_memory.add_url(x), urls)
-                    raise Exception('Successfully processed')
+                    raise NoURLsFound
 
             except Exception as e:
-                thread_str = str(self.thread_id)
-                if any(isinstance(e, exc) for exc in (ConnectionError, ReadTimeout, ConnectTimeout)):
-                    print('Thread #' + thread_str + ':\t' + 'Connection error' + ': ' + url)
-                else:
-                    print('Thread #' + thread_str + ':\t' + str(e) + ': ' + url)
+                self.print(f'{type(e).__name__}: {url}', WARNING)
+            else:
+                self.print(f'Successfully processed: {url}', SUCCESS)
 
             self.shared_memory.set_inactive(self.thread_id)
+
+    def print(self, text, color):
+        if self.shared_memory.run_threads:
+            print(f'Thread #{self.thread_id}:\t{color}{text}{NORMAL}')
 
 
 def main():
@@ -83,17 +107,18 @@ def main():
     parser.add_argument('--url', help='The first page url')
     args = parser.parse_args()
 
-    root_password = getpass(prompt="Enter root password:")
-
-    # Check if tor is installed
-    if os.system('dpkg -l | grep torsocks > /dev/null') != 0:
-        os.system('yes | echo {} | sudo -S apt-get install tor'.format(root_password))
+    if os.name == 'nt':
+        start_port = 9150
     else:
-        os.system('echo {} | sudo -S service tor stop'.format(root_password))
+        start_port = 9050
+        root_password = getpass(prompt="Enter root password: ")
 
-    os.system('rm -rf /tmp/digamma/ && mkdir /tmp/digamma/')
+        if methods.execute('dpkg -l tor') != 0:
+            methods.execute(f'yes | echo {root_password} | sudo -S apt-get install tor')
 
-    start_port = [9050, 9150][os.name == 'nt']  # Default ports for Unix and Windows Clients
+        methods.execute(f'echo {root_password} | sudo -S service tor stop')
+        methods.execute('rm -rf /tmp/digamma/ && mkdir /tmp/digamma/')
+
     if args.port:
         start_port = args.port
 
@@ -110,29 +135,34 @@ def main():
     shared_memory.add_url(start_url)
 
     for thread_id in range(args.threads):
-        os.system(
-            'tor --SocksPort {} --ControlPort {} --DataDirectory "/tmp/digamma/{}"  --quiet &'.format(
-                start_port + 2 * thread_id,
-                start_port + 2 * thread_id + 1,
-                start_port + 2 * thread_id,
-            )
-        )
-
-        while os.system('! nc -z localhost {}'.format(start_port + 2 * thread_id)) == 0:
-            sleep(0.2)
+        start_cmd = f'tor' \
+            f' --SocksPort {start_port + 2 * thread_id}' \
+            f' --ControlPort {start_port + 2 * thread_id + 1}' \
+            f' --DataDirectory /tmp/digamma/{start_port + 2 * thread_id}' \
+            f' --RunAsDaemon 1'
+        methods.execute(start_cmd)
 
         thread_list.append(TorThread(thread_id, shared_memory))
         thread_list[thread_id].start()
 
     # Waiting for Ctrl+C
     try:
-        while True:
-            sleep(1)
+        while shared_memory.run_threads:
+            sleep(0.25)
     except KeyboardInterrupt:
+        print(f'\nStopping {args.threads} threads...')
         shared_memory.run_threads = False
         for thread in thread_list:
-            thread.join()
+            del thread
 
 
 if __name__ == '__main__':
     main()
+
+
+class NoURLsFound(Exception):
+    pass
+
+
+class IncorrectContentType(Exception):
+    pass

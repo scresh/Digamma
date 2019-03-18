@@ -1,7 +1,7 @@
 import socket
 import sys
 import json
-from tools.tools import *
+from tools.methods import *
 from tools.db import *
 from datetime import datetime
 from random import randint

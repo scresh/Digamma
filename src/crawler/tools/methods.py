@@ -1,19 +1,23 @@
-# -*- coding: utf-8 -*-
 import socket
 import struct
 from datetime import datetime
 
+import subprocess
 import os
 from bs4 import BeautifulSoup
 from html2text import html2text
 from os.path import expanduser
-
+from subprocess import call, DEVNULL
 
 html_mime = 'text/html'
 plain_mime = 'text/plain'
 
 correct_mime = [html_mime, plain_mime]
 correct_extensions = ['html', 'html', 'txt']
+
+
+def execute(command):
+    return call(command, stderr=DEVNULL, stdout=DEVNULL, shell=True)
 
 
 def is_mime_correct(content_type):
@@ -50,7 +54,7 @@ def get_urls(current_url, content, content_type):
     urls = []
     if mime_type == html_mime:
         try:
-            soup = BeautifulSoup(content)
+            soup = BeautifulSoup(content, features="html.parser")
             for a_href in soup.findAll('a', href=True):
                 urls.append(a_href['href'])
         except UnicodeEncodeError:
@@ -73,11 +77,11 @@ def get_urls(current_url, content, content_type):
 
 
 def get_title(content):
-    return BeautifulSoup(content).title.string
+    return BeautifulSoup(content, features="html.parser").title.string
 
 
 def get_plain(content):
-    soup = BeautifulSoup(content)
+    soup = BeautifulSoup(content, features="html.parser")
     body = soup.find('body')
     return html2text(body.text).replace('\n', ' ')
 
@@ -124,4 +128,3 @@ def get_default_path():
     slash = ['/', '\\'][os.name == 'nt']
 
     return expanduser("~") + slash + datetime.now().strftime("%Y-%m-%d %H_%M_%S") + '.db'
-
