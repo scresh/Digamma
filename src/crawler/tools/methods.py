@@ -2,7 +2,6 @@ import socket
 import struct
 from datetime import datetime
 
-import subprocess
 import os
 from bs4 import BeautifulSoup
 from html2text import html2text
@@ -14,6 +13,17 @@ plain_mime = 'text/plain'
 
 correct_mime = [html_mime, plain_mime]
 correct_extensions = ['html', 'html', 'txt']
+
+excluded_ips = [
+    [167772160, 184549375],
+    [2130706432, 2147483647],
+    [2886729728, 2887778303],
+    [3232235520, 3232301055],
+]
+
+SUCCESS = '\033[92m'
+WARNING = '\033[93m'
+NORMAL = '\033[0m'
 
 
 def execute(command):
@@ -116,11 +126,7 @@ def get_sentences(plain):
     return sentences
 
 
-def ip_to_no(ip):
-    return struct.unpack("!I", socket.inet_aton(ip))[0]
-
-
-def no_to_ip(no):
+def int_to_ip(no):
     return socket.inet_ntoa(struct.pack("!I", no))
 
 
@@ -128,3 +134,12 @@ def get_default_path():
     slash = ['/', '\\'][os.name == 'nt']
 
     return expanduser("~") + slash + datetime.now().strftime("%Y-%m-%d %H_%M_%S") + '.db'
+
+
+def is_ip_permitted(ip_int):
+    return not any(
+        [
+            ip_range[0] <= ip_int <= ip_range[1]
+            for ip_range in excluded_ips
+        ]
+    )

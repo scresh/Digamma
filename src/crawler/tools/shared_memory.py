@@ -1,9 +1,26 @@
 from threading import Lock
-from datetime import datetime
-from .db import TorDatabase
+from .db import TorDatabase, IoTDatabase
+from .methods import *
 
 
-class SharedMemory:
+class IoTSharedMemory:
+    def __init__(self, threads_no, ports, timeout):
+        self.threads_no = threads_no
+        self.timeout = timeout
+        self.ports = ports
+        self.run_threads = True
+
+        self._db_file_lock = Lock()
+        filename = datetime.now().strftime("%Y-%m-%d %H_%M_%S")
+        self._db_file = IoTDatabase(f'../db-server/db/{filename}.db')
+
+    def save_banner(self, ip, port, banner):
+        self._db_file_lock.acquire()
+        self._db_file.insert(ip, port, banner)
+        self._db_file_lock.release()
+
+
+class TorSharedMemory:
     def __init__(self, phrase_words, start_port, timeout, save_mode, threads_no):
         self.phrase_words = phrase_words
         self.start_port = start_port

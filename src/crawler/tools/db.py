@@ -54,9 +54,7 @@ select_sentence_query = 'SELECT id FROM Sentences WHERE sentence=?;'
 
 insert_pair_query = 'INSERT INTO Pairs (word_id, page_id, sentence_id) VALUES (?, ?, ?);'
 
-check_device_query = 'SELECT EXISTS(SELECT 1 FROM Devices WHERE ip = ? AND port = ?);'
 insert_device_query = 'INSERT INTO Devices (ip, port, banner) VALUES (?, ?, ?);'
-update_device_query = 'UPDATE Devices SET banner = ? WHERE ip = ? AND PORT = ?;'
 
 
 class TorDatabase:
@@ -110,13 +108,5 @@ class IoTDatabase:
         self.cur.execute(create_devices_tab_query)
 
     def insert(self, ip, port, banner):
-        self.cur.execute(check_device_query, (ip, port))
-        if self.cur.fetchone()[0] != 0:
-            return
-
         self.cur.execute(insert_device_query, (ip, port, banner))
         self.con.commit()
-
-    def print_devices(self):
-        self.cur.execute('SELECT * FROM Devices')
-        print(self.cur.fetchall())

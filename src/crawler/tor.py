@@ -8,11 +8,7 @@ from time import sleep
 from tools import methods
 from random import uniform
 from getpass import getpass
-from tools.shared_memory import SharedMemory
-
-SUCCESS = '\033[92m'
-WARNING = '\033[93m'
-NORMAL = '\033[0m'
+from tools.shared_memory import TorSharedMemory
 
 
 class TorThread(threading.Thread):
@@ -131,7 +127,7 @@ def main():
         start_url = args.url
 
     thread_list = []
-    shared_memory = SharedMemory(phrase_words, start_port, timeout=5, save_mode=args.save, threads_no=args.threads)
+    shared_memory = TorSharedMemory(phrase_words, start_port, timeout=5, save_mode=args.save, threads_no=args.threads)
     shared_memory.add_url(start_url)
 
     for thread_id in range(args.threads):
