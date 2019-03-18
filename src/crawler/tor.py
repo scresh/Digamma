@@ -33,7 +33,7 @@ class TorThread(threading.Thread):
                     proxies=self.proxies
                 )
             except requests.ConnectTimeout:
-                self.print(f'Attempting to establish Tor connection: Waiting...', NORMAL)
+                self.print(f'Attempting to establish Tor connection: Waiting...', methods.NORMAL)
                 sleep(1)
                 continue
             else:
@@ -46,11 +46,11 @@ class TorThread(threading.Thread):
             if url is None:
                 if self.shared_memory.any_active():
                     sleep(uniform(0, 1))
-                    self.print(f'Attempting to get new url: Waiting...', NORMAL)
+                    self.print(f'Attempting to get new url: Waiting...', methods.NORMAL)
                     continue
                 else:
                     self.shared_memory.run_threads = False
-                    self.print(f'No urls to process: Stop all threads', WARNING)
+                    self.print(f'No urls to process: Stop all threads', methods.WARNING)
                     break
 
             try:
@@ -83,15 +83,15 @@ class TorThread(threading.Thread):
                     raise NoURLsFound
 
             except Exception as e:
-                self.print(f'{type(e).__name__}: {url}', WARNING)
+                self.print(f'{type(e).__name__}: {url}', methods.WARNING)
             else:
-                self.print(f'Successfully processed: {url}', SUCCESS)
+                self.print(f'Successfully processed: {url}', methods.SUCCESS)
 
             self.shared_memory.set_inactive(self.thread_id)
 
     def print(self, text, color):
         if self.shared_memory.run_threads:
-            print(f'Thread #{self.thread_id}:\t{color}{text}{NORMAL}')
+            print(f'Thread #{self.thread_id}:\t{color}{text}{methods.NORMAL}')
 
 
 def main():

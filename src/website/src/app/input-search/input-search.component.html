@@ -2,7 +2,7 @@
   <div class="input-field col s12 row">
     <div class="col s10 small-p-lr">
       <input id="searchText" type="tel" name="searchingText" class="validate" [(ngModel)]="searchingText" (keydown.enter)="search()">
-      <label for="searchText" class="active">Wyszukaj...</label>
+      <label for="searchText" class="active">Search...</label>
     </div>
     <div class="col s2 waves-effect waves-light btn center-align search-button-height search__icon" (click)="search()">
       <i class="material-icons">search</i>
@@ -19,8 +19,8 @@
     </div>
   </div>
   <div class="col s12 center">
-    <h6 *ngIf="Searching.count>0">Znaleziono
-      <b>{{Searching.count}}</b> dopasowań</h6>
-    <h6 *ngIf="Searching.count==0">Nie znaleziono dopasowań</h6>
+    <h6 *ngIf="Searching.count>0">Found
+      <b>{{Searching.count}}</b> results</h6>
+    <h6 *ngIf="Searching.count==0">No result found</h6>
   </div>
 </form>
