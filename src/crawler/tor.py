@@ -153,7 +153,7 @@ def main():
         print(f'\nStopping {args.threads} threads...')
         shared_memory.run_threads = False
         for thread in thread_list:
-            del thread
+            thread.join()
 
 
 if __name__ == '__main__':

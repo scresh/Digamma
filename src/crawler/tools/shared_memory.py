@@ -12,7 +12,7 @@ class SharedMemory:
 
         filename = datetime.now().strftime("%Y-%m-%d %H_%M_%S")
         self._txt_file = open(filename + '.txt', 'w+')
-        self._db_file = TorDatabase(filename + '.db') if save_mode else None
+        self._db_file = TorDatabase(f'../db-server/db/{filename}.db') if save_mode else None
 
         self._index = 0
         self._url_stack = []
