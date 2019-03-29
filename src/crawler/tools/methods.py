@@ -2,17 +2,11 @@ import socket
 import struct
 from datetime import datetime
 
+from re import sub
 import os
 from bs4 import BeautifulSoup
-from html2text import html2text
 from os.path import expanduser
 from subprocess import call, DEVNULL
-
-html_mime = 'text/html'
-plain_mime = 'text/plain'
-
-correct_mime = [html_mime, plain_mime]
-correct_extensions = ['html', 'html', 'txt']
 
 excluded_ips = [
     [167772160, 184549375],
@@ -30,100 +24,60 @@ def execute(command):
     return call(command, stderr=DEVNULL, stdout=DEVNULL, shell=True)
 
 
-def is_mime_correct(content_type):
-    mime_type = content_type.split(';')[0]
-    if not (mime_type in correct_mime):
-        return False
-    return True
-
-
-def has_correct_extension(url):
+def is_html_possible(url):
     supposed_extension = url.split('.')[-1]
     if len(supposed_extension) > 4:
         return True
-    if supposed_extension in correct_extensions:
+    if supposed_extension == 'html':
         return True
     return False
 
 
 def get_onion_domain(url):
-    try:
-        if url.split('/')[2][-6:] != '.onion':
-            return None
+    if is_onion_domain(url):
         return '/'.join(url.split('/')[:3])
-    except IndexError:
-        return None
-
-
-def get_urls(current_url, content, content_type):
-    if not is_mime_correct(content_type):
-        return None
-    mime_type = content_type.split(';')[0]
-
-    # Different processing for different MIME types
-    urls = []
-    if mime_type == html_mime:
-        try:
-            soup = BeautifulSoup(content, features="html.parser")
-            for a_href in soup.findAll('a', href=True):
-                urls.append(a_href['href'])
-        except UnicodeEncodeError:
-            print('Invalid HTML/TEXT file')
     else:
-        words = content.replace('\n', ' ').split()
-        for word in words:
-            if word[:4] == 'http':
-                urls.append(word)
-
-    # Final validation
-    results = []
-    for url in urls:
-        # url = url.split('#')[0]
-        if url[0] == '/':
-            url = get_onion_domain(current_url) + url
-        if get_onion_domain(url) and has_correct_extension(url):
-            results.append(url)
-    return results
+        return None
 
 
-def get_title(content):
-    return BeautifulSoup(content, features="html.parser").title.string
+def is_onion_domain(url):
+    try:
+        if (url.startswith('http://') or url.startswith('https://')) and url.split('/')[2][-6:] == '.onion':
+            return True
+
+    except IndexError:
+        pass
+
+    return False
 
 
-def get_plain(content):
-    soup = BeautifulSoup(content, features="html.parser")
-    body = soup.find('body')
-    return html2text(body.text).replace('\n', ' ')
+def get_values(html, url):
+    soup = BeautifulSoup(html, features="html.parser")
 
+    title = soup.title.string
+    hrefs = set()
 
-def get_words(plain):
-    lower_text = plain.lower()
-    line = ''
-    for c in lower_text:
-        if c.isalnum() or c.isspace():
-            line += c
-    all_words = list(set(line.split()))
+    for tag in soup.findAll(["script", "style", "table", "a", "img", "button", "header", "footer", "nav"]):
+        if tag.name == 'a' and tag.string:
+            div = soup.new_tag('div')
+            div.string = tag.string
+            tag.insert_after(div)
 
-    words = []
-    for word in all_words:
-        if 0 < len(word) < 16:
-            words.append(word)
-    return words
+        if tag.get('href'):
+            href = tag['href']
 
+            if href[0] == '/':
+                href = get_onion_domain(url) + href
 
-def get_sentences(plain):
-    sep_split = plain.split()
+            if is_onion_domain(href) and is_html_possible(url):
+                hrefs.add(href)
 
-    sentences = []
-    current_sentence = ''
+        tag.extract()
 
-    for s in sep_split:
-        if (len(s) + len(current_sentence)) < 150:
-            current_sentence += ' ' + s
-        else:
-            sentences.append(current_sentence)
-            current_sentence = s
-    return sentences
+    content = ' '.join(filter(lambda x: 1 <= len(x) <= 16, sub(r'\s+', ' ', soup.get_text()).split()))
+    words = set(sub(r'([^\s\w]|_)+', '', content).lower().split())
+
+    return title, content, list(words), list(hrefs)
 
 
 def int_to_ip(no):
