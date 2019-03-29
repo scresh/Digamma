@@ -51,12 +51,12 @@ class IoTThread(threading.Thread):
 
 def main():
     parser = argparse.ArgumentParser(description='Run IoT scanner')
-    parser.add_argument('--threads', default=4, choices=[1, 4, 16, 64, 256, 1024], help='The number of threads')
+    parser.add_argument('--threads', default=1024, choices=[1, 4, 16, 64, 256, 1024], help='The number of threads')
     parser.add_argument('--ports', nargs='+', type=int, default=[21, 22, 23, 80])
     args = parser.parse_args()
 
     thread_list = []
-    shared_memory = IoTSharedMemory(threads_no=args.threads, ports=args.ports, timeout=0.5)
+    shared_memory = IoTSharedMemory(threads_no=args.threads, ports=args.ports, timeout=2)
 
     for thread_id in range(args.threads):
         thread_list.append(IoTThread(thread_id, shared_memory))

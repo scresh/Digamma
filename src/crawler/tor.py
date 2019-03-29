@@ -11,6 +11,14 @@ from getpass import getpass
 from tools.shared_memory import TorSharedMemory
 
 
+class NoURLsFound(Exception):
+    pass
+
+
+class IncorrectContentType(Exception):
+    pass
+
+
 class TorThread(threading.Thread):
     def __init__(self, thread_id, shared_memory):
         super().__init__()
@@ -59,22 +67,15 @@ class TorThread(threading.Thread):
                     timeout=self.shared_memory.timeout,
                     proxies=self.proxies
                 )
-                content_type = request.headers['Content-Type']
-                if not methods.is_mime_correct(content_type):
+
+                if 'text/html' not in request.headers['Content-Type']:
                     raise IncorrectContentType
 
-                content = request.content
-                if all(word in content.lower() for word in self.shared_memory.phrase_words):
-                    if self.shared_memory.db_mode():
-                        title = methods.get_title(content)
-                        plain = methods.get_plain(content)
-                        words = methods.get_words(plain)
-                        sentences = methods.get_sentences(plain)
-                        self.shared_memory.save_page(url, words, content, title, sentences)
+                html = request.text
 
-                    self.shared_memory.save_url(url)
+                title, content, words, urls = methods.get_values(html, url)
 
-                urls = methods.get_urls(url, content, content_type)
+                self.shared_memory.save_page(url, title, content, words)
 
                 if urls:
                     for x in urls:
@@ -95,9 +96,7 @@ class TorThread(threading.Thread):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Run Tor scanner for a given phrase')
-    parser.add_argument("--save", help="Save all matching results to .db file", action="store_true")
-    parser.add_argument('--phrase', help='Space separated word list')
+    parser = argparse.ArgumentParser(description='Run Tor scanner')
     parser.add_argument('--threads', type=int, default=4, choices=range(1, 64), help='The number of threads')
     parser.add_argument('--port', type=int, choices=range(1024, 65535), help='The custom port zero')
     parser.add_argument('--url', help='The first page url')
@@ -118,16 +117,12 @@ def main():
     if args.port:
         start_port = args.port
 
-    phrase_words = []
-    if args.phrase:
-        phrase_words = args.phrase.split()
-
     start_url = 'http://54ogum7gwxhtgiya.onion/'  # Greetings for Krang :)
     if args.url:
         start_url = args.url
 
     thread_list = []
-    shared_memory = TorSharedMemory(phrase_words, start_port, timeout=5, save_mode=args.save, threads_no=args.threads)
+    shared_memory = TorSharedMemory(start_port, timeout=5, threads_no=args.threads)
     shared_memory.add_url(start_url)
 
     for thread_id in range(args.threads):
@@ -156,9 +151,3 @@ if __name__ == '__main__':
     main()
 
 
-class NoURLsFound(Exception):
-    pass
-
-
-class IncorrectContentType(Exception):
-    pass
