@@ -1,4 +1,7 @@
 .search-card {
+  border-color: #C3073F;
+  border-style: solid;
+  border-width: 2px;
   background-color: #1B1B1B;
   border-radius: 8px;
   color: #fff;

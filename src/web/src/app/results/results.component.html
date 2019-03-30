@@ -1,6 +1,34 @@
-<div class="col-xs-offset-0 col-xs-12">
-  <div class="search-card">
-    Found 1 241 results
-  </div>
-</div>
+<div class="about-us">
+  <div class="section section-dark">
+     <div class="container">
+       <div class="row">
+        <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8">
+               <div class="tim-title"><h1><br>Results</h1></div>
+        <div *ngFor="let result of results">
+            <h4><a href="{{ result.url }}">{{ result.title }}</a></h4>
+            <a>{{ result.url }}</a><br/>
+            <p [innerHTML]="result.snippet"></p>
+        </div>
 
+      <ul class="pagination pagination-danger">
+        <li><a href="javascript:void(0);">&laquo;</a></li>
+        <li><a href="javascript:void(0);">1</a></li>
+        <li><a href="javascript:void(0);">2</a></li>
+        <li class="active"><a href="javascript:void(0);">3</a></li>
+        <li><a href="javascript:void(0);">4</a></li>
+        <li><a href="javascript:void(0);">5</a></li>
+        <li><a href="javascript:void(0);">&raquo;</a></li>
+      </ul>
+        </div>
+       </div>
+
+     </div>
+  </div>
+      <footer class="footer-demo section-dark">
+      <div class="container">
+          <div class="copyright">
+              &copy; 2019, made with <i class="fa fa-heart heart"></i> by Digamma Team
+          </div>
+      </div>
+  </footer>
+</div>
