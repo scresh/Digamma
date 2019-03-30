@@ -43,16 +43,13 @@
 #register-navbar a {
   color: #FFF; }
 
-.register-background {
-  background-image: url("../img/landscape.jpg");
-  background-position: center center;
-  background-size: cover;
+.home-background {
   min-height: 100vh;
   overflow: hidden;
   position: absolute;
   width: 100%; }
 
-.register-background .filter-black::after {
+.home-background .filter-black::after {
   background-color: rgba(0, 0, 0, 0.5);
   content: "";
   display: block;
@@ -63,20 +60,20 @@
   width: 100%;
   z-index: 1; }
 
-.register-background .container {
+.home-background .container {
   margin-top: 11%;
   position: relative;
   z-index: 3; }
 
-.register-footer {
+.home-footer {
   bottom: 20px;
   color: #fff;
   position: absolute;
   z-index: 3;
   width: 100%; }
 
-.register-footer .fa-heart {
-  color: #EB5E28; }
+.home-footer .fa-heart {
+  color: #C3073F; }
 
 .profile-background {
   background-image: url("../paper_img/lamp.jpg");

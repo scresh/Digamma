@@ -72,6 +72,7 @@ class Handler(BaseHTTPRequestHandler):
     def send_get_response(self, content, status_code):
         self.send_response(status_code)
         self.send_header('Content-type', 'application/json')
+        self.send_header('Access-Control-Allow-Origin', 'http://127.0.0.1:4200')
         self.end_headers()
         self.wfile.write(
             bytes(json.dumps(content, ensure_ascii=False), 'UTF-8')
