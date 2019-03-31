@@ -24,7 +24,7 @@
 
 ## Screenshots
 <img src="https://raw.githubusercontent.com/scresh/Digamma/master/images/tor_cli.gif"> 
-<img src="https://raw.githubusercontent.com/scresh/Digamma/master/images/tor_results.png"> 
+<img src="https://raw.githubusercontent.com/scresh/Digamma/master/images/home.png"> 
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [contributors-shield]: https://img.shields.io/badge/contributors-6-orange.svg
