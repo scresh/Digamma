@@ -3,22 +3,24 @@
      <div class="container">
        <div class="row">
         <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8">
-               <div class="tim-title"><h1><br>Results</h1></div>
-        <div *ngFor="let result of results">
+               <div class="tim-title"><h1><br>{{results.length}} Results</h1></div>
+        <div *ngFor="let result of resultOnPage">
             <h4><a href="{{ result.url }}">{{ result.title }}</a></h4>
             <a>{{ result.url }}</a><br/>
             <p [innerHTML]="result.snippet"></p>
         </div>
 
-      <ul class="pagination pagination-danger">
-        <li><a href="javascript:void(0);">&laquo;</a></li>
-        <li><a href="javascript:void(0);">1</a></li>
-        <li><a href="javascript:void(0);">2</a></li>
-        <li class="active"><a href="javascript:void(0);">3</a></li>
-        <li><a href="javascript:void(0);">4</a></li>
-        <li><a href="javascript:void(0);">5</a></li>
-        <li><a href="javascript:void(0);">&raquo;</a></li>
-      </ul>
+            <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                <li [ngClass]="{disabled:pager.currentPage === 1}">
+                    <a (click)="setPage(pager.currentPage - 1)">&#x25c2;</a>
+                </li>
+                <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                    <a (click)="setPage(page)">{{page}}</a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                    <a (click)="setPage(pager.currentPage + 1)">&#x25b8;</a>
+                </li>
+            </ul>
         </div>
        </div>
 

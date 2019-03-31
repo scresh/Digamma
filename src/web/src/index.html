@@ -38,16 +38,19 @@
   <script src="assets/js/bootstrap-select.js"></script>
   <script src="assets/js/bootstrap-datepicker.js"></script>
 
-   <script src="assets/js/three.r92.min.js"></script>
-   <script src="assets/js/vanta.net.min.js"></script>
+ <script src="assets/js/three.r92.min.js"></script>
+ <script src="assets/js/vanta.net.min.js"></script>
 
   <script>
-  VANTA.NET({
-    el: "#my-element",
-    color: 0xC3073F,
-    backgroundColor: 0x1A1A1D,
-    points: 12.00,
-  })
+    if(document.getElementById("background")){
+        VANTA.NET({
+        el: "#background",
+        color: 0xC3073F,
+        backgroundColor: 0x1A1A1D,
+        points: 12.00,
+      })
+    }
+
   </script>
 
 </html>

@@ -6,7 +6,7 @@ import { AboutUsComponent } from './about-us/about-us.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
-    { path: 'results', component: ResultsComponent },
+    { path: 'results/:type/:query', component: ResultsComponent },
     { path: 'about-us', component: AboutUsComponent },
 ];
 
