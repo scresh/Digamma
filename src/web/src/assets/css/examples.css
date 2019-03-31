@@ -43,13 +43,13 @@
 #register-navbar a {
   color: #FFF; }
 
-.home-background {
+.home {
   min-height: 100vh;
   overflow: hidden;
   position: absolute;
   width: 100%; }
 
-.home-background .filter-black::after {
+.home .filter-black::after {
   background-color: rgba(0, 0, 0, 0.5);
   content: "";
   display: block;
@@ -60,7 +60,7 @@
   width: 100%;
   z-index: 1; }
 
-.home-background .container {
+.home .container {
   margin-top: 11%;
   position: relative;
   z-index: 3; }
