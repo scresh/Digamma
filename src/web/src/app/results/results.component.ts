@@ -10,35 +10,48 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class ResultsComponent implements OnInit {
 
-  results: any[];
+  results = [];
   pager: any = {};
-  resultOnPage: any[];
+  resultOnPage = [];
+  queryType = 'tor';
 
   setPage(page: number) {
         this.pager = this.pageService.getPager(this.results.length, page);
         this.resultOnPage = this.results.slice(this.pager.startIndex, this.pager.endIndex + 1);
   }
 
-  getTorResults() {
-    let queryType = this.route.snapshot.paramMap.get('type');
-
-    if (queryType === 'tor'){
-      let query = this.route.snapshot.paramMap.get('query');
-
-      this.resultsService.getTorResults(query)
+  getTorResults(query: string){
+          this.resultsService.getTorResults(query)
       .subscribe(data => {
         this.results = data["results"];
         this.setPage(1);
       });
-    }else if(queryType === 'iot'){
-    }
+  }
+
+  getIoTResults(query: string){
+        this.resultsService.getIoTResults(query)
+    .subscribe(data => {
+      this.results = data["results"];
+      this.setPage(1);
+    });
 }
 
   constructor(private resultsService: ResultsService, private pageService: PageService, private route: ActivatedRoute)
   { }
 
   ngOnInit() {
-    this.getTorResults();
+    let queryType = this.route.snapshot.paramMap.get('type');
+    let query = this.route.snapshot.paramMap.get('query');
+
+    if (queryType === 'tor'){
+      this.queryType = 'tor';
+      this.getTorResults(query);
+
+    }else if(queryType === 'iot'){
+      this.queryType = 'iot';
+      this.getIoTResults(query);
+    }
+
   }
 
 }
