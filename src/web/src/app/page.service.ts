@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class PageService {
-  getPager(totalItems: number, currentPage: number = 1, pageSize: number = 3) {
+  getPager(totalItems: number, currentPage: number = 1, pageSize: number = 4) {
         let totalPages = Math.ceil(totalItems / pageSize);
 
         if (currentPage < 1) {
