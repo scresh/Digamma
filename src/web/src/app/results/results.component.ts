@@ -40,6 +40,8 @@ export class ResultsComponent implements OnInit {
   { }
 
   ngOnInit() {
+    console.log('Wywolano ngOnInit z results.component.ts');
+
     let queryType = this.route.snapshot.paramMap.get('type');
     let query = this.route.snapshot.paramMap.get('query');
 
