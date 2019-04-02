@@ -36,12 +36,12 @@ export class ResultsComponent implements OnInit {
     });
 }
 
-  constructor(private resultsService: ResultsService, private pageService: PageService, private route: ActivatedRoute)
+  constructor(private resultsService: ResultsService, private pageService: PageService, private activatedRoute: ActivatedRoute)
   { }
 
   ngOnInit() {
-    let queryType = this.route.snapshot.paramMap.get('type');
-    let query = this.route.snapshot.paramMap.get('query');
+    let queryType = this.activatedRoute.snapshot.paramMap.get('type');
+    let query = this.activatedRoute.snapshot.paramMap.get('query');
 
     if (queryType === 'tor'){
       this.queryType = 'tor';
