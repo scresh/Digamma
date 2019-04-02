@@ -19,7 +19,6 @@
             <p [innerHTML]="result.banner"></p>
           </div>
         </ng-template>
-
           <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
               <li [ngClass]="{disabled:pager.currentPage === 1}">
                   <a (click)="setPage(pager.currentPage - 1)">&#x25c2;</a>

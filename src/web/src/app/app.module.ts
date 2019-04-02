@@ -8,6 +8,7 @@ import { HomeComponent } from './home/home.component';
 import { ResultsComponent } from './results/results.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 import {FormsModule} from "@angular/forms";
+import { PreviewComponent } from './preview/preview.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import {FormsModule} from "@angular/forms";
     HomeComponent,
     ResultsComponent,
     AboutUsComponent,
+    PreviewComponent,
   ],
   imports: [
     BrowserModule,
