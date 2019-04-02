@@ -1,0 +1,9 @@
+.section {
+  min-height: 100vh;
+}
+
+
+p {
+  font-family: 'VT323', monospace;
+  font-size: 20px;
+}
