@@ -1,4 +1,5 @@
 from sqlite3 import connect, IntegrityError
+from datetime import datetime
 
 
 class Database:
@@ -10,7 +11,10 @@ class Database:
 
     def insert_page(self, url, title, content, words):
         try:
-            self.cur.execute('INSERT INTO Pages (url, title, content) VALUES (?, ?, ?);', (url, title, content))
+            now = datetime.now()
+            self.cur.execute(
+                'INSERT INTO Pages (url, title, content, updated_at) VALUES (?, ?, ?, ?);', (url, title, content, now)
+            )
             self.con.commit()
 
             self.cur.execute('SELECT id FROM Pages WHERE url=?;', (url,))
@@ -36,7 +40,10 @@ class Database:
 
     def insert_device(self, socket, banner):
         try:
-            self.cur.execute('INSERT INTO Devices (socket, banner) VALUES (?, ?);', (socket, banner))
+            now = datetime.now()
+            self.cur.execute(
+                'INSERT INTO Devices (socket, banner, updated_at) VALUES (?, ?, ?);', (socket, banner, now)
+            )
             self.con.commit()
         except IntegrityError:
             pass

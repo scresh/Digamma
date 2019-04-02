@@ -57,10 +57,10 @@ class Handler(BaseHTTPRequestHandler):
                     page_id = page[0]
                     words = page[1]
 
-                    self.cur.execute('SELECT url, title, content FROM Pages WHERE id == ?;', (page_id,))
-                    url, title, content = self.cur.fetchone()
+                    self.cur.execute('SELECT id, url, title, content FROM Pages WHERE id == ?;', (page_id,))
+                    page_id, url, title, content = self.cur.fetchone()
                     snippet = generate_snippet(content, words)
-                    response['results'].append({'url': url, 'title': title, 'snippet': snippet})
+                    response['results'].append({'id': page_id, 'url': url, 'title': title, 'snippet': snippet})
 
                 self.send_get_response(response, 200)
 
@@ -115,7 +115,7 @@ class Handler(BaseHTTPRequestHandler):
     def send_get_response(self, content, status_code):
         self.send_response(status_code)
         self.send_header('Content-type', 'application/json')
-        self.send_header('Access-Control-Allow-Origin', 'http://127.0.0.1:4200')
+        self.send_header('Access-Control-Allow-Origin', f'http://localhost:4200')
         self.end_headers()
         self.wfile.write(
             bytes(json.dumps(content, ensure_ascii=False), 'UTF-8')
