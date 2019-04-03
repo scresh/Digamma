@@ -37,6 +37,14 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  setTor(){
+    this.searchType = 'tor';
+  }
+
+  setIoT(){
+    this.searchType = 'iot';
+  }
+
 
 }
 
