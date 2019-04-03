@@ -989,14 +989,15 @@ textarea.form-control {
 
 /*           Labels & Progress-bar              */
 .label {
+  min-width: 100%;
   padding: 0.4em 0.6em;
-  border-radius: 10px;
+  border-radius: 8px 8px 0 0;
   color: #FFFFFF;
   font-weight: 500;
   font-size: 0.75em;
   text-transform: uppercase;
   display: inline-block;
-  margin-bottom: 3px; }
+}
 
 .label-primary {
   background-color: #7A9E9F; }
