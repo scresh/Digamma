@@ -13,14 +13,18 @@ export class HomeComponent implements OnInit {
   message ='Enter query:';
 
   search(){
-    let words = this.query.split(" ");
+    let words = this.query.split(" ").filter(function (x) {return x != '';});
 
     if (words.length > 12){
       this.message = 'Too many words';
-    }
-    else {
+
+    } else if(words.length < 1){
+      this.message = 'Enter at least one word';
+
+    } else {
+
       for (let word of words) {
-          if (word.length > 16){
+          if (word.length > 16 || word.length < 1){
             this.message = 'Word length too long';
             return;
           }
