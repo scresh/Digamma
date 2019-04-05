@@ -1,0 +1,38 @@
+<div id="background"></div>
+<div class="home">
+   <div class="container">
+      <div class="row">
+         <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8">
+            <div class="search-card">
+
+               <div class="title">
+                  <img src="../../assets/img/logo-gray.png" alt="logo"/>
+               </div>
+                  <div class="col-xs-offset-1 col-xs-10">
+                    <span class="label label-danger">{{ message}}</span>
+                      <input [(ngModel)]="query" type="text" class="form-control">
+                  </div>
+              <div class="col-xs-offset-2 col-xs-4 col-sm-3 col-sm-offset-3">
+                <label class="radio" (click)="setTor()">
+                  <input type="radio" name="searchType" data-toggle="radio" id="tor" value="tor" checked>
+                  <i></i>TOR SITES
+                </label>
+              </div>
+              <div class="col-xs-6 col-sm-6">
+                <label class="radio" (click)="setIoT()">
+                  <input type="radio" name="searchType" data-toggle="radio" id="iot" value="iot">
+                  <i></i>IOT DEVICES
+                </label>
+              </div>
+                  <div class="col-xs-offset-3 col-xs-6">
+                     <input type="submit" (click)="search()" class="btn btn-block" value="SEARCH">
+                  </div>
+
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<div class="footer home-footer text-center">
+   <h6>&copy; 2019, made with <i class="fa fa-heart heart"></i> by Digamma Team</h6>
+</div>

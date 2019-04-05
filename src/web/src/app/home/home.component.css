@@ -1,0 +1,42 @@
+.search-card {
+  border-color: #C3073F;
+  border-style: solid;
+  border-width: 2px;
+  background-color: #1B1B1B;
+  border-radius: 8px;
+  color: #fff;
+  margin: 20px 0 70px;
+  min-height: 420px;
+  padding: 30px; }
+
+.search-card label {
+  margin-top: 30px; }
+
+.search-card img {
+  margin: 0 auto;
+  width: 100%;
+}
+
+.btn {
+  border-style: solid;
+  border-width: 2px;
+  border-color: #C3073F;
+}
+
+.form-control{
+  border-style: solid;
+  border-width: 2px;
+  border-color: #C3073F;
+}
+
+.search-card .title {
+  alignment: center;
+  text-align: center; }
+
+.search-card .btn {
+  margin-top: 15px; }
+
+input[type="text"]{
+    border-radius: 0 0 8px 8px;
+
+}
