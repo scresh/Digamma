@@ -8,6 +8,8 @@ from time import sleep
 from tools import methods
 from random import uniform
 from getpass import getpass
+
+from tools.db import Database
 from tools.shared_memory import TorSharedMemory
 
 
@@ -30,6 +32,7 @@ class TorThread(threading.Thread):
                         'https': 'socks5h://127.0.0.1:' + str(socks_port)}
 
         self.shared_memory = shared_memory
+        self.thread_memory = []
 
     def run(self):
 
@@ -48,9 +51,7 @@ class TorThread(threading.Thread):
                 break
 
         while self.shared_memory.run_threads:
-
             url = self.shared_memory.get_url(self.thread_id)
-
             if url is None:
                 if self.shared_memory.any_active():
                     sleep(uniform(0, 1))
@@ -58,6 +59,7 @@ class TorThread(threading.Thread):
                     continue
                 else:
                     self.shared_memory.run_threads = False
+
                     self.print(f'No urls to process: Stop all threads', methods.WARNING)
                     break
 
@@ -75,7 +77,7 @@ class TorThread(threading.Thread):
 
                 title, content, words, urls = methods.get_values(html, url)
 
-                self.shared_memory.save_page(url, title, content, words)
+                self.thread_memory.append((title, content, words, url))
 
                 if urls:
                     for x in urls:
@@ -92,7 +94,8 @@ class TorThread(threading.Thread):
 
     def print(self, text, color):
         if self.shared_memory.run_threads:
-            print(f'Thread #{self.thread_id}:\t{color}{text}{methods.NORMAL}')
+            thread_id_str = str(self.thread_id).zfill(3)
+            print(f'[ Thread #{thread_id_str} ]\t{color}{text}{methods.NORMAL}')
 
 
 def main():
@@ -122,6 +125,7 @@ def main():
         start_url = args.url
 
     thread_list = []
+    db_file = Database()
     shared_memory = TorSharedMemory(start_port, timeout=5, threads_no=args.threads)
     shared_memory.add_url(start_url)
 
@@ -144,6 +148,9 @@ def main():
         print(f'\nStopping {args.threads} threads...')
         shared_memory.run_threads = False
         for thread in thread_list:
+            thread_id_str = str(thread.thread_id).zfill(3)
+            print(f'[ Thread #{thread_id_str} ]\t Saving pages...')
+            db_file.insert_pages(thread.thread_memory)
             thread.join()
 
 
