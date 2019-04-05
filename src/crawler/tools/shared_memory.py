@@ -24,8 +24,6 @@ class TorSharedMemory:
         self.timeout = timeout
         self.run_threads = True
 
-        self._db_file = Database()
-
         self._index = 0
         self._url_stack = []
         self._threads_active = [False] * threads_no
@@ -52,12 +50,6 @@ class TorSharedMemory:
 
         self._url_stack_lock.release()
         return url
-
-    def save_page(self, url, title, content, words):
-        if self._db_file:
-            self._db_file_lock.acquire()
-            self._db_file.insert_page(url, title, content, words)
-            self._db_file_lock.release()
 
     def any_active(self):
         return any(self._threads_active)
