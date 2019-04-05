@@ -90,15 +90,15 @@ class Handler(BaseHTTPRequestHandler):
     def send_tor_preview_response(self, params):
         page_id = get_page_id(params)
 
-        self.cur.execute('SELECT content, updated_at FROM Pages WHERE id == ?;', (page_id,))
+        self.cur.execute('SELECT title, content, updated_at FROM Pages WHERE id == ?;', (page_id,))
         page_info = self.cur.fetchone()
 
         if not page_info:
             self.send_get_response({'error': 'Page ID does not exist'}, 400)
         else:
-            content, updated_at = page_info
+            title, content, updated_at = page_info
             updated_at = updated_at.split('.')[0]
-            response = {'result': {'content': content, 'updated_at': updated_at}}
+            response = {'result': {'title': title, 'content': content, 'updated_at': updated_at}}
             self.send_get_response(response, 200)
 
     def send_iot_search_response(self, params):
