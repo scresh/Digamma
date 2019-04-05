@@ -16,9 +16,9 @@ export class ResultsService {
 }
 
 
-getIoTResults(query: string) {
-    let params = new HttpParams().set("query", query);
-    return this.http.get("http://127.0.0.1:9000/searchIoT", {params: params});
-}
+  getIoTResults(query: string) {
+      let params = new HttpParams().set("query", query);
+      return this.http.get("http://127.0.0.1:9000/searchIoT", {params: params});
+  }
   constructor(private http: HttpClient) { }
 }
