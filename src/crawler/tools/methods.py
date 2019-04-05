@@ -84,6 +84,16 @@ def int_to_ip(no):
     return socket.inet_ntoa(struct.pack("!I", no))
 
 
+def socket_to_int(ip, port):
+    socket_int = port
+    ip_split = ip.split('.')
+
+    for i in range(len(ip_split)):
+        socket_int += int(ip_split[i]) * 256**(3-i) * 2**16
+
+    return socket_int
+
+
 def get_default_path():
     slash = ['/', '\\'][os.name == 'nt']
 

@@ -1,21 +1,19 @@
 from threading import Lock
-from .db import Database
 
 
 class IoTSharedMemory:
-    def __init__(self, threads_no, ports, timeout):
+    def __init__(self, threads_no, ports, timeout, file):
         self.threads_no = threads_no
         self.timeout = timeout
         self.ports = ports
         self.run_threads = True
+        self.socket_list = None
 
-        self._db_file_lock = Lock()
-        self._db_file = Database()
-
-    def save_banner(self, socket, banner):
-        self._db_file_lock.acquire()
-        self._db_file.insert_device(socket, banner)
-        self._db_file_lock.release()
+        if file:
+            self.socket_list = [*map(lambda x: (
+                x.split(':')[0], int(x.split(':')[1])),
+                file.read().strip().split('\n')
+            )]
 
 
 class TorSharedMemory:
@@ -29,7 +27,6 @@ class TorSharedMemory:
         self._threads_active = [False] * threads_no
 
         self._url_stack_lock = Lock()
-        self._db_file_lock = Lock()
 
     def add_url(self, url):
         self._url_stack_lock.acquire()

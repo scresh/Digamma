@@ -145,13 +145,14 @@ def main():
         while shared_memory.run_threads:
             sleep(0.25)
     except KeyboardInterrupt:
-        print(f'\nStopping {args.threads} threads...')
         shared_memory.run_threads = False
-        for thread in thread_list:
-            thread_id_str = str(thread.thread_id).zfill(3)
-            print(f'[ Thread #{thread_id_str} ]\t Saving pages...')
-            db_file.insert_pages(thread.thread_memory)
-            thread.join()
+        print(f'\nStopping {args.threads} threads...')
+
+    for thread in thread_list:
+        thread_id_str = str(thread.thread_id).zfill(3)
+        print(f'[ Thread #{thread_id_str} ]\t Saving pages...')
+        db_file.insert_pages(thread.thread_memory)
+        thread.join()
 
 
 if __name__ == '__main__':

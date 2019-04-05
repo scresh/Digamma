@@ -16,7 +16,8 @@ class Database:
 
             try:
                 self.cur.execute(
-                    'INSERT INTO Pages (url, title, content, updated_at) VALUES (?, ?, ?, ?);', (url, title, content, now)
+                    'INSERT INTO Pages (url, title, content, updated_at) VALUES (?, ?, ?, ?);',
+                    (url, title, content, now),
                 )
             except IntegrityError:
                 pass
@@ -27,7 +28,10 @@ class Database:
 
             for word in words:
                 try:
-                    self.cur.execute('INSERT INTO Words (word) VALUES (?);', (word, ))
+                    self.cur.execute(
+                        'INSERT INTO Words (word) VALUES (?);',
+                        (word, ),
+                    )
 
                 except IntegrityError:
                     pass
@@ -36,27 +40,37 @@ class Database:
         for page in pages:
             title, content, words, url = page
 
-            self.cur.execute('SELECT id FROM Pages WHERE url=?;', (url,))
+            self.cur.execute(
+                'SELECT id FROM Pages WHERE url=?;',
+                (url,),
+            )
             page_id = self.cur.fetchone()[0]
 
             for word in words:
-                self.cur.execute('SELECT id FROM Words WHERE word=?;', (word, ))
+                self.cur.execute(
+                    'SELECT id FROM Words WHERE word=?;',
+                    (word, )
+                )
                 word_id = self.cur.fetchone()[0]
             try:
-                self.cur.execute('INSERT INTO WordsPages (page_id, word_id) VALUES (?, ?);', (page_id, word_id))
+                self.cur.execute(
+                    'INSERT INTO WordsPages (page_id, word_id) VALUES (?, ?);',
+                    (page_id, word_id),
+                )
             except IntegrityError:
                     pass
 
             self.con.commit()
 
-    def insert_device(self, socket, banner):
-        try:
-            now = datetime.now()
-            self.cur.execute(
-                'INSERT INTO Devices (socket, banner, updated_at) VALUES (?, ?, ?);', (socket, banner, now)
-            )
-            self.con.commit()
-        except IntegrityError:
-            pass
-
-
+    def insert_devices(self, devices):
+        now = datetime.now()
+        for device in devices:
+            socket, banner = device
+            try:
+                self.cur.execute(
+                    'INSERT INTO Devices (socket, banner, updated_at) VALUES (?, ?, ?);',
+                    (socket, banner, now),
+                )
+            except IntegrityError:
+                pass
+        self.con.commit()
