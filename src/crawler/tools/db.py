@@ -20,7 +20,13 @@ class Database:
                     (url, title, content, now),
                 )
             except IntegrityError:
-                pass
+                self.cur.execute(
+                    'SELECT id FROM Pages WHERE url=?;',
+                    (url,)
+                )
+                page_id = self.cur.fetchone()[0]
+                self.cur.execute('DELETE FROM WordsPages WHERE page_id=?;', (page_id,))
+
         self.con.commit()
 
         for page in pages:
@@ -42,7 +48,7 @@ class Database:
 
             self.cur.execute(
                 'SELECT id FROM Pages WHERE url=?;',
-                (url,),
+                (url,)
             )
             page_id = self.cur.fetchone()[0]
 
@@ -52,12 +58,12 @@ class Database:
                     (word, )
                 )
                 word_id = self.cur.fetchone()[0]
-            try:
-                self.cur.execute(
-                    'INSERT INTO WordsPages (page_id, word_id) VALUES (?, ?);',
-                    (page_id, word_id),
-                )
-            except IntegrityError:
+                try:
+                    self.cur.execute(
+                        'INSERT INTO WordsPages (page_id, word_id) VALUES (?, ?);',
+                        (page_id, word_id)
+                    )
+                except IntegrityError:
                     pass
 
             self.con.commit()
@@ -70,7 +76,7 @@ class Database:
                 self.cur.execute(
                     'INSERT INTO Devices (socket, banner, updated_at, location, organization, county, county_code) '
                     'VALUES (?, ?, ?, ?, ?, ?, ?);',
-                    (socket, banner, now, location, organization, county, county_code),
+                    (socket, banner, now, location, organization, county, county_code)
                 )
             except IntegrityError:
                 pass

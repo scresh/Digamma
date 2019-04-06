@@ -83,7 +83,6 @@ class Handler(BaseHTTPRequestHandler):
                 (page_id, pages_dict[page_id]) for page_id in
                 sorted(pages_dict, key=lambda x: len(pages_dict[x]), reverse=True)
             ]
-
             response = self.create_tor_search_response_dict(sorted_pages)
             self.send_get_response(response, 200)
 
@@ -124,9 +123,8 @@ class Handler(BaseHTTPRequestHandler):
 
     def get_page_dict(self, words):
         pages_dict = {}
-
         for word in words:
-            self.cur.execute('SELECT id FROM Words WHERE word == ?;', (word,))
+            self.cur.execute('SELECT id FROM Words WHERE word == ?;', (word, ))
             word_id = self.cur.fetchone()
 
             if word_id:
@@ -142,7 +140,6 @@ class Handler(BaseHTTPRequestHandler):
                     pages_dict[page_id] = []
 
                 pages_dict[page_id].append(word)
-
         return pages_dict
 
     def get_device_dict(self, words):
