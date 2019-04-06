@@ -184,6 +184,7 @@ class Handler(BaseHTTPRequestHandler):
             socket, banner, updated_at, location, organization, country, country_code = self.cur.fetchone()
 
             socket_str = socket_to_str(socket)
+            updated_at = updated_at.split('.')[0]
 
             response['results'].append(
                 {'socket': socket_str, 'banner': banner, 'updated_at': updated_at, 'location': location,

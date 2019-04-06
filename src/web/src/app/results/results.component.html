@@ -14,14 +14,16 @@
         </ng-template>
 
         <ng-template #iotResults>
+          <hr>
           <div *ngFor="let result of resultOnPage">
-            <a>{{ result.socket }}</a><br/>
+              <h5><b>{{ result.socket }}</b> [{{ result.updated_at }}]</h5>
+              <div>
+                <img width="24px" alt="flag"
+                   src="https://d3v5a27kxvpxh2.cloudfront.net/cdn/icons/flags/{{result.country_code.toLowerCase()}}.png"
+                /> <b>{{ result.country }}: {{ result.organization }}</b> [{{ result.location }}]
+              </div>
             <p [innerHTML]="result.banner.replace('\n', '<br/>')"></p>
-            <div>{{ result.updated_at }}</div>
-            <div>{{ result.location }}</div>
-            <div>{{ result.organization }}</div>
-            <div><img width="24px"  src="https://d3v5a27kxvpxh2.cloudfront.net/cdn/icons/flags/{{result.country_code.toLowerCase()}}.png"/>
- {{ result.country }}</div>
+            <hr>
           </div>
         </ng-template>
           <ul *ngIf="pager.pages && pager.pages.length" class="pagination">

@@ -1,3 +1,12 @@
 .section {
   min-height: 100vh;
 }
+
+
+h5 {
+  color: #C3073F;
+}
+
+td {
+  width: 50%;
+}
