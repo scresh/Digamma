@@ -16,7 +16,12 @@
         <ng-template #iotResults>
           <div *ngFor="let result of resultOnPage">
             <a>{{ result.socket }}</a><br/>
-            <p [innerHTML]="result.banner"></p>
+            <p [innerHTML]="result.banner.replace('\n', '<br/>')"></p>
+            <div>{{ result.updated_at }}</div>
+            <div>{{ result.location }}</div>
+            <div>{{ result.organization }}</div>
+            <div><img width="24px"  src="https://d3v5a27kxvpxh2.cloudfront.net/cdn/icons/flags/{{result.country_code.toLowerCase()}}.png"/>
+ {{ result.country }}</div>
           </div>
         </ng-template>
           <ul *ngIf="pager.pages && pager.pages.length" class="pagination">

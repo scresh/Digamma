@@ -74,7 +74,7 @@ class Database:
             socket, banner, location, organization, county, county_code = device
             try:
                 self.cur.execute(
-                    'INSERT INTO Devices (socket, banner, updated_at, location, organization, county, county_code) '
+                    'INSERT INTO Devices (socket, banner, updated_at, location, organization, country, country_code) '
                     'VALUES (?, ?, ?, ?, ?, ?, ?);',
                     (socket, banner, now, location, organization, county, county_code)
                 )

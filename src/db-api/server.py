@@ -179,14 +179,16 @@ class Handler(BaseHTTPRequestHandler):
         response = {'results': []}
         for device in sorted_devices:
             device_id = device[0]
-            words = device[1]
 
-            self.cur.execute('SELECT socket, banner FROM Devices WHERE id == ?;', (device_id,))
-            socket, banner = self.cur.fetchone()
+            self.cur.execute('SELECT socket, banner, updated_at, location, organization, country, country_code FROM Devices WHERE id == ?;', (device_id,))
+            socket, banner, updated_at, location, organization, country, country_code = self.cur.fetchone()
 
             socket_str = socket_to_str(socket)
 
-            response['results'].append({'socket': socket_str, 'banner': banner})
+            response['results'].append(
+                {'socket': socket_str, 'banner': banner, 'updated_at': updated_at, 'location': location,
+                 'organization': organization, 'country': country, 'country_code': country_code}
+            )
 
         return response
 

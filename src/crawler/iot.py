@@ -62,11 +62,11 @@ class IoTThread(threading.Thread):
                 location = generate_location_str(longitude, latitude)
 
                 organization = ip_info.get('org')
-                county = ip_info.get('country')
-                county_code = ip_info.get('countryCode')
+                country = ip_info.get('country')
+                country_code = ip_info.get('countryCode')
 
                 self.thread_memory.append(
-                    (socket_to_int(ip, port), banner.strip(), location, organization, county, county_code)
+                    (socket_to_int(ip, port), banner.strip(), location, organization, country, country_code)
                 )
                 self.print(f'[+] Connection to {ip}:{port} succeeded!', SUCCESS)
         except:
