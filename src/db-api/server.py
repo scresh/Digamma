@@ -187,10 +187,9 @@ class Handler(BaseHTTPRequestHandler):
             self.cur.execute('SELECT socket, banner FROM Devices WHERE id == ?;', (device_id,))
             socket, banner = self.cur.fetchone()
 
-            snippet = generate_snippet(banner, words)
             socket_str = socket_to_str(socket)
 
-            response['results'].append({'socket': socket_str, 'banner': snippet})
+            response['results'].append({'socket': socket_str, 'banner': banner})
 
         return response
 

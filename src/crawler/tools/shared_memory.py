@@ -1,3 +1,4 @@
+from random import randint
 from threading import Lock
 
 
@@ -8,6 +9,8 @@ class IoTSharedMemory:
         self.ports = ports
         self.run_threads = True
         self.socket_list = None
+
+        self.seed = randint(0, 256**4-1)
 
         if file:
             self.socket_list = [*map(lambda x: (

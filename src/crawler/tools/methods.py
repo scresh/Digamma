@@ -107,3 +107,27 @@ def is_ip_permitted(ip_int):
             for ip_range in excluded_ips
         ]
     )
+
+
+def generate_location_str(lat, lon):
+    lat_str = ['N', 'S'][lat < 0]
+    lon_str = ['E', 'W'][lon < 0]
+    lat = abs(lat)
+    lon = abs(lon)
+
+    lat_deg = int(lat)
+    lon_deg = int(lon)
+    lat -= lat_deg
+    lat *= 60
+    lon -= lon_deg
+    lon *= 60
+
+    lat_min = int(lat)
+    lon_min = int(lon)
+    lat -= lat_min
+    lon -= lon_min
+
+    lat_sec = round(lat * 60, 1)
+    lon_sec = round(lon * 60, 1)
+
+    return f'{lat_deg}°{lat_min}\'{lat_sec}\"{lat_str} {lon_deg}°{lon_min}\'{lon_sec}\"{lon_str}'

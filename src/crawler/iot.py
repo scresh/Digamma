@@ -5,6 +5,7 @@ from tools.db import Database
 from tools.methods import *
 import threading
 import socket
+import requests
 
 from tools.shared_memory import IoTSharedMemory
 
@@ -39,6 +40,7 @@ class IoTThread(threading.Thread):
         try:
             target_socket = socket.socket()
             target_socket.settimeout(self.shared_memory.timeout)
+
             target_socket.connect((ip, port))
 
             data = "HEAD / HTTP/1.1\r\n\r\n"
@@ -50,15 +52,25 @@ class IoTThread(threading.Thread):
                 recv_data = target_socket.recv(256)
                 banner += recv_data.decode("utf-8")
 
-            target_socket.recv(256)
             target_socket.close()
 
-            self.thread_memory.append((socket_to_int(ip, port), banner.strip()))
+            if len(banner.strip()) > 0:
 
-            self.print(f'[+] Connection to {ip}:{port} succeeded!', SUCCESS)
+                ip_info = requests.get(f'https://extreme-ip-lookup.com/json/{ip}').json()
+                latitude = float(ip_info.get('lat'))
+                longitude = float(ip_info.get('lon'))
+                location = generate_location_str(longitude, latitude)
 
-        except Exception as e:
-            self.print(f'[-] Connection to {ip}:{port} failed: {type(e).__name__}', WARNING)
+                organization = ip_info.get('org')
+                county = ip_info.get('country')
+                county_code = ip_info.get('countryCode')
+
+                self.thread_memory.append(
+                    (socket_to_int(ip, port), banner.strip(), location, organization, county, county_code)
+                )
+                self.print(f'[+] Connection to {ip}:{port} succeeded!', SUCCESS)
+        except:
+            pass
 
     def socket_generator(self):
         batch_sqrt = int(self.batch_size ** 0.5)
@@ -70,20 +82,20 @@ class IoTThread(threading.Thread):
 
             while ip_int < ip_max_int:
                 for port in self.shared_memory.ports:
-                    yield int_to_ip(ip_int), port
+                    yield int_to_ip((ip_int + self.shared_memory.seed) % 256**4), port
                 ip_int += batch_sqrt
 
 
 def main():
     parser = argparse.ArgumentParser(description='Run IoT scanner')
-    parser.add_argument('--threads', type=int, default=1, help='The number of threads')
+    parser.add_argument('--threads', type=int, default=32, help='The number of threads')
     parser.add_argument('--ports', nargs='+', type=int, default=[21, 22, 23, 80])
     parser.add_argument('--file', type=argparse.FileType('r'))
     args = parser.parse_args()
 
     db_file = Database()
     thread_list = []
-    shared_memory = IoTSharedMemory(threads_no=args.threads, ports=args.ports, file=args.file, timeout=2)
+    shared_memory = IoTSharedMemory(threads_no=args.threads, ports=args.ports, file=args.file, timeout=0.5)
 
     for thread_id in range(args.threads):
         thread_list.append(IoTThread(thread_id, shared_memory))
@@ -97,7 +109,7 @@ def main():
         print(f'\nStopping {args.threads} threads...')
 
     for thread in thread_list:
-        thread_id_str = str(thread.thread_id).zfill(4)
+        thread_id_str = str(thread.thread_id).zfill(3)
         print(f'[ Thread #{thread_id_str} ]\t Saving banners...')
         db_file.insert_devices(thread.thread_memory)
         thread.join()
