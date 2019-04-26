@@ -4,10 +4,10 @@
 [![LinkedIn][linkedin-shield]][linkedin-url-filip-szczesniak]
 
 
-# <img src="https://raw.githubusercontent.com/scresh/Digamma/master/images/favicon.png" width="24" height="24" alt="icon" > Digamma
+# <img src="https://github.com/scresh/Digamma/blob/master/src/web/src/assets/img/favicon.png" width="24" height="24" alt="icon" > Digamma
 
 ## About
-  <p><img src="https://raw.githubusercontent.com/scresh/Digamma/master/images/logo-gray.png" alt="banner" ></p>
+  <p><img src="https://github.com/scresh/Digamma/blob/master/src/web/src/assets/img/logo-gray.png" alt="banner" ></p>
   <p align="center">
     Real time search engine for Tor sites and IoT devices.</br>
     App was created as student group project work at the Warsaw University of Technology.</br>
@@ -23,9 +23,9 @@
 - **--url** the start page url
 
 ## Screenshots
-<img src="https://raw.githubusercontent.com/scresh/Digamma/master/images/tor_cli.gif"> 
-<img src="https://raw.githubusercontent.com/scresh/Digamma/master/images/home.png"> 
-<img src="https://raw.githubusercontent.com/scresh/Digamma/master/images/results.png"> 
+<img src="https://github.com/scresh/Digamma/blob/master/src/web/src/assets/img/tor_cli.gif"> 
+<img src="https://github.com/scresh/Digamma/blob/master/src/web/src/assets/img/home.png"> 
+<img src="https://github.com/scresh/Digamma/blob/master/src/web/src/assets/img/results.png"> 
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [contributors-shield]: https://img.shields.io/badge/contributors-6-orange.svg
