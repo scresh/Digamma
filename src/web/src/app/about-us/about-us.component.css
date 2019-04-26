@@ -10,18 +10,9 @@
   margin-top: 50px;
   margin-left: auto;
   margin-right: auto;
-  width: 80%;
+  width: 75%;
+
 }
-
-
-.img-rounded {
-  border-radius: 8px;
-  box-shadow: 0 2px 2px rgba(204, 197, 185, 0.5);
-  transition: opacity 0.5s ease 0s; }
-
-.img-details {
-  min-height: 50px;
-  padding: 0 4px 0.5em; }
 
 .img-details .author {
   margin-left: 10px;
@@ -29,7 +20,8 @@
   width: 40px; }
 
 .img-circle {
+  box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(255, 255, 255, 0.19);
   alignment: center;
-  background-color: #C3073F;
+  background-color: #ffffff;
   margin-bottom: 30px;
-  padding: 3px; }
+  padding: 1px; }
