@@ -5,3 +5,31 @@
 .tinted { opacity: 2.0; }
 
 
+.contributor .img-circle, .contributor .img-thumbnail {
+  display: block;
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+}
+
+
+.img-rounded {
+  border-radius: 8px;
+  box-shadow: 0 2px 2px rgba(204, 197, 185, 0.5);
+  transition: opacity 0.5s ease 0s; }
+
+.img-details {
+  min-height: 50px;
+  padding: 0 4px 0.5em; }
+
+.img-details .author {
+  margin-left: 10px;
+  margin-top: -21px;
+  width: 40px; }
+
+.img-circle {
+  alignment: center;
+  background-color: #C3073F;
+  margin-bottom: 30px;
+  padding: 3px; }

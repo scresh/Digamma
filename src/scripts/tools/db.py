@@ -4,7 +4,7 @@ from datetime import datetime
 
 class Database:
     def __init__(self):
-        self.con = connect('../db-api/digamma.db', check_same_thread=False)
+        self.con = connect('../api/digamma.db', check_same_thread=False)
 
         self.cur = self.con.cursor()
 

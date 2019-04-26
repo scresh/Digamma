@@ -40,3 +40,36 @@ input[type="text"]{
     border-radius: 0 0 8px 8px;
 
 }
+
+
+.home {
+  min-height: 100vh;
+  overflow: hidden;
+  position: absolute;
+  width: 100%; }
+
+.home .filter-black::after {
+  background-color: rgba(0, 0, 0, 0.5);
+  content: "";
+  display: block;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1; }
+
+.home .container {
+  margin-top: 11%;
+  position: relative;
+  z-index: 3; }
+
+.home-footer {
+  bottom: 20px;
+  color: #fff;
+  position: absolute;
+  z-index: 3;
+  width: 100%; }
+
+.home-footer .fa-heart {
+  color: #C3073F; }
