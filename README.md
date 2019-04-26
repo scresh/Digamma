@@ -27,8 +27,13 @@
 
 ## Screenshots
 <img src="https://github.com/scresh/Digamma/blob/master/src/web/src/assets/img/tor_cli.gif"> 
-<img src="https://github.com/scresh/Digamma/blob/master/src/web/src/assets/img/home.png"> 
-<img src="https://github.com/scresh/Digamma/blob/master/src/web/src/assets/img/results.png"> 
+
+|<img width="1604" alt="home" src="https://github.com/scresh/Digamma/blob/master/src/web/src/assets/img/home.png">|<img width="1604" alt="about us" src="https://github.com/scresh/Digamma/blob/master/src/web/src/assets/img/about-us.png">|
+|:-------------------------:|:-------------------------:|
+|<img width="1604" alt="results" src="https://github.com/scresh/Digamma/blob/master/src/web/src/assets/img/results.png">  |  <img width="1604" alt="preview" src="https://github.com/scresh/Digamma/blob/master/src/web/src/assets/img/preview.png">
+
+
+
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [contributors-shield]: https://img.shields.io/badge/contributors-6-orange.svg
