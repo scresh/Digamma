@@ -22,7 +22,7 @@
 
 **Script for gathering banners can be run with the following parameters:**<br/>
 **--threads**: the number of threads<br/>
-**--port**: the custom port zero<br/>
+**--ports**: custom port list<br/>
 **--file**: the file with list of sockets to visit<br/>
 
 ## Screenshots
