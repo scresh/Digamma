@@ -10,3 +10,15 @@ h5 {
 td {
   width: 50%;
 }
+
+
+a {
+  color: #C3073F;
+  -webkit-transition: all 150ms linear;
+  -moz-transition: all 150ms linear;
+  -o-transition: all 150ms linear;
+  -ms-transition: all 150ms linear;
+  transition: all 150ms linear; }
+  a:hover, a:focus {
+    color: #950740;
+    text-decoration: none; }
