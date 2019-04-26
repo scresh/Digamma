@@ -15,12 +15,15 @@
   </p>
 
 ## Usage
-**Can be run with the following parameters:**
-- **--save:** save all matching results to .db file
-- **--phrase** pace separated word list
-- **--threads** the number of threads
-- **--port** the custom port zero
-- **--url** the start page url
+**Tor sites crawler can be run with the following parameters:**<br/>
+**--threads**: the number of threads<br/>
+**--port**: the custom port zero<br/>
+**--url**: the start page url<br/>
+
+**Script for gathering banners can be run with the following parameters:**<br/>
+**--threads**: the number of threads<br/>
+**--port**: the custom port zero<br/>
+**--file**: the file with list of sockets to visit<br/>
 
 ## Screenshots
 <img src="https://github.com/scresh/Digamma/blob/master/src/web/src/assets/img/tor_cli.gif"> 
