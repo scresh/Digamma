@@ -25,7 +25,8 @@
 **--file**: the file with list of sockets to visit<br/>
 
 ## Screenshots
-<img src="https://github.com/scresh/Digamma/blob/master/src/web/src/assets/img/tor_cli.gif"> 
+|<img  width="846" src="https://github.com/scresh/Digamma/blob/master/src/web/src/assets/img/tor_cli.gif"> |
+|:-------------------------:|
 
 |<img width="1604" alt="home" src="https://raw.githubusercontent.com/scresh/Digamma/master/src/web/src/assets/img/home.png">|<img width="1604" alt="about us" src="https://raw.githubusercontent.com/scresh/Digamma/master/src/web/src/assets/img/about-us.png">|
 |:-------------------------:|:-------------------------:|
