@@ -1,7 +1,6 @@
 [![Contributors][contributors-shield]]()
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url-emanuel-zarzecki]
-[![LinkedIn][linkedin-shield]][linkedin-url-filip-szczesniak]
 
 
 # <img src="https://github.com/scresh/Digamma/blob/master/src/web/src/assets/img/favicon.png" width="24" height="24" alt="icon" > Digamma
@@ -28,9 +27,9 @@
 ## Screenshots
 <img src="https://github.com/scresh/Digamma/blob/master/src/web/src/assets/img/tor_cli.gif"> 
 
-|<img width="1604" alt="home" src="https://github.com/scresh/Digamma/blob/master/src/web/src/assets/img/home.png">|<img width="1604" alt="about us" src="https://github.com/scresh/Digamma/blob/master/src/web/src/assets/img/about-us.png">|
+|<img width="1604" alt="home" src="https://raw.githubusercontent.com/scresh/Digamma/master/src/web/src/assets/img/home.png">|<img width="1604" alt="about us" src="https://raw.githubusercontent.com/scresh/Digamma/master/src/web/src/assets/img/about-us.png">|
 |:-------------------------:|:-------------------------:|
-|<img width="1604" alt="results" src="https://github.com/scresh/Digamma/blob/master/src/web/src/assets/img/results.png">  |  <img width="1604" alt="preview" src="https://github.com/scresh/Digamma/blob/master/src/web/src/assets/img/preview.png">
+|<img width="1604" alt="results" src="https://raw.githubusercontent.com/scresh/Digamma/master/src/web/src/assets/img/results.png">  |  <img width="1604" alt="preview" src="https://raw.githubusercontent.com/scresh/Digamma/master/src/web/src/assets/img/preview.png">
 
 
 
@@ -41,5 +40,3 @@
 [license-url]: https://github.com/scresh/Digamma/blob/master/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?logo=linkedin&colorB=555
 [linkedin-url-emanuel-zarzecki]: https://www.linkedin.com/in/emanuel-zarzecki/
-[linkedin-url-filip-szczesniak]: https://www.linkedin.com/in/filip-szcześniak-0b9340182/
-
